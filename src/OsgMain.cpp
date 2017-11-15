@@ -92,9 +92,10 @@ bool OsgMain::init(int x, int y, int width, int height)
     m_window = m_viewer->setUpViewerAsEmbeddedInWindow(x, y, width, height);
     m_window->getEventQueue()->windowResize(x, y, width, height);
     //m_viewer->setUpViewInWindow(x,y,width,height);
-    AssetsManager::instance().setRootPath("../../android/assets/");
-    AssetsManager::instance().loadMenuEntries();
-    AssetsManager::instance().loadAssets("lua/resources.lua");    
+    //AssetsManager::instance().setRootPath("../assets");
+    //AssetsManager::instance().loadMenuEntries();
+
+    AssetsManager::instance().loadAssets();    
     
     m_rootNode = new osg::Group();    
     m_rootNode->setNodeMask(MASK_2D); 

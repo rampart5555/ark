@@ -93,7 +93,7 @@ debug_gles2:$(LOCAL_OBJ_FILES) test_lua
 %.o: %.cpp 
 	g++ -c -o $@ $< -Wall -ggdb $(LOCAL_SRC_INCLUDE) 
 test_lua:
-	../../local/bin/lua ../../android/assets/lua/menudef.lua	
+	$(HOME)/g_dev/gmengine/local/bin/lua ../assets/lua/menudef.lua	
 clean:
 	rm -f *.o scene/*.o ui/*.o
 	

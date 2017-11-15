@@ -34,7 +34,7 @@ class AssetsManager
         std::vector<MenuItem>*getMenuItems(const char*);
         
 
-        bool loadAssets(const char*);
+        bool loadAssets();
         bool loadTextures();        
         bool loadMenuEntries();    
         

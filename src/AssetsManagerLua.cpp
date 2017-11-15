@@ -129,7 +129,7 @@ bool AssetsManagerLua::loadScript(const char *script)
     L = luaL_newstate();
     if (luaL_loadstring(L, script) || lua_pcall(L, 0, 0, 0)) 
     {
-        printf("%s","Fail to load file\n");
+        printf("%s","AssetsManagerLua::loadScript=> Fail to load script\n");
         L = 0;
         return false ;
     }

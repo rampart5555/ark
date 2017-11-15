@@ -67,10 +67,12 @@ class FindModel : public osg::NodeVisitor
             //traverse(tr);
         }
 };
- 
+
+extern char* readBinaryFile(const char* filename, unsigned int *filesize);
+
 AssetsManager::AssetsManager()
 {    
-        
+    m_rootPath = "/home/dancioata/g_dev/ark/assets/";    
     m_etypeToString.insert(std::make_pair(ENTITY_BRICK, "entity_brick"));
     m_etypeToString.insert(std::make_pair(ENTITY_BALL, "entity_ball"));
     m_etypeToString.insert(std::make_pair(ENTITY_PADDLE, "entity_paddle"));
@@ -96,50 +98,26 @@ void AssetsManager::setRootPath(const char *path)
     m_rootPath = path;
 }
 
-extern char* readBinaryFile(const char* filename, unsigned int *filesize);
-#if 0
-char* AssetsManager::readBinaryFile(const char* filename, unsigned int *filesize)
-{
-    unsigned int bufsize=0;
-    char *buf = NULL;
-    
-    std::string path;
-    path = m_rootPath;
-    path += filename;
-    
-    FILE *fp = fopen (path.c_str(), "rb");
-
-    if (fp)
-    {
-        fseek (fp, 0, SEEK_END);
-        bufsize = ftell (fp);
-        fseek (fp, 0, SEEK_SET);
-        buf = (char*)malloc (bufsize+1);
-        fread (buf, 1, bufsize, fp);
-        fclose (fp);
-        buf[bufsize] = 0;
-    }
-    *filesize = bufsize;
-    
-    return buf;
-}
-#endif
-bool AssetsManager::loadAssets(const char *resource_lua)
+bool AssetsManager::loadAssets()
 {
     AssetsManagerLua assets_lua;
     std::vector<ResourceItem> res_items;
     ResourceItem *item;
-    
     unsigned int file_size = 0;
-    const char *script = readBinaryFile(resource_lua,&file_size);
+    //Resources
+    std::string resources_lua = m_rootPath + "/lua/resources.lua";
+    LOG_INFO("Loading lua resource file: %s\n",resources_lua.c_str());    
+    const char *script = readBinaryFile(resources_lua.c_str(), &file_size);
     bool res = assets_lua.loadScript(script);    
     if(res==false)
     {
+        LOG_ERROR("%s","Failed to read file\n");
         return false;
     }
     assets_lua.loadResources("Resources",&res_items);
     assets_lua.close();
-
+    //Menu entries
+    loadMenuEntries();
     
     for (unsigned i=0;i<res_items.size();i++)
     {
@@ -152,8 +130,7 @@ bool AssetsManager::loadAssets(const char *resource_lua)
             if(node != NULL)
             {                
                 FindModel fm;
-                node->accept(fm);
-                  
+                node->accept(fm);                  
             }
         }
         else if(item->m_type == "ttf")
@@ -199,7 +176,7 @@ osg::Object* AssetsManager::loadObject(const char *filename, const char *ext)
 {
     char *buf = NULL;
     unsigned int buf_size = 0;
-    
+           
     LOG_INFO("AssetsManager::loadObject=> name: %s, type:%s\n", filename, ext);
     buf = readBinaryFile(filename, &buf_size);
     
@@ -270,9 +247,9 @@ bool AssetsManager::loadMenuEntries()
     
     unsigned int filesize;
     AssetsManagerLua lua_mgr;
-    const char *lua_file = "lua/menudef.lua";
+    std::string lua_file = m_rootPath + "/lua/menudef.lua";
     
-    char *script = readBinaryFile(lua_file, &filesize);
+    char *script = readBinaryFile(lua_file.c_str(), &filesize);
     
     bool result = lua_mgr.loadScript(script);
     if(result==false )
@@ -299,10 +276,10 @@ bool AssetsManager::loadMenuEntries()
 osg::MatrixTransform* AssetsManager::getEntityModel(EntityType etype) 
 {
     osg::MatrixTransform *model = NULL;
-    if( m_etypeToString.count(etype) >0 ) 
+    if( m_etypeToString.count(etype)  >0 ) 
         model = dynamic_cast<osg::MatrixTransform*>(m_assetList[m_etypeToString[etype]].get());    
     else
-        LOG_WARN("AssetsManager::getEntityModel=> Entity model not found: :%d", etype);
+        LOG_WARN("AssetsManager::getEntityModel=> Entity model not found: :%d\n", etype);
             
     return model;
 }
@@ -313,7 +290,7 @@ osg::MatrixTransform* AssetsManager::getEntityModel(const char* model_name)
     if(m_assetList.count(model_name)>0)
         model = dynamic_cast<osg::MatrixTransform*>(m_assetList[model_name].get());    
     else
-        LOG_WARN("AssetsManager::getEntityModel=> Entity model not found: :%s", model_name);
+        LOG_WARN("AssetsManager::getEntityModel=> Entity model not found: :%s\n", model_name);
     return model;
 }
 
@@ -326,7 +303,7 @@ osg::MatrixTransform* AssetsManager::getWidgetModel(const char* widget_model_nam
     }
     else
     {
-        LOG_WARN("AssetsManager::getWidgetModel=> Widget model not found: :%s",widget_model_name);
+        LOG_WARN("AssetsManager::getWidgetModel=> Widget model not found: :%s\n",widget_model_name);
     }
     return NULL;
 }
@@ -403,10 +380,14 @@ bool AssetsManager::getLevelData(const char *level_file, LevelData *data)
 {
     AssetsManagerLua lua_mgr;
     unsigned int buf_size;
-    const char *script = readBinaryFile(level_file,&buf_size);
+    std::string level_path = m_rootPath + level_file;
+    const char *script = readBinaryFile(level_path.c_str(),&buf_size);
     bool res = lua_mgr.loadScript(script);
     if (res==false)
+    {
+        LOG_ERROR("Level file not loaded: %s\n",level_path.c_str());
         return false;       
+    }
     lua_mgr.loadLevelData("Level", data);
         lua_mgr.close();
         
@@ -418,7 +399,7 @@ std::vector<MenuItem>* AssetsManager::getMenuItems(const char* menu_name)
     if(m_menuEntries.count(menu_name) > 0)
         return m_menuEntries[menu_name];
     else
-        LOG_ERROR("AssetsManager::getMenuEntries=> Menu items not found form menu: %s", menu_name);
+        LOG_ERROR("AssetsManager::getMenuEntries=> Menu items not found form menu: %s\n", menu_name);
     return NULL;
 }
 
