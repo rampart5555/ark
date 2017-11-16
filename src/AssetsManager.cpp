@@ -73,6 +73,7 @@ extern char* readBinaryFile(const char* filename, unsigned int *filesize);
 AssetsManager::AssetsManager()
 {    
     m_rootPath = "/home/dancioata/g_dev/ark/assets/";    
+
     m_etypeToString.insert(std::make_pair(ENTITY_BRICK, "entity_brick"));
     m_etypeToString.insert(std::make_pair(ENTITY_BALL, "entity_ball"));
     m_etypeToString.insert(std::make_pair(ENTITY_PADDLE, "entity_paddle"));
@@ -367,7 +368,13 @@ void AssetsManager::getEntityProps(const char *file_name, EntityProps *data)
 {
     AssetsManagerLua lua_mgr;
     unsigned int buf_size;
-    const char *script = readBinaryFile(file_name, &buf_size);
+    std::string file_path = m_rootPath + file_name;
+    const char *script = readBinaryFile(file_path.c_str(), &buf_size);
+    if(script==NULL)
+    {
+        LOG_WARN("Invalid entity props file:%s\n",file_path.c_str());
+        return;
+    }
     bool res = lua_mgr.loadScript(script);
     if(res)
     {
