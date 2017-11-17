@@ -5,6 +5,7 @@
 #include "scenes/Simple.h"
 #include "scenes/Particle.h"
 #include "scenes/Alpha.h"
+#include "scenes/Userdata.h"
 //USE_OSGPLUGIN(osg2)
 //USE_SERIALIZER_WRAPPER_LIBRARY(osg)
 //USE_GRAPHICSWINDOW()
@@ -86,7 +87,7 @@ osg::Camera* OsgMain::createOrthoCamera(int width, int height)
 bool OsgMain::init(int x, int y, int width, int height)
 {
     //in StatsHandler.cpp change gupu stats from true to false collectStats("gpu",false);
-    osg::setNotifyLevel(osg::INFO);
+    //osg::setNotifyLevel(osg::INFO);
     m_viewer = new osgViewer::Viewer;
     m_window = m_viewer->setUpViewerAsEmbeddedInWindow(x, y, width, height);
     m_window->getEventQueue()->windowResize(x, y, width, height);
@@ -98,8 +99,9 @@ bool OsgMain::init(int x, int y, int width, int height)
     
     initScene();
     //loadScene("Simple");
-    loadScene("Particle");
+    //loadScene("Particle");
     //loadScene("Alpha");
+    loadScene("Userdata");
     m_viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     m_viewer->addEventHandler(new osgViewer::StatsHandler);  
     m_viewer->addEventHandler(new MouseHandler());  
@@ -198,6 +200,12 @@ void OsgMain::loadScene(const char* scene_name)
         Scene* s = new Alpha();
         s->createScene();
         m_sceneNode->addChild(s->getSceneNode());
+    }
+    else if(strcmp(scene_name,"Userdata")==0)
+    {
+        Scene* s = new Userdata();
+        s->createScene();
+        //m_sceneNode->addChild(s->getSceneNode());
     }
 }
 

@@ -40,7 +40,8 @@ LOCAL_OBJ_FILES:=\
     scenes/Simple.o\
     scenes/Particle.o\
     scenes/Alpha.o\
-    scenes/PSystem.o
+    scenes/PSystem.o\
+    scenes/Userdata.o
     
 
 

@@ -73,8 +73,7 @@ void Simple::createScene()
     ss->setAttributeAndModes(prog, osg::StateAttribute::ON);
     osg::Uniform* texSampler = new osg::Uniform("sampler2D","uSampler");
     ss->addUniform(texSampler);
-    
-    
+        
 }
 
 
