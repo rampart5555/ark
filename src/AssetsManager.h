@@ -21,6 +21,7 @@ class AssetsManager
         osg::ref_ptr<osg::Object> loadAsset(AssetType, const char*);
         //char* readBinaryFile(const char*, unsigned int*);
         osg::Object* loadObject(const char*, const char*);
+        void writeNode(osg::Node&,const char*);
         void addModelAsset(osg::MatrixTransform&);
         osg::MatrixTransform* getEntityModel(EntityType);
         osg::MatrixTransform* getEntityModel(const char*);

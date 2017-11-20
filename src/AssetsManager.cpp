@@ -69,6 +69,7 @@ class FindModel : public osg::NodeVisitor
 };
 
 extern char* readBinaryFile(const char* filename, unsigned int *filesize);
+extern bool writeFile(const char *filename, const char *buf, unsigned int filesize);
 
 AssetsManager::AssetsManager()
 {    
@@ -173,6 +174,27 @@ bool AssetsManager::loadAssets()
     return true;
 }
 
+void AssetsManager::writeNode(osg::Node& node, const char *file_path)
+{
+    std::string ext="osgt";
+    osgDB::ReaderWriter *wr = osgDB::Registry::instance()->getReaderWriterForExtension(ext);    
+    if(wr==NULL)
+    {
+        LOG_WARN("AssetsManager::writeObject=> Invalid plugin for extension %s\n",ext.c_str());
+        return;
+    }
+    LOG_INFO("AssetsManager::writeObject=> name: %s\n", file_path);
+    std::stringstream ss;
+    //wr->writeNode(node, "levels.osgt");        
+    wr->writeNode(node, ss);        
+    ss.seekg(0, std::ios::end);
+    unsigned int buf_len = ss.tellg();
+    printf("%d\n", buf_len);
+    // ss.seekg(0, std::ios::beg);    
+    // printf("%s\n", ss.str().c_str());
+    // writeFile(file_path, ss.str().c_str(), buf_len);
+}
+
 osg::Object* AssetsManager::loadObject(const char *filename, const char *ext)
 {
     char *buf = NULL;
@@ -192,7 +214,7 @@ osg::Object* AssetsManager::loadObject(const char *filename, const char *ext)
         LOG_WARN("AssetsManager::loadObject=> Invalid plugin for extension %s\n",ext);
         return NULL;
     }
-    osgDB::ReaderWriter::ReadResult rr = wr->readObject(ss);        
+    osgDB::ReaderWriter::ReadResult rr = wr->readObject(ss);
     
     if (rr.validObject())
     {         

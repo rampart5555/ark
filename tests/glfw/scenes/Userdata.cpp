@@ -80,24 +80,30 @@ class FindLevel : public osg::NodeVisitor
 
 static void write_user_data()
 {
-    osg::Group *episode=new osg::Group();
-    episode->setUserValue("ep_id",1);
-    episode->setUserValue("ep_name",std::string("Episode_1"));
-    episode->setUserValue("ep_unlocked",false);
-    for(int i=0;i<15;i++)
+    osg::Group *root = new osg::Group();
+    for(int i=0;i<3;i++)
     {
-        char buf[10];
-        osg::Group *level = new osg::Group();
-        level->setUserValue("lvl_id",i);
-        level->setUserValue("lvl_unlocked",false);
-        level->setUserValue("lvl_score",0);
-        std::string lvl_data = "levels/level_";
-        sprintf(buf,"%02d",i+1);
-        lvl_data += buf;
-        lvl_data+=".lua";
-        level->setUserValue("lvl_data",lvl_data);
-        episode->addChild(level);
-    }
+        std::string ep_name="Episode_"+i;
+        osg::Group *episode = new osg::Group();
+        episode->setUserValue("ep_id",i);
+        episode->setUserValue("ep_name",ep_name);
+        episode->setUserValue("ep_unlocked",false);
+        for(int j=0;j<15;j++)
+        {
+            char buf[10];
+            osg::Group *level = new osg::Group();
+            level->setUserValue("lvl_id",i);
+            level->setUserValue("lvl_unlocked",false);
+            level->setUserValue("lvl_score",0);
+            std::string lvl_data = "levels/level_";
+            sprintf(buf,"%02d",i+1);
+            lvl_data += buf;
+            lvl_data+=".lua";
+            level->setUserValue("lvl_data",lvl_data);
+            episode->addChild(level);
+        }
+        root->addChild(episode);
+    }    
     osgDB::writeNodeFile(*episode, "levels.osgt");
 }
 

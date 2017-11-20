@@ -20,3 +20,14 @@ char* readBinaryFile(const char *filename, unsigned int *file_len)
     *file_len = length;
     return buffer;
 }    
+
+bool writeFile(const char *filename, const char *buf, unsigned int file_len)
+{
+    FILE *fp;
+    fp = fopen(filename, "wb");
+    if(fp == NULL)
+       return false;    
+    fwrite(buf, file_len, 1, fp);
+    fclose(fp);
+    return true;
+}
