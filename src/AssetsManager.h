@@ -18,6 +18,7 @@ class AssetsManager
         AssetsManager();
         static AssetsManager& instance();
         void setRootPath(const char*);
+        std::string& getRootPath();
         osg::ref_ptr<osg::Object> loadAsset(AssetType, const char*);
         //char* readBinaryFile(const char*, unsigned int*);
         osg::Object* loadObject(const char*, const char*);

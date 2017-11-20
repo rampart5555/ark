@@ -72,7 +72,7 @@ extern char* readBinaryFile(const char* filename, unsigned int *filesize);
 extern bool writeFile(const char *filename, const char *buf, unsigned int filesize);
 
 AssetsManager::AssetsManager()
-{    
+{        
     m_rootPath = "/home/dancioata/g_dev/ark/assets/";    
 
     m_etypeToString.insert(std::make_pair(ENTITY_BRICK, "entity_brick"));
@@ -93,6 +93,11 @@ AssetsManager& AssetsManager::instance()
 {
     static AssetsManager instance;
     return instance; 
+}
+
+std::string& AssetsManager::getRootPath()
+{
+    return m_rootPath;
 }
 
 void AssetsManager::setRootPath(const char *path)
@@ -130,9 +135,10 @@ bool AssetsManager::loadAssets()
             osg::Object *obj = loadObject(item->m_path1.c_str(),"osgt");
             osg::Node *node = dynamic_cast<osg::Node*>(obj);
             if(node != NULL)
-            {                
+            {                   
                 FindModel fm;
-                node->accept(fm);                  
+                node->accept(fm);
+                
             }
         }
         else if(item->m_type == "ttf")
@@ -184,15 +190,17 @@ void AssetsManager::writeNode(osg::Node& node, const char *file_path)
         return;
     }
     LOG_INFO("AssetsManager::writeObject=> name: %s\n", file_path);
+
+    osg::ref_ptr<osgDB::Options> local_opt = new osgDB::Options;    
+    local_opt->setPluginStringData( "fileType", "Ascii" );
     std::stringstream ss;
-    //wr->writeNode(node, "levels.osgt");        
-    wr->writeNode(node, ss);        
+        
+    wr->writeNode(node, ss, local_opt);        
     ss.seekg(0, std::ios::end);
-    unsigned int buf_len = ss.tellg();
-    printf("%d\n", buf_len);
-    // ss.seekg(0, std::ios::beg);    
-    // printf("%s\n", ss.str().c_str());
-    // writeFile(file_path, ss.str().c_str(), buf_len);
+    unsigned int buf_len = ss.tellg();    
+    ss.seekg(0, std::ios::beg);    
+    
+    writeFile(file_path, ss.str().c_str(), buf_len);
 }
 
 osg::Object* AssetsManager::loadObject(const char *filename, const char *ext)
@@ -265,13 +273,12 @@ bool AssetsManager::loadTextures()
 }
 
 bool AssetsManager::loadMenuEntries()
-{
-    LOG_INFO("%s", "AssetsManager::loadMenuEntries()");
-    
+{        
     unsigned int filesize;
     AssetsManagerLua lua_mgr;
     std::string lua_file = m_rootPath + "/lua/menudef.lua";
-    
+    LOG_INFO("AssetsManager::loadMenuEntries()=> %s\n",lua_file.c_str());
+
     char *script = readBinaryFile(lua_file.c_str(), &filesize);
     
     bool result = lua_mgr.loadScript(script);

@@ -1,34 +1,37 @@
 #include <stdio.h>
 #include <osgDB/ReadFile>
 #include <osgDB/WriteFile>
-
 #include <osg/io_utils>
 #include <osg/UserDataContainer>
+
 #include <osg/ValueObject>
 #include "SceneData.h"
 #include "AssetsManager.h"
+#include "Logging.h"
 
 static void build_scene_data(const char *osgt_file)
 {
+    char buf[20];
     osg::Group *root = new osg::Group();
     for(int i=0;i<EPISODE_NR;i++)
     {
-        std::string ep_name="Episode_"+i;
+        std::string ep_name="Episode_";
         osg::Group *episode = new osg::Group();
         episode->setUserValue("ep_id",i);
+        sprintf(buf,"%d",i+1);
+        ep_name += buf;
         episode->setUserValue("ep_name",ep_name);
         episode->setUserValue("ep_unlocked",false);
         for(int j=0;j<SCENE_NR;j++)
-        {
-            char buf[10];
+        {            
             osg::Group *level = new osg::Group();
             level->setUserValue("lvl_id",i);
             level->setUserValue("lvl_unlocked",false);
             level->setUserValue("lvl_score",0);
-            std::string lvl_data = "levels/level_";
-            sprintf(buf,"%02d",i+1);
+            std::string lvl_data = "levels/Level_";
+            sprintf(buf,"%02d",j+1);
             lvl_data += buf;
-            lvl_data+=".lua";
+            lvl_data +=".lua";
             level->setUserValue("lvl_data",lvl_data);
             episode->addChild(level);
         }
@@ -56,19 +59,20 @@ static void dump_level_info(LevelInfo li)
 
 SceneLoader::SceneLoader()
 {
-    m_osgtFile="../assets/models/levels.osgt";
-    build_scene_data(m_osgtFile.c_str());
+    m_osgtFile=AssetsManager::instance().getRootPath()+"models/levels.osgt";    
+    //build_scene_data(m_osgtFile.c_str());
 }
 
 void SceneLoader::writeSceneData()
 {
-    osgDB::writeNodeFile(*m_rootGroup, m_osgtFile.c_str());
+    AssetsManager::instance().writeNode(*m_rootGroup, m_osgtFile.c_str());    
 }
 
 void SceneLoader::readSceneData()
 {
-    osg::Node *node = osgDB::readNodeFile(m_osgtFile.c_str());
-    m_rootGroup=node->asGroup();
+    LOG_INFO("SceneLoader::readSceneData=> %s\n",m_osgtFile.c_str());
+    osg::Object *obj = AssetsManager::instance().loadObject(m_osgtFile.c_str(),"osgt");
+    m_rootGroup = dynamic_cast<osg::Group*>(obj);    
 }
 
 void SceneLoader::dumpSceneData()
