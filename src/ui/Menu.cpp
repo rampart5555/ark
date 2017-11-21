@@ -1,9 +1,10 @@
+#include <osgAnimation/EaseMotion>
 #include "Menu.h"
 #include "MenuManager.h"
 #include "scene/SceneData.h"
 #include "AssetsManager.h"
-#include <osgAnimation/EaseMotion>
 #include "Animation.h"
+
 
 /* Menu */
 Menu::Menu(MenuManager *mm)
@@ -117,6 +118,31 @@ void MenuEpisode::loadShaders()
     
 }
 
+Widget* MenuEpisode::addWidget(const char* widget_model, const char* label, float x, float y)
+{    
+    Widget *w = new Widget();
+    w->setNode(AssetsManager::instance().getWidgetModel(widget_model));
+    w->setLabel(label);
+    w->setPosition(x, y, -0.3);        
+    m_transform->addChild(w->getNode());    
+    return w;
+}
+
+void MenuEpisode::loadWidgets()
+{
+    EpisodeInfo ep_info;
+    bool res;
+    res = SceneLoader::instance().getEpisodeInfo(m_episodeId, ep_info);
+    if(res==false)    
+        return;
+    Widget *w;
+    w = addWidget("widget_title_1", ep_info.ep_name.c_str(), 0.0, 3.0);
+    w = addWidget("widget_button_1", "Prev", -2.0, -4.0);
+    w->setCallback(MenuLevelSelect_prev_episode);
+    w = addWidget("widget_button_1", "Next",  2.0, -4.0);
+    w->setCallback(MenuLevelSelect_next_episode); 
+}
+#if 0
 void MenuEpisode::loadWidgets()
 {        
     EpisodeData *ep = &Episode[m_episodeId];
@@ -186,7 +212,7 @@ void MenuEpisode::loadWidgets()
     m_transform->addChild(next->getNode());
 
 }
-
+#endif
 void MenuEpisode::createMenu()    
 {
     if( (m_episodeId >= 0) && (m_episodeId <= 2) )

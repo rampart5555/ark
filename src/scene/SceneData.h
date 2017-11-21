@@ -26,16 +26,28 @@ typedef struct
 
 class SceneLoader
 {
-    public:            
-        SceneLoader();
+    public:
+        static SceneLoader& instance()
+        {
+            static SceneLoader instance;
+            return instance;
+        }                         
         ~SceneLoader();
         void writeSceneData();
         void readSceneData();    
         void dumpSceneData();
-        void getLevelInfo(int , int, LevelInfo&);        
+        bool getLevelInfo(int , int, LevelInfo&);
+        bool getEpisodeInfo(int, EpisodeInfo&);
+        int getEpNr()  { return m_epNr; }
+        int getLvlNr() { return m_lvlNr; }
+
     private:
+        SceneLoader();
         osg::Group *m_rootGroup;
-        std::string m_osgtFile;    
+        std::string m_osgtFile;
+        int m_epNr; 
+        int m_lvlNr;
+
 };
 
 /* old */

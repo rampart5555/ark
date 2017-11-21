@@ -59,8 +59,19 @@ static void dump_level_info(LevelInfo li)
 
 SceneLoader::SceneLoader()
 {
-    m_osgtFile=AssetsManager::instance().getRootPath()+"models/levels.osgt";    
+    m_osgtFile=AssetsManager::instance().getRootPath() + "models/levels.osgt";    
+    m_epNr = 3; 
+    m_lvlNr = 15; //levels per episode
     //build_scene_data(m_osgtFile.c_str());
+    if(m_rootGroup==NULL)
+    {        
+        readSceneData();
+    }
+}
+
+SceneLoader::~SceneLoader()
+{
+
 }
 
 void SceneLoader::writeSceneData()
@@ -109,9 +120,54 @@ void SceneLoader::dumpSceneData()
     }
 }
 
-void SceneLoader::getLevelInfo(int ep_id,int lvl_id, LevelInfo& linfo)
+bool SceneLoader::getLevelInfo(int ep_id, int lvl_id, LevelInfo& lvl_info)
 {
+    unsigned int i,j;
+    if(m_rootGroup != NULL)
+    {
+        for(i=0;i<m_rootGroup->getNumChildren();i++)
+        {
+            osg::Group *ep_group = dynamic_cast<osg::Group*>(m_rootGroup->getChild(i));
+            int l_ep_id;
+            bool ep_res = ep_group->getUserValue("ep_id",l_ep_id);
+            if( (ep_res==true) && (ep_id == l_ep_id) )
+            {
+                for(j=0; j<ep_group->getNumChildren(); j++)
+                {
+                    osg::Node *lvl_group = dynamic_cast<osg::Group*>(ep_group->getChild(j));
+                    bool lvl_res = lvl_group->getUserValue("lvl_id", lvl_info.lvl_id);
+                    if( (lvl_res==true) && (lvl_id == lvl_info.lvl_id) )
+                    {
+                        lvl_group->getUserValue("lvl_unlocked",lvl_info.lvl_unlocked);
+                        lvl_group->getUserValue("lvl_score",lvl_info.lvl_score);
+                        lvl_group->getUserValue("lvl_data",lvl_info.lvl_data);
+                        return true;
+                    }                         
+                }
+            }
+        }
+    }
+    return false;
+}
 
+bool SceneLoader::getEpisodeInfo(int ep_id, EpisodeInfo& ep_info)
+{
+    unsigned int i;
+    if(m_rootGroup != NULL)
+    {
+        for(i=0;i<m_rootGroup->getNumChildren();i++)
+        {
+            osg::Group *ep_group = dynamic_cast<osg::Group*>(m_rootGroup->getChild(i));
+            bool ep_res = ep_group->getUserValue("ep_id",ep_info.ep_id);
+            if((ep_res==true) && (ep_id == ep_info.ep_id) )
+            {
+                ep_group->getUserValue("ep_name", ep_info.ep_name);
+                ep_group->getUserValue("ep_unlocked", ep_info.ep_unlocked);
+                return true;                               
+            }            
+        }
+    }
+    return false;
 }
 
 EpisodeData Episode[EPISODE_NR]={
