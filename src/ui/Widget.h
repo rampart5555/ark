@@ -43,9 +43,11 @@ class LevelSelectButton : public Widget
     public:
         LevelSelectButton();
         virtual void runCallback(void*);
-        void setSceneData(SceneData *data); 
+        void setSceneData(int, int); 
     private:
-        SceneData *m_data;
+        int m_epId;
+        int m_lvlId;
+        
 };
 
 #endif

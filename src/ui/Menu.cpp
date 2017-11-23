@@ -4,7 +4,7 @@
 #include "scene/SceneData.h"
 #include "AssetsManager.h"
 #include "Animation.h"
-
+#include "Logging.h"
 
 /* Menu */
 Menu::Menu(MenuManager *mm)
@@ -67,6 +67,17 @@ void Menu::animationComplete()
     }
 }
 
+Widget* Menu::addWidget(const char* widget_model, const char* label, float x, float y)
+{    
+    Widget *w = new Widget();
+    w->setNode(AssetsManager::instance().getWidgetModel(widget_model));
+    w->setLabel(label);
+    w->setPosition(x, y, -0.3);        
+    m_transform->addChild(w->getNode());    
+    return w;
+}
+
+
 /// Menu Start ///
 MenuStart::MenuStart(MenuManager *mm):Menu(mm)
 {
@@ -120,7 +131,7 @@ void MenuEpisode::loadShaders()
 
 Widget* MenuEpisode::addWidget(const char* widget_model, const char* label, float x, float y)
 {    
-    Widget *w = new Widget();
+    LevelSelectButton *w = new LevelSelectButton();
     w->setNode(AssetsManager::instance().getWidgetModel(widget_model));
     w->setLabel(label);
     w->setPosition(x, y, -0.3);        
@@ -131,88 +142,41 @@ Widget* MenuEpisode::addWidget(const char* widget_model, const char* label, floa
 void MenuEpisode::loadWidgets()
 {
     EpisodeInfo ep_info;
+    LevelInfo   lvl_info;
     bool res;
     res = SceneLoader::instance().getEpisodeInfo(m_episodeId, ep_info);
     if(res==false)    
         return;
     Widget *w;
-    w = addWidget("widget_title_1", ep_info.ep_name.c_str(), 0.0, 3.0);
-    w = addWidget("widget_button_1", "Prev", -2.0, -4.0);
+    w = Menu::addWidget("widget_title_1", ep_info.ep_name.c_str(), 0.0, 3.0);
+    w = Menu::addWidget("widget_button_1", "Prev", -2.0, -4.0);
     w->setCallback(MenuLevelSelect_prev_episode);
-    w = addWidget("widget_button_1", "Next",  2.0, -4.0);
+    w = Menu::addWidget("widget_button_1", "Next",  2.0, -4.0);
     w->setCallback(MenuLevelSelect_next_episode); 
-}
-#if 0
-void MenuEpisode::loadWidgets()
-{        
-    EpisodeData *ep = &Episode[m_episodeId];
-    Widget *title = new Widget();
-    title->setNode(AssetsManager::instance().getWidgetModel("level_select_title"));
-    title->setLabel(ep->m_name);
-    title->setPosition(0.0, 3.0, -0.3);
-        
-    m_transform->addChild(title->getNode());    
-    
-    /*level select buttons */
-    osg::MatrixTransform *but_node = AssetsManager::instance().getWidgetModel("widget_button_1");
-    if(but_node == NULL)
+    int i,j;
+    float pos_x,pos_y;
+    int level_nr=0;    
+    for(j=0; j<3; j++)
     {
-        printf("ERROR: Invalid menu assets\n");
-        return;
-    }
-    /* buttons */
-    osg::Geode *geode = dynamic_cast <osg::Geode*>(but_node->getChild(0));
-    osg::BoundingBox bb = geode->getBoundingBox();
-    
-    float but_width = bb.xMax() - bb.xMin();    
-    float gap = (m_bounds.xMax - m_bounds.xMin -5*but_width)/(5+1);
-    /* first button position*/
-    float pos_first = m_bounds.xMin + gap + but_width/2;    
-    float y = 0.5;
-    int scene_index = 0;
-    
-    for(int j=0;j<3;j++)
-    {
-        float pos_y = y - j*(gap + but_width);        
-        LevelSelectButton *but = new LevelSelectButton();
-        but->setNode(but_node);            
-        //but->setLabel("12");
-        but->setSceneData(&ep->m_scene[scene_index]);
-        m_transform->addChild(but->getNode());    
-        but->setPosition(pos_first, pos_y, -0.3);
-        but->setCallback(MenuLevelSelect_button_level_push);
-        scene_index++;
-        
-        for(int i=1;i<5;i++)
+        pos_y = (1-j)*1.3;
+        for(i=0; i<5; i++)
         {
-            but = new LevelSelectButton();
-            but->setNode(but_node);
-            float pos_x = pos_first + i*(gap + but_width);
-            //printf("pos_x:%f\n",pos_x);            
-            //but->setLabel("12");
-            but->setSceneData(&ep->m_scene[scene_index]);
-            m_transform->addChild(but->getNode());            
-            but->setPosition(pos_x, pos_y, -0.3);
-            but->setCallback(MenuLevelSelect_button_level_push);
-            scene_index++;
-        }        
+            pos_x = (i-2)*1.3;
+            LevelSelectButton *b = 
+                dynamic_cast<LevelSelectButton*>(addWidget("widget_button_1","1",pos_x, pos_y));
+            res = SceneLoader::instance().getLevelInfo(m_episodeId, level_nr, lvl_info);
+            if(res==false)    
+            {
+                LOG_ERROR("Level no found for episode: %d level :%d\n",m_episodeId, lvl_info.lvl_id);
+                return;
+            }
+            b->setSceneData(m_episodeId, lvl_info.lvl_id);
+            b->setCallback(MenuLevelSelect_button_level_push);
+            level_nr++;
+        }
     }
-    Widget *prev = new Widget();    
-    prev->setNode(but_node);    
-    prev->setLabel("Prev"); 
-    prev->setPosition(-2.0, -4.0, -0.3);   
-    m_transform->addChild(prev->getNode());
-    prev->setCallback(MenuLevelSelect_prev_episode);
-       
-    Widget *next = new Widget();
-    next->setNode(but_node);
-    next->setLabel("Next"); 
-    next->setPosition(2.0, -4.0, -0.3);   
-    next->setCallback(MenuLevelSelect_next_episode);
-    m_transform->addChild(next->getNode());
-
 }
-#endif
+
 void MenuEpisode::createMenu()    
 {
     if( (m_episodeId >= 0) && (m_episodeId <= 2) )

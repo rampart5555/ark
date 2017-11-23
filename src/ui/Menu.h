@@ -36,6 +36,7 @@ class Menu
         virtual void hide(EngineCallback, void*);
         virtual void animationComplete();
         virtual void setEnabled(bool);
+        virtual Widget* addWidget(const char*, const char*, float, float);
     protected:
         osg::MatrixTransform *m_transform;
         MenuBounds m_bounds;
@@ -49,7 +50,7 @@ class MenuEpisode: public Menu
     public:
         MenuEpisode(MenuManager*);
         virtual void createMenu();
-        virtual Widget* addWidget(const char*, const char*, float , float );        
+        virtual Widget* addWidget(const char*, const char*, float, float );        
         void setEpisodeId(int);
         int  getEpisodeId();
         void loadShaders();
@@ -88,9 +89,7 @@ class MenuLevelComplete : public Menu
 {
     public:
         MenuLevelComplete(MenuManager*);
-        virtual void createMenu();
-    
-        
+        virtual void createMenu();            
 };
 
 class MenuLevelFailed : public Menu

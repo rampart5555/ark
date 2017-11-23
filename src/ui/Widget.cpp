@@ -138,35 +138,45 @@ void Widget::setUniform(osg::Uniform *uniform)
 /* level selected button */
 LevelSelectButton::LevelSelectButton():Widget()
 {
-    m_data = NULL;
+    m_epId = -1;   
+    m_lvlId = -1;   
 }
 
-void LevelSelectButton::setSceneData(SceneData *data)
-{
-    m_data = data; 
-    if(m_data==NULL)
+void LevelSelectButton::setSceneData(int ep_id, int lvl_id)
+{    
+    m_epId = ep_id;
+    m_lvlId = lvl_id;
+    LevelInfo li;
+    bool res = SceneLoader::instance().getLevelInfo(m_epId, m_lvlId, li);
+    if(res==false)
     {
-        printf("NULL level data\n");
+        LOG_ERROR("Level not found for episode:%d level:%d\n", m_epId, m_lvlId);
         return;
     }
-   
-    if(m_data->m_unlocked==false)
+    LOG_DEBUG("Level set for lvlid:%d episode:%d level:%d unlocked:%d\n", lvl_id, m_epId, li.lvl_id,li.lvl_unlocked);
+    if(li.lvl_unlocked == false)    
         setLabel("\uE98F");
     else
     {
         char buf[10];
-        sprintf(buf,"%d",m_data->m_id);
-        setLabel(buf);
-        printf("buffer:%d %s\n",m_data->m_id,buf);
+        sprintf(buf, "%d", li.lvl_id+1);
+        setLabel(buf);        
     }
 }
 
 void LevelSelectButton::runCallback(void *args)
 {
-    printf("Level data: id:%d, map: %s\n",m_data->m_id,m_data->m_mapFile);
-    if(m_callback!=NULL)
-        m_callback(m_data);
-    //EngineManager::instance().handleEvent(SCENE_LOAD_LEVEL, m_data);
+    LevelInfo li;    
+    bool res = SceneLoader::instance().getLevelInfo(m_epId, m_lvlId, li);
+    if(res==false)
+    {
+        LOG_ERROR("Level not found for episode:%d level:%d\n", m_epId, m_lvlId);
+        return;
+    }
+    //LOG_INFO("Level data: ep_id: %d lvl_id: %d  map: %s\n", m_epId, m_lvlId, li.lvl_data.c_str());
+
+    if(m_callback != NULL)
+        m_callback(&li);    
 }
 
 

@@ -40,7 +40,8 @@ osg::Group {
                 }
                 osg::BoolValueObject {
                   UniqueID 10 
-                  Name "lvl_unlocked" 
+                  Name "lvl_unlocked"
+                  Value TRUE  
                 }
                 osg::IntValueObject {
                   UniqueID 11 
@@ -64,6 +65,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 15 
                   Name "lvl_id" 
+                  Value 1 
                 }
                 osg::BoolValueObject {
                   UniqueID 16 
@@ -91,6 +93,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 21 
                   Name "lvl_id" 
+                  Value 2 
                 }
                 osg::BoolValueObject {
                   UniqueID 22 
@@ -118,6 +121,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 27 
                   Name "lvl_id" 
+                  Value 3 
                 }
                 osg::BoolValueObject {
                   UniqueID 28 
@@ -145,6 +149,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 33 
                   Name "lvl_id" 
+                  Value 4 
                 }
                 osg::BoolValueObject {
                   UniqueID 34 
@@ -172,6 +177,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 39 
                   Name "lvl_id" 
+                  Value 5 
                 }
                 osg::BoolValueObject {
                   UniqueID 40 
@@ -199,6 +205,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 45 
                   Name "lvl_id" 
+                  Value 6 
                 }
                 osg::BoolValueObject {
                   UniqueID 46 
@@ -226,6 +233,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 51 
                   Name "lvl_id" 
+                  Value 7 
                 }
                 osg::BoolValueObject {
                   UniqueID 52 
@@ -253,6 +261,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 57 
                   Name "lvl_id" 
+                  Value 8 
                 }
                 osg::BoolValueObject {
                   UniqueID 58 
@@ -280,6 +289,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 63 
                   Name "lvl_id" 
+                  Value 9 
                 }
                 osg::BoolValueObject {
                   UniqueID 64 
@@ -307,6 +317,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 69 
                   Name "lvl_id" 
+                  Value 10 
                 }
                 osg::BoolValueObject {
                   UniqueID 70 
@@ -334,6 +345,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 75 
                   Name "lvl_id" 
+                  Value 11 
                 }
                 osg::BoolValueObject {
                   UniqueID 76 
@@ -361,6 +373,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 81 
                   Name "lvl_id" 
+                  Value 12 
                 }
                 osg::BoolValueObject {
                   UniqueID 82 
@@ -388,6 +401,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 87 
                   Name "lvl_id" 
+                  Value 13 
                 }
                 osg::BoolValueObject {
                   UniqueID 88 
@@ -415,6 +429,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 93 
                   Name "lvl_id" 
+                  Value 14 
                 }
                 osg::BoolValueObject {
                   UniqueID 94 
@@ -468,7 +483,6 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 104 
                   Name "lvl_id" 
-                  Value 1 
                 }
                 osg::BoolValueObject {
                   UniqueID 105 
@@ -524,7 +538,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 116 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 2 
                 }
                 osg::BoolValueObject {
                   UniqueID 117 
@@ -552,7 +566,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 122 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 3 
                 }
                 osg::BoolValueObject {
                   UniqueID 123 
@@ -580,7 +594,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 128 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 4 
                 }
                 osg::BoolValueObject {
                   UniqueID 129 
@@ -608,7 +622,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 134 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 5 
                 }
                 osg::BoolValueObject {
                   UniqueID 135 
@@ -636,7 +650,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 140 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 6 
                 }
                 osg::BoolValueObject {
                   UniqueID 141 
@@ -664,7 +678,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 146 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 7 
                 }
                 osg::BoolValueObject {
                   UniqueID 147 
@@ -692,7 +706,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 152 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 8 
                 }
                 osg::BoolValueObject {
                   UniqueID 153 
@@ -720,7 +734,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 158 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 9 
                 }
                 osg::BoolValueObject {
                   UniqueID 159 
@@ -748,7 +762,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 164 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 10 
                 }
                 osg::BoolValueObject {
                   UniqueID 165 
@@ -776,7 +790,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 170 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 11 
                 }
                 osg::BoolValueObject {
                   UniqueID 171 
@@ -804,7 +818,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 176 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 12 
                 }
                 osg::BoolValueObject {
                   UniqueID 177 
@@ -832,7 +846,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 182 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 13 
                 }
                 osg::BoolValueObject {
                   UniqueID 183 
@@ -860,7 +874,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 188 
                   Name "lvl_id" 
-                  Value 1 
+                  Value 14 
                 }
                 osg::BoolValueObject {
                   UniqueID 189 
@@ -914,7 +928,6 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 199 
                   Name "lvl_id" 
-                  Value 2 
                 }
                 osg::BoolValueObject {
                   UniqueID 200 
@@ -942,7 +955,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 205 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 1 
                 }
                 osg::BoolValueObject {
                   UniqueID 206 
@@ -998,7 +1011,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 217 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 3 
                 }
                 osg::BoolValueObject {
                   UniqueID 218 
@@ -1026,7 +1039,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 223 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 4 
                 }
                 osg::BoolValueObject {
                   UniqueID 224 
@@ -1054,7 +1067,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 229 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 5 
                 }
                 osg::BoolValueObject {
                   UniqueID 230 
@@ -1082,7 +1095,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 235 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 6 
                 }
                 osg::BoolValueObject {
                   UniqueID 236 
@@ -1110,7 +1123,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 241 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 7 
                 }
                 osg::BoolValueObject {
                   UniqueID 242 
@@ -1138,7 +1151,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 247 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 8 
                 }
                 osg::BoolValueObject {
                   UniqueID 248 
@@ -1166,7 +1179,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 253 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 9 
                 }
                 osg::BoolValueObject {
                   UniqueID 254 
@@ -1194,7 +1207,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 259 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 10 
                 }
                 osg::BoolValueObject {
                   UniqueID 260 
@@ -1222,7 +1235,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 265 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 11 
                 }
                 osg::BoolValueObject {
                   UniqueID 266 
@@ -1250,7 +1263,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 271 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 12 
                 }
                 osg::BoolValueObject {
                   UniqueID 272 
@@ -1278,7 +1291,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 277 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 13 
                 }
                 osg::BoolValueObject {
                   UniqueID 278 
@@ -1306,7 +1319,7 @@ osg::Group {
                 osg::IntValueObject {
                   UniqueID 283 
                   Name "lvl_id" 
-                  Value 2 
+                  Value 14 
                 }
                 osg::BoolValueObject {
                   UniqueID 284 
