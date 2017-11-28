@@ -18,6 +18,7 @@ typedef struct
 typedef struct 
 {
     int lvl_id;
+    int lvl_ep_id;
     bool lvl_unlocked;
     int lvl_score;
     std::string lvl_data;
@@ -40,13 +41,17 @@ class SceneLoader
         bool getEpisodeInfo(int, EpisodeInfo&);
         int getEpNr()  { return m_epNr; }
         int getLvlNr() { return m_lvlNr; }
-
+        void setCurrentScene(int ep_id, int lvl_id);
+        void getCurrentScene(int& ep_id, int& lvl_id);
+        bool unlockNextLevel();
     private:
         SceneLoader();
         osg::Group *m_rootGroup;
         std::string m_osgtFile;
         int m_epNr; 
         int m_lvlNr;
+        int m_currentEp;
+        int m_currentLvl;
 
 };
 

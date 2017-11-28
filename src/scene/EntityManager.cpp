@@ -55,6 +55,7 @@ EntityManager::EntityManager()
     m_sceneNode = new osg::MatrixTransform();
     m_paddle = NULL;
     m_entitiesNum = 0;
+    m_brickNumber = 0;
     
 }
 
@@ -160,7 +161,11 @@ void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
         if(entity->getType() == ENTITY_PADDLE)
             m_paddle = entity->asEntityPaddle();
         else if((entity->getType() == ENTITY_BRICK)||(entity->getType() == ENTITY_POWERUP))
+        {
             m_entitiesNum++;     
+            if( entity->getType() == ENTITY_BRICK )
+                m_brickNumber++;
+        }
         /* enable physics for spawned entities */       
         if(m_physicsActive == true)
             entity->enablePhysics();
@@ -279,6 +284,7 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
     if(entity->getType() == ENTITY_BRICK)
     {
         m_entitiesNum--;
+        m_brickNumber--;
         // update score   
         int score =  entity->getValue();        
         MenuSceneHud_update_score(&score);
@@ -310,6 +316,7 @@ void EntityManager::clear()
     }    
     m_entityList.clear();
     m_entitiesNum = 0;
+    m_brickNumber = 0;
 }
 
 void EntityManager::update(float passedTime)
@@ -331,7 +338,7 @@ void EntityManager::update(float passedTime)
             
         }
     }
-    if(m_entitiesNum <= 0)
+    if(m_brickNumber <= 0)
     {        
         levelComplete();
     }

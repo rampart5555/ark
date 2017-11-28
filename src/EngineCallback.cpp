@@ -176,7 +176,9 @@ void MenuLevelFailed_button_restart_push(void* args)
 void Scene_load_level(void *args)
 {
     LevelInfo *sdata = static_cast<LevelInfo*>(args);    
-    Scene::instance().loadScene(sdata->lvl_data.c_str());    
+    Scene::instance().loadScene(sdata->lvl_data.c_str());
+    SceneLoader::instance().setCurrentScene(sdata->lvl_ep_id,sdata->lvl_id);
+
 }
 
 void Scene_start_physics(void *args)
@@ -209,6 +211,7 @@ void Scene_level_complete(void *args)
     LOG_INFO("%s","Scene_level_complete\n");
     MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();
     msh->hide(MenuLevelComplete_show, args);
+    SceneLoader::instance().unlockNextLevel();
 }
 
 

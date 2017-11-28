@@ -69,6 +69,8 @@ SceneLoader::SceneLoader()
     {        
         readSceneData();
     }
+    m_currentEp  = -1;
+    m_currentLvl = -1;
     //build_scene_data(m_osgtFile.c_str());
 }
 
@@ -142,6 +144,8 @@ bool SceneLoader::getLevelInfo(int ep_id, int lvl_id, LevelInfo& lvl_info)
         lvl_group->getUserValue("lvl_unlocked",lvl_info.lvl_unlocked);
         lvl_group->getUserValue("lvl_score",lvl_info.lvl_score);
         lvl_group->getUserValue("lvl_data",lvl_info.lvl_data);  
+        //set episode id for this level
+        lvl_info.lvl_ep_id = ep_id;
         //printf("level info: ep_id: %d,lvl_id:%d\n",ep_id,lvl_id);     
         dump_level_info(lvl_info);
         return true;
@@ -149,8 +153,7 @@ bool SceneLoader::getLevelInfo(int ep_id, int lvl_id, LevelInfo& lvl_info)
     return false;
 }
 bool SceneLoader::getEpisodeInfo(int ep_id, EpisodeInfo& ep_info)
-{
-    unsigned int i;
+{    
     if(m_rootGroup != NULL)
     {
         
@@ -167,4 +170,39 @@ bool SceneLoader::getEpisodeInfo(int ep_id, EpisodeInfo& ep_info)
         
     }
     return false;
+}
+
+void SceneLoader::getCurrentScene(int& ep_id, int& lvl_id)
+{
+    ep_id  = m_currentEp;
+    lvl_id = m_currentLvl;
+}
+
+void SceneLoader::setCurrentScene(int ep_id, int lvl_id)
+{
+    LOG_INFO("Set current scene episode: %d level: %d\n",ep_id,lvl_id);
+    m_currentEp = ep_id ;
+    m_currentLvl = lvl_id;
+}
+
+bool SceneLoader::unlockNextLevel()
+{
+    LOG_INFO("Unlock next level, current scene episode: %d level: %d\n",m_currentEp,m_currentLvl);
+    if(m_currentLvl < m_lvlNr)
+    {
+        osg::Group *ep_group = NULL;
+        osg::Group *lvl_group = NULL;
+        m_currentLvl++;
+
+        ep_group = dynamic_cast<osg::Group*>(m_rootGroup->getChild(m_currentEp));
+        if(ep_group != NULL)        
+            lvl_group = dynamic_cast<osg::Group*>(ep_group->getChild(m_currentLvl));
+        if( (ep_group == NULL)||(lvl_group == NULL) )
+        {
+            LOG_ERROR("Level info not found for ep_id:%d lvl_id:%d\n", m_currentEp, m_currentLvl);        
+            return false;
+        }
+        lvl_group->setUserValue("lvl_unlocked", true );
+    }
+    return true;
 }

@@ -39,6 +39,7 @@ class EntityManager
         osg::MatrixTransform *m_sceneNode;
         EntityPaddle *m_paddle;
         int m_entitiesNum;
+        int m_brickNumber;
         ContactListener *m_contactListener;
         b2MouseJoint *m_mouseJoint;
         b2Body* m_groundBody;
