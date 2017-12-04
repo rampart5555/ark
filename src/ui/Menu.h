@@ -24,6 +24,13 @@ typedef enum
     AnimationHide
 }AnimationType;
 
+typedef enum
+{
+    WidgetTitle=0,
+    WidgetButton,
+    WidgetButtonLevelSelect
+}WidgetType;
+
 class MenuManager;
 
 class Menu
@@ -36,21 +43,22 @@ class Menu
         virtual void hide(EngineCallback, void*);
         virtual void animationComplete();
         virtual void setEnabled(bool);
-        virtual Widget* addWidget(const char*, const char*, float, float);
+        Widget* addWidget(WidgetType, const char*, const char*, float, float);
+
     protected:
         osg::MatrixTransform *m_transform;
         MenuBounds m_bounds;
         MenuManager *m_menuManager;
         osg::Uniform *m_uniform;
         AnimationType m_currentAnimType;
+        std::vector<Widget*> m_widgetList;
 };
 
 class MenuEpisode: public Menu
 {
     public:
         MenuEpisode(MenuManager*);
-        virtual void createMenu();
-        virtual Widget* addWidget(const char*, const char*, float, float );        
+        virtual void createMenu();        
         void setEpisodeId(int);
         int  getEpisodeId();
         void loadShaders();

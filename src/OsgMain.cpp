@@ -4,7 +4,8 @@
 #include "MouseHandler.h"
 #include "ui/MenuManager.h"
 #include "scene/Scene.h"
-#include "scene/SceneData.h"
+
+
 USE_OSGPLUGIN(osg2)
 USE_OSGPLUGIN(jpeg)
 USE_OSGPLUGIN(freetype)
@@ -121,6 +122,7 @@ bool OsgMain::init(int x, int y, int width, int height)
 	cam->setViewMatrixAsLookAt(osg::Vec3(0.0f, 2.0f, -7.0f)*bs.radius(), osg::Vec3(0.0,0.0,0.0),osg::Vec3(0.0f,1.0f,0.0f));	
 	osg::DisplaySettings::instance()->setNumMultiSamples( 4 ); 
     m_viewer->realize();
+
     return true;
 }
 

@@ -6,7 +6,6 @@
 #include <osgText/Text>
 #include <osg/MatrixTransform>
 #include <osg/ref_ptr>
-#include "scene/SceneData.h"
 #include "Config.h"
 #include "EngineCallback.h"
 #include "UIDefs.h"
@@ -26,7 +25,10 @@ class Widget : public osg::Referenced
         float getHeight();
         void setCallback(EngineCallback cb);
         virtual void runCallback(void*);
-    protected:        
+        unsigned int getId();
+
+    protected:
+        unsigned int m_widgetId;        
         osg::MatrixTransform *m_transform;
         osg::MatrixTransform *m_geomNode;
         osg::Geode *m_textGeode;

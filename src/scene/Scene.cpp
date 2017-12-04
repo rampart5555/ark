@@ -1,7 +1,6 @@
 #include <osg/Program>
 #include "AssetsManager.h"
 #include "Scene.h"
-#include "SceneData.h"
 #include "Entity.h"
 #include "EntityBall.h"
 #include "Logging.h"

@@ -73,7 +73,7 @@ extern bool writeFile(const char *filename, const char *buf, unsigned int filesi
 
 AssetsManager::AssetsManager()
 {        
-    m_rootPath = "/home/dancioata/g_dev/ark/assets/";    
+    m_rootPath = "/home/dcioata/g_dev/ark/assets/";    
 
     m_etypeToString.insert(std::make_pair(ENTITY_BRICK, "entity_brick"));
     m_etypeToString.insert(std::make_pair(ENTITY_BALL, "entity_ball"));

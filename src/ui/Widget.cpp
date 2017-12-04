@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include "Widget.h"
 #include "MenuManager.h"
+#include "scene/LevelManager.h"
 #include "Config.h"
 #include "Logging.h"
+
+static unsigned int widget_id=0;
 
 Widget::Widget()
 {
@@ -13,6 +16,8 @@ Widget::Widget()
     m_textGeode = NULL;
     m_callback  = NULL;
     m_transform = NULL;
+
+    m_widgetId = widget_id++;
 }
 
 Widget::Widget(MenuItem item)
@@ -30,10 +35,15 @@ Widget::Widget(MenuItem item)
     setCallback( getCallback(item.m_cb) );
     m_width = item.m_width;
     m_height = item.m_height;
+    m_widgetId = widget_id++;
     printf("name: %s position: %f, %f\n", item.m_name.c_str(), item.m_x, item.m_y);
     
 }
 
+unsigned int Widget::getId()
+{
+    return m_widgetId;
+}
 void Widget::setNode(osg::MatrixTransform *node)
 {
     if(node == NULL)
@@ -146,29 +156,28 @@ void LevelSelectButton::setSceneData(int ep_id, int lvl_id)
 {    
     m_epId = ep_id;
     m_lvlId = lvl_id;
-    LevelInfo li;
-    bool res = SceneLoader::instance().getLevelInfo(m_epId, m_lvlId, li);
-    if(res==false)
+    
+    SceneLevel *lvl = LevelManager::instance().getLevel(m_epId, m_lvlId);
+    if( lvl == NULL)
     {
         LOG_ERROR("Level not found for episode:%d level:%d\n", m_epId, m_lvlId);
         return;
-    }
-    LOG_DEBUG("Level set for lvlid:%d episode:%d level:%d unlocked:%d\n", lvl_id, m_epId, li.lvl_id,li.lvl_unlocked);
-    if(li.lvl_unlocked == false)    
+    }    
+    if(lvl->m_unlocked == false)    
         setLabel("\uE98F");
     else
     {
         char buf[10];
-        sprintf(buf, "%d", li.lvl_id+1);
+        sprintf(buf, "%d", lvl->m_id+1);
         setLabel(buf);        
     }
 }
 
 void LevelSelectButton::runCallback(void *args)
 {
-    LevelInfo li;    
-    bool res = SceneLoader::instance().getLevelInfo(m_epId, m_lvlId, li);
-    if(res==false)
+    SceneLevel *lvl;    
+    lvl = LevelManager::instance().getLevel(m_epId, m_lvlId);
+    if(lvl == NULL)
     {
         LOG_ERROR("Level not found for episode:%d level:%d\n", m_epId, m_lvlId);
         return;
@@ -176,7 +185,7 @@ void LevelSelectButton::runCallback(void *args)
     //LOG_INFO("Level data: ep_id: %d lvl_id: %d  map: %s\n", m_epId, m_lvlId, li.lvl_data.c_str());
 
     if(m_callback != NULL)
-        m_callback(&li);    
+        m_callback(lvl);    
 }
 
 
