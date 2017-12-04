@@ -35,4 +35,6 @@ void Scene_paddle_select(void *args);
 void Scene_paddle_move(void *args);
 void Scene_paddle_unselect(void *args);
 void Scene_level_complete(void *args);
+void Scene_level_complete(void *args);
+void Scene_unlock_next_level(void *args);
 #endif

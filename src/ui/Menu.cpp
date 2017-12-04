@@ -82,6 +82,16 @@ Widget* Menu::addWidget(WidgetType wtype, const char* widget_model, const char* 
     return w;
 }
 
+Widget* Menu::getWidget(unsigned int wid)
+{
+    for(unsigned int i=0;i<m_widgetList.size();i++)
+    {
+        if(m_widgetList[i]->getId() == wid)
+            return m_widgetList[i];
+    }
+    return NULL;
+}
+
 
 /// Menu Start ///
 MenuStart::MenuStart(MenuManager *mm):Menu(mm)
@@ -164,6 +174,8 @@ void MenuEpisode::loadWidgets()
             LevelSelectButton *b = 
                 dynamic_cast<LevelSelectButton*>(addWidget(WidgetButtonLevelSelect,"widget_button_1","1",pos_x, pos_y));
             lvl_info = LevelManager::instance().getLevel(m_episodeId, level_nr);
+            lvl_info->m_widgetId = b->getId();
+
             if(lvl_info == NULL)    
             {
                 LOG_ERROR("Level no found for episode: %d level :%d\n",m_episodeId, level_nr);
@@ -240,6 +252,13 @@ void MenuLevelSelect::hide(EngineCallback cb, void* args)
         m_menuList[i]->hide(NULL, NULL);
     }
     */
+}
+
+MenuEpisode* MenuLevelSelect::getMenuEpisode(unsigned int ep_index)
+{
+    if(ep_index < m_menuList.size())
+        return m_menuList[ep_index];    
+    return NULL;
 }
 
 void MenuLevelSelect::nextEpisode()

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "ui/Menu.h"
 #include "ui/MenuManager.h"
 #include "scene/Scene.h"
@@ -209,10 +210,45 @@ void Scene_paddle_unselect(void *args)
 
 void Scene_level_complete(void *args)
 {
+    
     LOG_INFO("%s","Scene_level_complete\n");
     MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();
-    msh->hide(MenuLevelComplete_show, args);
-    LevelManager::instance().unlockNextLevel();
+    msh->hide(MenuLevelComplete_show, args);    
+    Scene_unlock_next_level(args);
+    
+}
+
+void Scene_unlock_next_level(void *args)
+{
+    unsigned int ep_id, lvl_id;
+    SceneLevel* sl;
+
+    LevelManager::instance().unlockNextLevel(ep_id, lvl_id);    
+    sl = LevelManager::instance().getLevel(ep_id, lvl_id);
+
+    if(sl == NULL)
+    {
+        LOG_ERROR("Level not for for ep:%d lvl: %d\n",ep_id, lvl_id);
+        return;
+    }
+
+    MenuLevelSelect *mls = MenuManager::instance().getMenuLevelSelect();
+    MenuEpisode *me = mls->getMenuEpisode(ep_id);
+
+    if(me==NULL)
+    {
+        LOG_ERROR("Menu Episode not found %d:\n",ep_id);
+        return;
+    }
+    LevelSelectButton *but = dynamic_cast<LevelSelectButton*>(me->getWidget(sl->m_widgetId));
+    if(but==NULL)
+    {
+        LOG_ERROR("Widget not found %d:\n",lvl_id);
+        return;
+    }
+    char buf[10];
+    sprintf(buf, "%d", sl->m_id + 1);
+    but->setLabel(buf);        
 }
 
 

@@ -82,6 +82,11 @@ SceneLevel* LevelManager::getLevel(unsigned int ep_id, unsigned int lvl_id)
     return NULL;
 }
 
+SceneLevel* LevelManager::getCurrentLevel()
+{
+    return getLevel(m_epId, m_lvlId);
+}
+
 void LevelManager::setCurrent(unsigned int ep_id, unsigned int lvl_id)
 {
     m_epId  = ep_id;
@@ -111,9 +116,8 @@ void LevelManager::dump()
     }
 }
 
-void LevelManager::unlockNextLevel()
-{
-    unsigned int ep_id,lvl_id;
+void LevelManager::unlockNextLevel(unsigned int& ep_id, unsigned int &lvl_id)
+{    
     ep_id = m_epId;
     lvl_id = m_lvlId+1;
     SceneLevel *sl = getLevel(ep_id,lvl_id);

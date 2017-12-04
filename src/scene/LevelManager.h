@@ -5,12 +5,14 @@
 #include <vector>
 
 typedef struct 
-{
+{    
     int m_id;
     int m_epId;
     int m_score;
     bool m_unlocked;
-    std::string m_file;        
+    unsigned int m_widgetId;
+    std::string m_file;
+
 }SceneLevel;
 
 typedef struct
@@ -31,9 +33,11 @@ class LevelManager
         void dump();
         SceneEpisode* getEpisode(unsigned int);
         SceneLevel* getLevel(unsigned  int, unsigned int);
+        SceneLevel* getCurrentLevel();
         void setCurrent(unsigned int, unsigned int);
         void getCurrent(unsigned int&, unsigned int&);
-        void unlockNextLevel();
+        void unlockNextLevel(unsigned int&, unsigned int&);
+
     private:        
         LevelManager();
         std::vector<SceneEpisode*> m_episodes;

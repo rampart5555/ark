@@ -44,6 +44,7 @@ class Menu
         virtual void animationComplete();
         virtual void setEnabled(bool);
         Widget* addWidget(WidgetType, const char*, const char*, float, float);
+        Widget* getWidget(unsigned int);
 
     protected:
         osg::MatrixTransform *m_transform;
@@ -87,6 +88,7 @@ class MenuLevelSelect : public Menu
         void prevEpisode();
         virtual void show();
         virtual void hide(EngineCallback, void*);
+        MenuEpisode* getMenuEpisode(unsigned int);
     protected:
         std::vector <MenuEpisode*> m_menuList;
         int m_menuIndex;
