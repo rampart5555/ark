@@ -16,7 +16,7 @@ Entity::Entity()
     m_phyActive = false;
     m_hits  = 0;
     m_value = 0;    
-    m_powerup = 0;
+    m_powerup = POWERUP_NONE;
     m_color = 0xc0c0c0FF;
 }
 
@@ -32,7 +32,7 @@ Entity::Entity(Entity& ent)
     m_phyBody = NULL;
     m_valid = true;
     m_phyActive = false; 
-    m_powerup = 0;     
+    m_powerup = POWERUP_NONE;     
     m_color = 0xc0c0c0FF;  
 }
 
@@ -52,7 +52,7 @@ void Entity::setUniforms()
     r = ((m_color>>24)&0xff)/255.0;
     g = ((m_color>>16)&0xff)/255.0;
     b = ((m_color>>8) &0xff)/255.0;
-    LOG_INFO("Entity::setUniforms()=> %s %d %f %f %f", m_name.c_str(), m_color,r,g,b);
+    //LOG_DEBUG("Entity::setUniforms()=> %s %d %f %f %f\n", m_name.c_str(), m_color,r,g,b);
     osg::Uniform* uEntityDiffuseColor = new osg::Uniform("uEntityDiffuseColor",osg::Vec4(r,g,b,1.0));
     osg::StateSet *ss = m_transform->getOrCreateStateSet();
     ss->addUniform(uEntityDiffuseColor);     
@@ -114,7 +114,7 @@ void Entity::updateInitialTransform()
 {
     if(m_transform == NULL)
     {
-        printf("EntityPhysics::updateInitialTransform(): Entity model is NULL\n");
+        LOG_ERROR("%s\n","EntityPhysics::updateInitialTransform(): Entity model is NULL");
         return;
     }
     if(m_phyActive==false)

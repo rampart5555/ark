@@ -20,6 +20,7 @@ Scene::~Scene()
 void Scene::clear()
 {    
     m_levelScore = 0;
+    m_entityMgr.clear();
 }
 
 void Scene::loadScene(const char *tmx_file)
@@ -97,7 +98,7 @@ bool Scene::loadLevel(const char *level_file)
                     return false;
                     
                 ent->setPosition(osg::Vec3(-osg_ox + x*0.2, osg_oy - y*0.1, 0.0));
-                ent->setPowerup(powerup_val);
+                ent->setPowerup((PowerupType)powerup_val);
                 ent->setSubType(brick_val);
                 addEntityProps(ent);
 

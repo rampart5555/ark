@@ -197,7 +197,7 @@ void MenuEpisode::createMenu()
     }
     else
     {
-        printf("Error: Invalid episdode:%d\n", m_episodeId);
+        LOG_ERROR("Error: Invalid episdode:%d\n", m_episodeId);
     } 
 }
 
@@ -307,7 +307,7 @@ void MenuSceneHud::createMenu()
         itm = items->at(i);
         Widget *w = new Widget(itm);
         m_transform->addChild(w->getNode());
-        printf("MenuSceneHud::createMenu add item:%s\n",(items->at(i)).m_label.c_str());
+        LOG_DEBUG("MenuSceneHud::createMenu add item:%s\n",(items->at(i)).m_label.c_str());
         if(itm.m_name=="HudScore")
         {
             m_score=w;
@@ -321,7 +321,7 @@ void MenuSceneHud::updateScore(int score)
     char buf[32];
     sprintf(buf,"%d",score);
     
-    printf("score: %s\n", buf);
+    LOG_DEBUG("updateScore: %s\n", buf);
     m_score->setLabel(buf);
 }
 
@@ -349,7 +349,7 @@ void MenuLevelComplete::createMenu()
     {
         Widget *w = new Widget(items->at(i));
         m_transform->addChild(w->getNode());
-        printf("Add item:%s\n",(items->at(i)).m_label.c_str());
+        LOG_DEBUG("Add item:%s\n",(items->at(i)).m_label.c_str());
     }
 }
 
@@ -377,7 +377,7 @@ void MenuLevelFailed::createMenu()
     {
         Widget *w = new Widget(items->at(i));
         m_transform->addChild(w->getNode());
-        printf("Add item:%s\n",(items->at(i)).m_label.c_str());
+        LOG_DEBUG("Add item:%s\n",(items->at(i)).m_label.c_str());
     }
 } 
  

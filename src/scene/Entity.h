@@ -85,8 +85,8 @@ class Entity : public osg::Referenced
         int  getHits()            { return m_hits; }
         void setValue(int value)  { m_value = value; }
         int  getValue()           { return m_value; }  
-        void setPowerup( int pup) { m_powerup = pup; }
-        int  getPowerup( )        { return m_powerup; }
+        void setPowerup( PowerupType pup) { m_powerup = pup; }
+        PowerupType  getPowerup( )        { return m_powerup; }
         void setColor(int color)  { m_color = color; }
         
     protected:
@@ -102,7 +102,7 @@ class Entity : public osg::Referenced
         bool m_valid;
         int m_hits;
         int m_value;
-        int m_powerup;
+        PowerupType m_powerup;
         unsigned int m_color;
         osg::Vec3 m_position;
 };

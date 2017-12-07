@@ -58,14 +58,16 @@ typedef enum
     
 }EntityType;
 
+/* map powerup from 17 to 25 */
 typedef enum
 {
-    POWERUP_NONE  = 0,
-    POWERUP_BALLS = 1,
-    POWERUP_FAST  = 2,
-    POWERUP_SLOW  = 3,
-    POWERUP_LIFE  = 4,
-    POWERUP_CANNON = 5
+    POWERUP_NONE   = 0,
+    POWERUP_BALLS  = 17,
+    POWERUP_FAST   = 18,
+    POWERUP_SLOW   = 19,
+    POWERUP_LIFE   = 20,
+    POWERUP_CANNON = 21
+    
 }PowerupType;
 
 #endif

@@ -9,7 +9,6 @@
 #include "EntityManager.h"
 #include "EngineCallback.h"
 
-#define SDL_Log printf
 
 class EntityManagerCallback : public osg::NodeCallback
 {
@@ -56,6 +55,7 @@ EntityManager::EntityManager()
     m_paddle = NULL;
     m_entitiesNum = 0;
     m_brickNumber = 0;
+    m_powerupNumber = 0;
     
 }
 
@@ -90,7 +90,7 @@ void EntityManager::startPhysics()
     m_paddle->setJoint(m_groundBody);
     //m_paddle->getPhyBody()->Dump();
     //m_bottomWall->getPhyBody()->Dump();
-    LOG_INFO("Number of entities:%lu", m_entityList.size());
+    LOG_INFO("Number of entities:%lu\n", m_entityList.size());
     m_sceneNode->setUpdateCallback(new EntityManagerCallback(this) );
     
 }
@@ -160,12 +160,11 @@ void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
         m_sceneNode->addChild(entity->getEntityNode());
         if(entity->getType() == ENTITY_PADDLE)
             m_paddle = entity->asEntityPaddle();
-        else if((entity->getType() == ENTITY_BRICK)||(entity->getType() == ENTITY_POWERUP))
-        {
-            m_entitiesNum++;     
-            if( entity->getType() == ENTITY_BRICK )
-                m_brickNumber++;
-        }
+        else if(entity->getType() == ENTITY_BRICK)                    
+            m_brickNumber++;        
+        else if(entity->getType() == ENTITY_POWERUP)        
+            m_powerupNumber++;        
+        m_entitiesNum++;
         /* enable physics for spawned entities */       
         if(m_physicsActive == true)
             entity->enablePhysics();
@@ -175,7 +174,9 @@ void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
 
 void EntityManager::spawnPowerup(Entity *entity)
 {
-    LOG_INFO("SPAWN POWERUP: %d\n", entity->getPowerup());
+    const char *ptype;
+    ptype = powerupToStr(entity->getPowerup());
+    LOG_INFO("SPAWN POWERUP: %s\n", ptype);
     //m_level->spawnPowerup(entity.get());
     osg::ref_ptr<Entity> pu_ent = createEntity(ENTITY_POWERUP);
     if(pu_ent == NULL)
@@ -297,6 +298,7 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
     else if(entity->getType() == ENTITY_POWERUP)
     {
         m_entitiesNum--;
+        m_powerupNumber--;
         PowerupType ptype = static_cast<PowerupType>(entity->getSubType());
         setPowerup(ptype);
     }
@@ -317,6 +319,7 @@ void EntityManager::clear()
     m_entityList.clear();
     m_entitiesNum = 0;
     m_brickNumber = 0;
+    m_powerupNumber = 0;
 }
 
 void EntityManager::update(float passedTime)
@@ -393,4 +396,24 @@ void EntityManager::levelComplete()
     //EngineEventArgs args;
     //args.arg1 = GameManager::instance()->getLevelScore();
     //GameManager::instance()->handleMenuEvent(MENU_LEVEL_COMPLETE_SHOW, &args);
+}
+
+/* debug function*/
+const char* EntityManager::powerupToStr(PowerupType ptype)
+{
+    switch(ptype)
+    {
+        case POWERUP_BALLS:
+            return "POWERUP_BALLS";
+        case POWERUP_FAST:  
+            return "POWERUP_FAST";
+        case POWERUP_SLOW:  
+            return "POWERUP_SLOW";
+        case POWERUP_LIFE:  
+            return "POWERUP_LIFE";
+        case POWERUP_CANNON:
+            return "POWERUP_CANNON";
+        default:
+            return "POWERUP_NONE";
+    }
 }

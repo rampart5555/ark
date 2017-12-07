@@ -59,21 +59,19 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
         contact->GetWorldManifold( &worldManifold );
         b2Vec2 pos = ent->getPhyBody()->GetPosition();
         float local_x = worldManifold.points[0].x - pos.x;
-        printf("EntityBall::endContact %d %f %f\n",numPoints, local_x,worldManifold.points[0].x);
+        //printf("EntityBall::endContact %d %f %f\n",numPoints, local_x,worldManifold.points[0].x);
         if((local_x>=-0.1)&&(local_x<=0.1))
         {
-            printf("HIT center\n");
+            //printf("HIT center\n");
         }
         else if(local_x < -0.1)
-        {
-            printf("HIT left\n");
+        {            
             m_dir.x = cos(2*3.14/3);
             m_dir.y = sin(2*3.14/3);
             m_ajustBallDir = true;
         }
         else if(local_x > 0.1)
-        {
-            printf("HIT right\n");
+        {            
             m_dir.x = cos(3.14/3);
             m_dir.y = sin(3.14/3);
             m_ajustBallDir = true;

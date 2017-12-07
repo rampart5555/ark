@@ -1,6 +1,7 @@
-#include "Animation.h"
 #include <stdio.h>
+#include "Animation.h"
 #include "ui/Menu.h"
+#include "Logging.h"
 /* 
 Example:
 Animate from 5.0f to 12.0f in 4 seconds
@@ -30,7 +31,7 @@ AnimTranslate::AnimTranslate(float start, float end, float duration)
 
 AnimTranslate::~AnimTranslate()
 {
-    printf("AnimNode::~AnimNode()\n");
+    LOG_DEBUG("%s\n","AnimNode::~AnimNode()");
 }
 
 void AnimTranslate::start(bool rev)
@@ -72,12 +73,12 @@ void AnimTranslate::operator()(osg::Node* node, osg::NodeVisitor* nv)
         if(tr!=NULL)
             tr->setMatrix(m);
         else
-            printf("Invalid transfrom\n");
+            LOG_ERROR("%s\n","Invalid transfrom");
         
         if(m_motion->getTime() >= m_duration)
         {
             m_status = COMPLETE;
-            printf("Animation complete:\n");                        
+            LOG_DEBUG("%s\n","Animation complete:");
         }
     }
     /* Continue traversing so that OSG can process any other nodes with callback */
@@ -102,7 +103,7 @@ AnimFade::AnimFade(Menu *menu, float start, float end, float duration)
 
 AnimFade::~AnimFade()
 {
-    printf("AnimFade::~AnimFade()\n");
+    LOG_DEBUG("%s\n","AnimFade::~AnimFade()");
 }
 
 void AnimFade::start(bool rev)
@@ -143,7 +144,7 @@ void AnimFade::operator() ( osg::Uniform* uniform, osg::NodeVisitor* nv )
                 m_callback(m_callbackArgs);
             if(m_menu != NULL)
                 m_menu->animationComplete();
-            printf("Animation complete\n");            
+            LOG_DEBUG("%s\n","Animation complete");
             
         }
         if(value<0.0) 

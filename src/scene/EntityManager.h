@@ -32,6 +32,9 @@ class EntityManager
         void spawnPowerup(Entity*);
         void spawnEntity(EntityType etype, osg::Vec3 pos);
         void setPowerup(PowerupType);
+        //debug utilities
+        const char* powerupToStr(PowerupType);
+        
         
      private:        
         std::list < osg::ref_ptr<Entity> > m_entityList;
@@ -40,6 +43,7 @@ class EntityManager
         EntityPaddle *m_paddle;
         int m_entitiesNum;
         int m_brickNumber;
+        int m_powerupNumber;
         ContactListener *m_contactListener;
         b2MouseJoint *m_mouseJoint;
         b2Body* m_groundBody;

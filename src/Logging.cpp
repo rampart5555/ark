@@ -42,7 +42,7 @@ int runLoggingThread() { // run this function to redirect your output to android
     return 0;
 }
 #else
-static LogLevel debug_log_level = LOG_DEBUG;
+static LogLevel debug_log_level = LOG_INFO;
 int runLoggingThread()
 {
     return 0;
