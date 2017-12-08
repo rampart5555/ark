@@ -412,11 +412,11 @@ void AssetsManager::getEntityProps(const char *file_name, EntityProps *data)
     }
 }
 
-bool AssetsManager::getLevelData(const char *level_file, LevelData *data)
+bool AssetsManager::getLevelData(const char *ep_file, const char *lvl_name, LevelData *data)
 {
     AssetsManagerLua lua_mgr;
     unsigned int buf_size;
-    std::string level_path = m_rootPath + level_file;
+    std::string level_path = m_rootPath + ep_file;
     const char *script = readBinaryFile(level_path.c_str(),&buf_size);
     bool res = lua_mgr.loadScript(script);
     if (res==false)

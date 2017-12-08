@@ -18,8 +18,8 @@ class Scene
             return instance;
         }
         void clear();
-        void loadScene(const char*);
-        bool loadLevel(const char*);
+        void loadScene(const char*, const char*);
+        bool loadLevel(const char*,const char*);
         osg::MatrixTransform *getSceneNode();
         void loadShaders();
         osg::ref_ptr <Entity> createEntity(EntityType etype);

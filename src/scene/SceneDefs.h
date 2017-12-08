@@ -19,7 +19,7 @@ struct LevelData
     std::string m_name;
     int m_width;
     int m_height;
-    std::vector<int> m_bricks;
+    std::vector<int> m_brick;
     std::vector<int> m_powerup;      
 };
 #endif

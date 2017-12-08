@@ -31,7 +31,7 @@ class AssetsManager
         osg::Texture2D* getTexture(const char*);
         osgText::Font*  getFont(const char*);
         char* getLevelData(const char*);
-        bool getLevelData(const char *, LevelData *);
+        bool getLevelData(const char *, const char*, LevelData *);
         void getEntityProps(const char *, EntityProps *);
         std::vector<MenuItem>*getMenuItems(const char*);
         

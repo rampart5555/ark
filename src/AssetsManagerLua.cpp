@@ -242,7 +242,7 @@ bool AssetsManagerLua::loadLevelData(const char *table_name, LevelData *data)
     getInt(L,"width",data->m_width);
     getInt(L,"height",data->m_height);
     printf("name:%s\n", data->m_name.c_str());    
-    getIntVector(L,"bricks", &data->m_bricks);
+    getIntVector(L,"brick", &data->m_brick);
     getIntVector(L,"powerup", &data->m_powerup);
     return true;
 }

@@ -23,7 +23,7 @@ void Scene::clear()
     m_entityMgr.clear();
 }
 
-void Scene::loadScene(const char *tmx_file)
+void Scene::loadScene(const char *ep_file, const char* lvl_name)
 {    
     clear();
     
@@ -56,19 +56,19 @@ void Scene::loadScene(const char *tmx_file)
     }
     
     //loadTMXMap(tmx_file);
-    loadLevel(tmx_file);
+    loadLevel(ep_file, lvl_name);
     loadShaders();
     
 }
 
-bool Scene::loadLevel(const char *level_file)
+bool Scene::loadLevel(const char *ep_file, const char* lvl_name)
 {
     LevelData ldata;
 
-    bool res = AssetsManager::instance().getLevelData(level_file,&ldata);    
+    bool res = AssetsManager::instance().getLevelData(ep_file, lvl_name, &ldata);    
     if(res==false)
     {
-        LOG_ERROR("Scene::loadLevel=>level not loaded:%s\n",level_file);
+        LOG_ERROR("Scene::loadLevel=>level not loaded:%s\n", lvl_name);
         return false;
     }
             
@@ -88,7 +88,7 @@ bool Scene::loadLevel(const char *level_file)
         for(int x=0; x<cols;x++)
         {            
             tindex = y*cols + x;
-            brick_val = ldata.m_bricks[tindex];
+            brick_val = ldata.m_brick[tindex];
             powerup_val = ldata.m_powerup[tindex];
             if(brick_val > 0)
             {

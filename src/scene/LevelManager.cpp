@@ -34,11 +34,11 @@ bool LevelManager::readLevelData()
         {
             osg::Group *ep_group = dynamic_cast<osg::Group*>(rootGroup->getChild(i));
             int ep_id;
-            bool ep_res = ep_group->getUserValue("ep_id",ep_id);             
+            bool ep_res = ep_group->getUserValue("ep_id", ep_id);
             if(ep_res==true)
             {
                 ep = new SceneEpisode;
-                ep_group->getUserValue("ep_id",ep->m_id);                
+                ep_group->getUserValue("ep_id", ep->m_id);                
                 ep_group->getUserValue("ep_name", ep->m_title);
                 ep_group->getUserValue("ep_unlocked", ep->m_unlocked);
                 m_episodes.push_back(ep);
@@ -51,10 +51,11 @@ bool LevelManager::readLevelData()
                 if(lvl_res==true)
                 {
                     lvl=new SceneLevel;
-                    lvl_group->getUserValue("lvl_id",lvl->m_id);
-                    lvl_group->getUserValue("lvl_unlocked",lvl->m_unlocked);
-                    lvl_group->getUserValue("lvl_score",lvl->m_score);
-                    lvl_group->getUserValue("lvl_data",lvl->m_file);
+                    lvl->m_epId = ep_id;
+                    lvl_group->getUserValue("lvl_id", lvl->m_id);
+                    lvl_group->getUserValue("lvl_unlocked", lvl->m_unlocked);
+                    lvl_group->getUserValue("lvl_score", lvl->m_score);
+                    lvl_group->getUserValue("lvl_data", lvl->m_file);
                     ep->m_levels.push_back(lvl);
                 }                         
             }

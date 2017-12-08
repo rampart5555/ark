@@ -177,8 +177,14 @@ void MenuLevelFailed_button_restart_push(void* args)
 /*** Scene ***/
 void Scene_load_level(void *args)
 {
+    SceneEpisode* ep_data;
     SceneLevel *sdata = static_cast<SceneLevel*>(args);    
-    Scene::instance().loadScene(sdata->m_file.c_str());
+    ep_data = LevelManager::instance().getEpisode(sdata->m_epId);
+    if(ep_data != NULL)
+    {
+        LOG_INFO("Loading level: %s from: %s\n", ep_data->m_title);
+    }
+    //Scene::instance().loadScene(sdata->m_file.c_str());
     LevelManager::instance().setCurrent(sdata->m_epId,sdata->m_id);
 
 }
