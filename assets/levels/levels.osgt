@@ -10,18 +10,23 @@ osg::Group {
       UserDataContainer TRUE {
         osg::DefaultUserDataContainer {
           UniqueID 3 
-          UDC_UserObjects 3 {
+          UDC_UserObjects 4 {
             osg::IntValueObject {
               UniqueID 4 
               Name "ep_id" 
             }
             osg::StringValueObject {
               UniqueID 5 
-              Name "ep_name" 
-              Value "Episode_1" 
+              Name "ep_title" 
+              Value "Episode 1" 
+            }
+            osg::StringValueObject {
+              UniqueID 6 
+              Name "ep_file" 
+              Value "levels/episode_1.lua" 
             }
             osg::BoolValueObject {
-              UniqueID 6 
+              UniqueID 7 
               Name "ep_unlocked" 
             }
           }
@@ -29,27 +34,27 @@ osg::Group {
       }
       Children 15 {
         osg::Group {
-          UniqueID 7 
+          UniqueID 8 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 8 
+              UniqueID 9 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 9 
-                  Name "lvl_id" 
-                }
-                osg::BoolValueObject {
                   UniqueID 10 
-                  Name "lvl_unlocked"
-                  Value TRUE  
+                  Name "lvl_id" 
                 }
                 osg::IntValueObject {
                   UniqueID 11 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 12 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                  Value TRUE 
+                }
+                osg::StringValueObject {
+                  UniqueID 13 
+                  Name "lvl_name" 
                   Value "Level_01" 
                 }
               }
@@ -57,27 +62,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 13 
+          UniqueID 14 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 14 
+              UniqueID 15 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 15 
+                  UniqueID 16 
                   Name "lvl_id" 
                   Value 1 
-                }
-                osg::BoolValueObject {
-                  UniqueID 16 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 17 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 18 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 19 
+                  Name "lvl_name" 
                   Value "Level_02" 
                 }
               }
@@ -85,27 +90,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 19 
+          UniqueID 20 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 20 
+              UniqueID 21 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 21 
+                  UniqueID 22 
                   Name "lvl_id" 
                   Value 2 
-                }
-                osg::BoolValueObject {
-                  UniqueID 22 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 23 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 24 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 25 
+                  Name "lvl_name" 
                   Value "Level_03" 
                 }
               }
@@ -113,27 +118,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 25 
+          UniqueID 26 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 26 
+              UniqueID 27 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 27 
+                  UniqueID 28 
                   Name "lvl_id" 
                   Value 3 
-                }
-                osg::BoolValueObject {
-                  UniqueID 28 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 29 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 30 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 31 
+                  Name "lvl_name" 
                   Value "Level_04" 
                 }
               }
@@ -141,27 +146,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 31 
+          UniqueID 32 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 32 
+              UniqueID 33 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 33 
+                  UniqueID 34 
                   Name "lvl_id" 
                   Value 4 
-                }
-                osg::BoolValueObject {
-                  UniqueID 34 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 35 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 36 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 37 
+                  Name "lvl_name" 
                   Value "Level_05" 
                 }
               }
@@ -169,27 +174,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 37 
+          UniqueID 38 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 38 
+              UniqueID 39 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 39 
+                  UniqueID 40 
                   Name "lvl_id" 
                   Value 5 
-                }
-                osg::BoolValueObject {
-                  UniqueID 40 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 41 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 42 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 43 
+                  Name "lvl_name" 
                   Value "Level_06" 
                 }
               }
@@ -197,27 +202,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 43 
+          UniqueID 44 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 44 
+              UniqueID 45 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 45 
+                  UniqueID 46 
                   Name "lvl_id" 
                   Value 6 
-                }
-                osg::BoolValueObject {
-                  UniqueID 46 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 47 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 48 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 49 
+                  Name "lvl_name" 
                   Value "Level_07" 
                 }
               }
@@ -225,27 +230,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 49 
+          UniqueID 50 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 50 
+              UniqueID 51 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 51 
+                  UniqueID 52 
                   Name "lvl_id" 
                   Value 7 
-                }
-                osg::BoolValueObject {
-                  UniqueID 52 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 53 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 54 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 55 
+                  Name "lvl_name" 
                   Value "Level_08" 
                 }
               }
@@ -253,27 +258,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 55 
+          UniqueID 56 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 56 
+              UniqueID 57 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 57 
+                  UniqueID 58 
                   Name "lvl_id" 
                   Value 8 
-                }
-                osg::BoolValueObject {
-                  UniqueID 58 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 59 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 60 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 61 
+                  Name "lvl_name" 
                   Value "Level_09" 
                 }
               }
@@ -281,27 +286,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 61 
+          UniqueID 62 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 62 
+              UniqueID 63 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 63 
+                  UniqueID 64 
                   Name "lvl_id" 
                   Value 9 
-                }
-                osg::BoolValueObject {
-                  UniqueID 64 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 65 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 66 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 67 
+                  Name "lvl_name" 
                   Value "Level_10" 
                 }
               }
@@ -309,27 +314,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 67 
+          UniqueID 68 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 68 
+              UniqueID 69 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 69 
+                  UniqueID 70 
                   Name "lvl_id" 
                   Value 10 
-                }
-                osg::BoolValueObject {
-                  UniqueID 70 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 71 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 72 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 73 
+                  Name "lvl_name" 
                   Value "Level_11" 
                 }
               }
@@ -337,27 +342,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 73 
+          UniqueID 74 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 74 
+              UniqueID 75 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 75 
+                  UniqueID 76 
                   Name "lvl_id" 
                   Value 11 
-                }
-                osg::BoolValueObject {
-                  UniqueID 76 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 77 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 78 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 79 
+                  Name "lvl_name" 
                   Value "Level_12" 
                 }
               }
@@ -365,27 +370,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 79 
+          UniqueID 80 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 80 
+              UniqueID 81 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 81 
+                  UniqueID 82 
                   Name "lvl_id" 
                   Value 12 
-                }
-                osg::BoolValueObject {
-                  UniqueID 82 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 83 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 84 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 85 
+                  Name "lvl_name" 
                   Value "Level_13" 
                 }
               }
@@ -393,27 +398,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 85 
+          UniqueID 86 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 86 
+              UniqueID 87 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 87 
+                  UniqueID 88 
                   Name "lvl_id" 
                   Value 13 
-                }
-                osg::BoolValueObject {
-                  UniqueID 88 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 89 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 90 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 91 
+                  Name "lvl_name" 
                   Value "Level_14" 
                 }
               }
@@ -421,27 +426,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 91 
+          UniqueID 92 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 92 
+              UniqueID 93 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 93 
+                  UniqueID 94 
                   Name "lvl_id" 
                   Value 14 
-                }
-                osg::BoolValueObject {
-                  UniqueID 94 
-                  Name "lvl_unlocked" 
                 }
                 osg::IntValueObject {
                   UniqueID 95 
                   Name "lvl_score" 
                 }
-                osg::StringValueObject {
+                osg::BoolValueObject {
                   UniqueID 96 
-                  Name "lvl_data" 
+                  Name "lvl_unlocked" 
+                }
+                osg::StringValueObject {
+                  UniqueID 97 
+                  Name "lvl_name" 
                   Value "Level_15" 
                 }
               }
@@ -451,23 +456,28 @@ osg::Group {
       }
     }
     osg::Group {
-      UniqueID 97 
+      UniqueID 98 
       UserDataContainer TRUE {
         osg::DefaultUserDataContainer {
-          UniqueID 98 
-          UDC_UserObjects 3 {
+          UniqueID 99 
+          UDC_UserObjects 4 {
             osg::IntValueObject {
-              UniqueID 99 
+              UniqueID 100 
               Name "ep_id" 
               Value 1 
             }
             osg::StringValueObject {
-              UniqueID 100 
-              Name "ep_name" 
-              Value "Episode_2" 
+              UniqueID 101 
+              Name "ep_title" 
+              Value "Episode 2" 
+            }
+            osg::StringValueObject {
+              UniqueID 102 
+              Name "ep_file" 
+              Value "levels/episode_2.lua" 
             }
             osg::BoolValueObject {
-              UniqueID 101 
+              UniqueID 103 
               Name "ep_unlocked" 
             }
           }
@@ -475,26 +485,26 @@ osg::Group {
       }
       Children 15 {
         osg::Group {
-          UniqueID 102 
+          UniqueID 104 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 103 
+              UniqueID 105 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 104 
+                  UniqueID 106 
                   Name "lvl_id" 
                 }
-                osg::BoolValueObject {
-                  UniqueID 105 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 106 
+                  UniqueID 107 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 108 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 107 
-                  Name "lvl_data" 
+                  UniqueID 109 
+                  Name "lvl_name" 
                   Value "Level_01" 
                 }
               }
@@ -502,27 +512,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 108 
+          UniqueID 110 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 109 
+              UniqueID 111 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 110 
+                  UniqueID 112 
                   Name "lvl_id" 
                   Value 1 
                 }
-                osg::BoolValueObject {
-                  UniqueID 111 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 112 
+                  UniqueID 113 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 114 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 113 
-                  Name "lvl_data" 
+                  UniqueID 115 
+                  Name "lvl_name" 
                   Value "Level_02" 
                 }
               }
@@ -530,27 +540,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 114 
+          UniqueID 116 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 115 
+              UniqueID 117 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 116 
+                  UniqueID 118 
                   Name "lvl_id" 
                   Value 2 
                 }
-                osg::BoolValueObject {
-                  UniqueID 117 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 118 
+                  UniqueID 119 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 120 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 119 
-                  Name "lvl_data" 
+                  UniqueID 121 
+                  Name "lvl_name" 
                   Value "Level_03" 
                 }
               }
@@ -558,27 +568,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 120 
+          UniqueID 122 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 121 
+              UniqueID 123 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 122 
+                  UniqueID 124 
                   Name "lvl_id" 
                   Value 3 
                 }
-                osg::BoolValueObject {
-                  UniqueID 123 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 124 
+                  UniqueID 125 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 126 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 125 
-                  Name "lvl_data" 
+                  UniqueID 127 
+                  Name "lvl_name" 
                   Value "Level_04" 
                 }
               }
@@ -586,27 +596,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 126 
+          UniqueID 128 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 127 
+              UniqueID 129 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 128 
+                  UniqueID 130 
                   Name "lvl_id" 
                   Value 4 
                 }
-                osg::BoolValueObject {
-                  UniqueID 129 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 130 
+                  UniqueID 131 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 132 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 131 
-                  Name "lvl_data" 
+                  UniqueID 133 
+                  Name "lvl_name" 
                   Value "Level_05" 
                 }
               }
@@ -614,27 +624,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 132 
+          UniqueID 134 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 133 
+              UniqueID 135 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 134 
+                  UniqueID 136 
                   Name "lvl_id" 
                   Value 5 
                 }
-                osg::BoolValueObject {
-                  UniqueID 135 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 136 
+                  UniqueID 137 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 138 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 137 
-                  Name "lvl_data" 
+                  UniqueID 139 
+                  Name "lvl_name" 
                   Value "Level_06" 
                 }
               }
@@ -642,27 +652,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 138 
+          UniqueID 140 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 139 
+              UniqueID 141 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 140 
+                  UniqueID 142 
                   Name "lvl_id" 
                   Value 6 
                 }
-                osg::BoolValueObject {
-                  UniqueID 141 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 142 
+                  UniqueID 143 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 144 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 143 
-                  Name "lvl_data" 
+                  UniqueID 145 
+                  Name "lvl_name" 
                   Value "Level_07" 
                 }
               }
@@ -670,27 +680,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 144 
+          UniqueID 146 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 145 
+              UniqueID 147 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 146 
+                  UniqueID 148 
                   Name "lvl_id" 
                   Value 7 
                 }
-                osg::BoolValueObject {
-                  UniqueID 147 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 148 
+                  UniqueID 149 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 150 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 149 
-                  Name "lvl_data" 
+                  UniqueID 151 
+                  Name "lvl_name" 
                   Value "Level_08" 
                 }
               }
@@ -698,27 +708,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 150 
+          UniqueID 152 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 151 
+              UniqueID 153 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 152 
+                  UniqueID 154 
                   Name "lvl_id" 
                   Value 8 
                 }
-                osg::BoolValueObject {
-                  UniqueID 153 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 154 
+                  UniqueID 155 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 156 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 155 
-                  Name "lvl_data" 
+                  UniqueID 157 
+                  Name "lvl_name" 
                   Value "Level_09" 
                 }
               }
@@ -726,27 +736,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 156 
+          UniqueID 158 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 157 
+              UniqueID 159 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 158 
+                  UniqueID 160 
                   Name "lvl_id" 
                   Value 9 
                 }
-                osg::BoolValueObject {
-                  UniqueID 159 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 160 
+                  UniqueID 161 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 162 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 161 
-                  Name "lvl_data" 
+                  UniqueID 163 
+                  Name "lvl_name" 
                   Value "Level_10" 
                 }
               }
@@ -754,27 +764,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 162 
+          UniqueID 164 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 163 
+              UniqueID 165 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 164 
+                  UniqueID 166 
                   Name "lvl_id" 
                   Value 10 
                 }
-                osg::BoolValueObject {
-                  UniqueID 165 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 166 
+                  UniqueID 167 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 168 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 167 
-                  Name "lvl_data" 
+                  UniqueID 169 
+                  Name "lvl_name" 
                   Value "Level_11" 
                 }
               }
@@ -782,27 +792,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 168 
+          UniqueID 170 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 169 
+              UniqueID 171 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 170 
+                  UniqueID 172 
                   Name "lvl_id" 
                   Value 11 
                 }
-                osg::BoolValueObject {
-                  UniqueID 171 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 172 
+                  UniqueID 173 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 174 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 173 
-                  Name "lvl_data" 
+                  UniqueID 175 
+                  Name "lvl_name" 
                   Value "Level_12" 
                 }
               }
@@ -810,27 +820,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 174 
+          UniqueID 176 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 175 
+              UniqueID 177 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 176 
+                  UniqueID 178 
                   Name "lvl_id" 
                   Value 12 
                 }
-                osg::BoolValueObject {
-                  UniqueID 177 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 178 
+                  UniqueID 179 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 180 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 179 
-                  Name "lvl_data" 
+                  UniqueID 181 
+                  Name "lvl_name" 
                   Value "Level_13" 
                 }
               }
@@ -838,27 +848,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 180 
+          UniqueID 182 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 181 
+              UniqueID 183 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 182 
+                  UniqueID 184 
                   Name "lvl_id" 
                   Value 13 
                 }
-                osg::BoolValueObject {
-                  UniqueID 183 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 184 
+                  UniqueID 185 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 186 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 185 
-                  Name "lvl_data" 
+                  UniqueID 187 
+                  Name "lvl_name" 
                   Value "Level_14" 
                 }
               }
@@ -866,27 +876,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 186 
+          UniqueID 188 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 187 
+              UniqueID 189 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 188 
+                  UniqueID 190 
                   Name "lvl_id" 
                   Value 14 
                 }
-                osg::BoolValueObject {
-                  UniqueID 189 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 190 
+                  UniqueID 191 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 192 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 191 
-                  Name "lvl_data" 
+                  UniqueID 193 
+                  Name "lvl_name" 
                   Value "Level_15" 
                 }
               }
@@ -896,23 +906,28 @@ osg::Group {
       }
     }
     osg::Group {
-      UniqueID 192 
+      UniqueID 194 
       UserDataContainer TRUE {
         osg::DefaultUserDataContainer {
-          UniqueID 193 
-          UDC_UserObjects 3 {
+          UniqueID 195 
+          UDC_UserObjects 4 {
             osg::IntValueObject {
-              UniqueID 194 
+              UniqueID 196 
               Name "ep_id" 
               Value 2 
             }
             osg::StringValueObject {
-              UniqueID 195 
-              Name "ep_name" 
-              Value "Episode_3" 
+              UniqueID 197 
+              Name "ep_title" 
+              Value "Episode 3" 
+            }
+            osg::StringValueObject {
+              UniqueID 198 
+              Name "ep_file" 
+              Value "levels/episode_3.lua" 
             }
             osg::BoolValueObject {
-              UniqueID 196 
+              UniqueID 199 
               Name "ep_unlocked" 
             }
           }
@@ -920,26 +935,26 @@ osg::Group {
       }
       Children 15 {
         osg::Group {
-          UniqueID 197 
+          UniqueID 200 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 198 
+              UniqueID 201 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 199 
+                  UniqueID 202 
                   Name "lvl_id" 
                 }
-                osg::BoolValueObject {
-                  UniqueID 200 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 201 
+                  UniqueID 203 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 204 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 202 
-                  Name "lvl_data" 
+                  UniqueID 205 
+                  Name "lvl_name" 
                   Value "Level_01" 
                 }
               }
@@ -947,27 +962,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 203 
+          UniqueID 206 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 204 
+              UniqueID 207 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 205 
+                  UniqueID 208 
                   Name "lvl_id" 
                   Value 1 
                 }
-                osg::BoolValueObject {
-                  UniqueID 206 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 207 
+                  UniqueID 209 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 210 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 208 
-                  Name "lvl_data" 
+                  UniqueID 211 
+                  Name "lvl_name" 
                   Value "Level_02" 
                 }
               }
@@ -975,27 +990,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 209 
+          UniqueID 212 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 210 
+              UniqueID 213 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 211 
+                  UniqueID 214 
                   Name "lvl_id" 
                   Value 2 
                 }
-                osg::BoolValueObject {
-                  UniqueID 212 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 213 
+                  UniqueID 215 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 216 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 214 
-                  Name "lvl_data" 
+                  UniqueID 217 
+                  Name "lvl_name" 
                   Value "Level_03" 
                 }
               }
@@ -1003,27 +1018,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 215 
+          UniqueID 218 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 216 
+              UniqueID 219 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 217 
+                  UniqueID 220 
                   Name "lvl_id" 
                   Value 3 
                 }
-                osg::BoolValueObject {
-                  UniqueID 218 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 219 
+                  UniqueID 221 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 222 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 220 
-                  Name "lvl_data" 
+                  UniqueID 223 
+                  Name "lvl_name" 
                   Value "Level_04" 
                 }
               }
@@ -1031,27 +1046,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 221 
+          UniqueID 224 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 222 
+              UniqueID 225 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 223 
+                  UniqueID 226 
                   Name "lvl_id" 
                   Value 4 
                 }
-                osg::BoolValueObject {
-                  UniqueID 224 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 225 
+                  UniqueID 227 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 228 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 226 
-                  Name "lvl_data" 
+                  UniqueID 229 
+                  Name "lvl_name" 
                   Value "Level_05" 
                 }
               }
@@ -1059,27 +1074,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 227 
+          UniqueID 230 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 228 
+              UniqueID 231 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 229 
+                  UniqueID 232 
                   Name "lvl_id" 
                   Value 5 
                 }
-                osg::BoolValueObject {
-                  UniqueID 230 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 231 
+                  UniqueID 233 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 234 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 232 
-                  Name "lvl_data" 
+                  UniqueID 235 
+                  Name "lvl_name" 
                   Value "Level_06" 
                 }
               }
@@ -1087,27 +1102,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 233 
+          UniqueID 236 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 234 
+              UniqueID 237 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 235 
+                  UniqueID 238 
                   Name "lvl_id" 
                   Value 6 
                 }
-                osg::BoolValueObject {
-                  UniqueID 236 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 237 
+                  UniqueID 239 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 240 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 238 
-                  Name "lvl_data" 
+                  UniqueID 241 
+                  Name "lvl_name" 
                   Value "Level_07" 
                 }
               }
@@ -1115,27 +1130,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 239 
+          UniqueID 242 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 240 
+              UniqueID 243 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 241 
+                  UniqueID 244 
                   Name "lvl_id" 
                   Value 7 
                 }
-                osg::BoolValueObject {
-                  UniqueID 242 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 243 
+                  UniqueID 245 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 246 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 244 
-                  Name "lvl_data" 
+                  UniqueID 247 
+                  Name "lvl_name" 
                   Value "Level_08" 
                 }
               }
@@ -1143,27 +1158,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 245 
+          UniqueID 248 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 246 
+              UniqueID 249 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 247 
+                  UniqueID 250 
                   Name "lvl_id" 
                   Value 8 
                 }
-                osg::BoolValueObject {
-                  UniqueID 248 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 249 
+                  UniqueID 251 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 252 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 250 
-                  Name "lvl_data" 
+                  UniqueID 253 
+                  Name "lvl_name" 
                   Value "Level_09" 
                 }
               }
@@ -1171,27 +1186,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 251 
+          UniqueID 254 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 252 
+              UniqueID 255 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 253 
+                  UniqueID 256 
                   Name "lvl_id" 
                   Value 9 
                 }
-                osg::BoolValueObject {
-                  UniqueID 254 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 255 
+                  UniqueID 257 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 258 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 256 
-                  Name "lvl_data" 
+                  UniqueID 259 
+                  Name "lvl_name" 
                   Value "Level_10" 
                 }
               }
@@ -1199,27 +1214,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 257 
+          UniqueID 260 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 258 
+              UniqueID 261 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 259 
+                  UniqueID 262 
                   Name "lvl_id" 
                   Value 10 
                 }
-                osg::BoolValueObject {
-                  UniqueID 260 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 261 
+                  UniqueID 263 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 264 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 262 
-                  Name "lvl_data" 
+                  UniqueID 265 
+                  Name "lvl_name" 
                   Value "Level_11" 
                 }
               }
@@ -1227,27 +1242,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 263 
+          UniqueID 266 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 264 
+              UniqueID 267 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 265 
+                  UniqueID 268 
                   Name "lvl_id" 
                   Value 11 
                 }
-                osg::BoolValueObject {
-                  UniqueID 266 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 267 
+                  UniqueID 269 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 270 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 268 
-                  Name "lvl_data" 
+                  UniqueID 271 
+                  Name "lvl_name" 
                   Value "Level_12" 
                 }
               }
@@ -1255,27 +1270,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 269 
+          UniqueID 272 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 270 
+              UniqueID 273 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 271 
+                  UniqueID 274 
                   Name "lvl_id" 
                   Value 12 
                 }
-                osg::BoolValueObject {
-                  UniqueID 272 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 273 
+                  UniqueID 275 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 276 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 274 
-                  Name "lvl_data" 
+                  UniqueID 277 
+                  Name "lvl_name" 
                   Value "Level_13" 
                 }
               }
@@ -1283,27 +1298,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 275 
+          UniqueID 278 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 276 
+              UniqueID 279 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 277 
+                  UniqueID 280 
                   Name "lvl_id" 
                   Value 13 
                 }
-                osg::BoolValueObject {
-                  UniqueID 278 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 279 
+                  UniqueID 281 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 282 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 280 
-                  Name "lvl_data" 
+                  UniqueID 283 
+                  Name "lvl_name" 
                   Value "Level_14" 
                 }
               }
@@ -1311,27 +1326,27 @@ osg::Group {
           }
         }
         osg::Group {
-          UniqueID 281 
+          UniqueID 284 
           UserDataContainer TRUE {
             osg::DefaultUserDataContainer {
-              UniqueID 282 
+              UniqueID 285 
               UDC_UserObjects 4 {
                 osg::IntValueObject {
-                  UniqueID 283 
+                  UniqueID 286 
                   Name "lvl_id" 
                   Value 14 
                 }
-                osg::BoolValueObject {
-                  UniqueID 284 
-                  Name "lvl_unlocked" 
-                }
                 osg::IntValueObject {
-                  UniqueID 285 
+                  UniqueID 287 
                   Name "lvl_score" 
                 }
+                osg::BoolValueObject {
+                  UniqueID 288 
+                  Name "lvl_unlocked" 
+                }
                 osg::StringValueObject {
-                  UniqueID 286 
-                  Name "lvl_data" 
+                  UniqueID 289 
+                  Name "lvl_name" 
                   Value "Level_15" 
                 }
               }

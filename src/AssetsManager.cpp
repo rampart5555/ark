@@ -73,7 +73,7 @@ extern bool writeFile(const char *filename, const char *buf, unsigned int filesi
 
 AssetsManager::AssetsManager()
 {        
-    m_rootPath = "/home/dancioata/g_dev/ark/assets/";    
+    m_rootPath = "/home/dcioata/g_dev/ark/assets/";    
 
     m_etypeToString.insert(std::make_pair(ENTITY_BRICK, "entity_brick"));
     m_etypeToString.insert(std::make_pair(ENTITY_BALL, "entity_ball"));
@@ -424,8 +424,10 @@ bool AssetsManager::getLevelData(const char *ep_file, const char *lvl_name, Leve
         LOG_ERROR("Level file not loaded: %s\n",level_path.c_str());
         return false;       
     }
-    lua_mgr.loadLevelData("Level", data);
-        lua_mgr.close();
+        
+    LOG_INFO("Loading level name:%s from:%s \n", lvl_name, ep_file);
+    lua_mgr.loadLevelData(lvl_name, data);
+    lua_mgr.close();
         
     return true;
 }

@@ -106,7 +106,7 @@ bool Scene::loadLevel(const char *ep_file, const char* lvl_name)
             }
             //printf("%2d ",ldata.m_bricks[tindex]);
         }
-        printf("\n");
+        //printf("\n");
     }
     
     return true;

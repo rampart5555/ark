@@ -26,7 +26,7 @@ AnimTranslate::AnimTranslate(float start, float end, float duration)
     //m_motion = new osgAnimation::OutSineMotion(start_value, m_duration, end_value);
     m_motion = new osgAnimation::OutBackMotion(m_startValue, m_duration, m_endValue);
     m_reverse = false;
-    printf(" AnimTranslate %f <->%f\n", m_startValue,m_endValue);
+    LOG_DEBUG(" AnimTranslate %f <->%f\n", m_startValue,m_endValue);
 }
 
 AnimTranslate::~AnimTranslate()
@@ -95,7 +95,7 @@ AnimFade::AnimFade(Menu *menu, float start, float end, float duration)
     m_status = STOP;  
     m_motion = new osgAnimation::LinearMotion(m_startValue, m_duration, m_endValue);
     m_reverse = false;
-    printf(" AnimFade %f <->%f\n", m_startValue,m_endValue);    
+    LOG_DEBUG(" AnimFade %f <->%f\n", m_startValue,m_endValue);    
     m_menu = menu;
     m_callback = NULL;
     m_callbackArgs = NULL;

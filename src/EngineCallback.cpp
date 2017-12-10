@@ -180,12 +180,14 @@ void Scene_load_level(void *args)
     SceneEpisode* ep_data;
     SceneLevel *sdata = static_cast<SceneLevel*>(args);    
     ep_data = LevelManager::instance().getEpisode(sdata->m_epId);
+
     if(ep_data != NULL)
     {
-        LOG_INFO("Loading level: %s from: %s\n", ep_data->m_title);
-    }
-    //Scene::instance().loadScene(sdata->m_file.c_str());
-    LevelManager::instance().setCurrent(sdata->m_epId,sdata->m_id);
+        LOG_INFO("Loading level: %s from: %s\n", sdata->m_name.c_str(), ep_data->m_file.c_str());
+        LevelManager::instance().setCurrent(sdata->m_epId, sdata->m_id);
+        Scene::instance().loadScene(ep_data->m_file.c_str(),sdata->m_name.c_str());
+    }    
+    
 
 }
 
