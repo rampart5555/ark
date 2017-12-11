@@ -49,9 +49,9 @@ void Entity::setModel(osg::MatrixTransform& tr)
 void Entity::setUniforms()
 {
     float r,g,b;
-    r = ((m_color>>24)&0xff)/255.0;
-    g = ((m_color>>16)&0xff)/255.0;
-    b = ((m_color>>8) &0xff)/255.0;
+    r = ((m_color>>16) & 0xff)/255.0;
+    g = ((m_color>>8 ) & 0xff)/255.0;
+    b = ((m_color>>0 ) & 0xff)/255.0;   
     //LOG_DEBUG("Entity::setUniforms()=> %s %d %f %f %f\n", m_name.c_str(), m_color,r,g,b);
     osg::Uniform* uEntityDiffuseColor = new osg::Uniform("uEntityDiffuseColor",osg::Vec4(r,g,b,1.0));
     osg::StateSet *ss = m_transform->getOrCreateStateSet();

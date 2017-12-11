@@ -126,6 +126,7 @@ void Scene::addEntityProps(Entity *ent)
                 ent->setHits(prop->m_hits);
                 ent->setValue(prop->m_value);
                 ent->setColor(prop->m_color);
+                printf("setting entity prop: %d color:%8x\n",prop->m_id, prop->m_color);
                 break;                
             }
         }

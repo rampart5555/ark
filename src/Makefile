@@ -57,6 +57,7 @@ LOCAL_SRC_FILES:=main.cpp\
     
 
 LOCAL_OBJ_FILES:=main.o\
+    Utils.o\
     Logging.o\
     OsgMain.o\
     AssetsManager.o\

@@ -1,4 +1,4 @@
-ROOT_PATH = "/home/dcioata/g_dev/ark/assets/"
+ROOT_PATH = "/home/dancioata/g_dev/ark/assets/"
 Resources={
     { rtype="osgt", rid="scene_models",  
         file1_path=ROOT_PATH .. "models/scene_models.osgt",   file2_path="" },

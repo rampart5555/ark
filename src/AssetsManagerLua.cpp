@@ -108,12 +108,13 @@ void AssetsManagerLua::getPropVector(lua_State* L, const char *table_name, std::
     while(lua_next(L, -2) != 0)
     {
         EntityProp prop;                
-        getInt(L,"id",prop.m_id);
-        getInt(L,"color",prop.m_color);
-        getInt(L,"hits",prop.m_hits);
-        getInt(L,"value",prop.m_value);
+        getInt(L,"id", prop.m_id);
+        getInt(L,"color", prop.m_color);
+        getInt(L,"hits", prop.m_hits);
+        getInt(L,"value", prop.m_value);
         lua_pop(L, 1);  
         items->push_back(prop);
+        //printf("id:%d color:%8x value:%d \n",prop.m_id, prop.m_color, prop.m_value);
     }
     lua_pop(L, 1);
     

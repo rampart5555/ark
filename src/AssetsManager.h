@@ -29,8 +29,7 @@ class AssetsManager
         osg::MatrixTransform* getWidgetModel(const char*);
         osg::Program* getProgram(const char*);
         osg::Texture2D* getTexture(const char*);
-        osgText::Font*  getFont(const char*);
-        char* getLevelData(const char*);
+        osgText::Font*  getFont(const char*);        
         bool getLevelData(const char *, const char*, LevelData *);
         void getEntityProps(const char *, EntityProps *);
         std::vector<MenuItem>*getMenuItems(const char*);

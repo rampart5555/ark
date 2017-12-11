@@ -3,7 +3,7 @@
 #include <osgAnimation/Bone>
 #include "Logging.h"
 #include "AssetsManager.h"
-
+#include <Utils.h>
 
 typedef struct { 
     const char* name;
@@ -73,7 +73,7 @@ extern bool writeFile(const char *filename, const char *buf, unsigned int filesi
 
 AssetsManager::AssetsManager()
 {        
-    m_rootPath = "/home/dcioata/g_dev/ark/assets/";    
+    m_rootPath = "/home/dancioata/g_dev/ark/assets/";    
 
     m_etypeToString.insert(std::make_pair(ENTITY_BRICK, "entity_brick"));
     m_etypeToString.insert(std::make_pair(ENTITY_BALL, "entity_ball"));
@@ -381,20 +381,9 @@ osgText::Font*  AssetsManager::getFont(const char *font_name)
     return NULL;
 }
 
-char* AssetsManager::getLevelData(const char *tmx_level)
-{
-    char *buf=NULL;
-    unsigned int bufsize;
-    buf = readBinaryFile(tmx_level, &bufsize);
-    if(buf==NULL)
-    {
-        LOG_ERROR("AssetsManager::getLevel: Level file not found %s", tmx_level);
-    }
-    return buf;
-}
-
 void AssetsManager::getEntityProps(const char *file_name, EntityProps *data)
 {
+    LOG_INFO("Getting entity props from: %s\n",file_name);
     AssetsManagerLua lua_mgr;
     unsigned int buf_size;
     std::string file_path = m_rootPath + file_name;
@@ -413,11 +402,28 @@ void AssetsManager::getEntityProps(const char *file_name, EntityProps *data)
 }
 
 bool AssetsManager::getLevelData(const char *ep_file, const char *lvl_name, LevelData *data)
-{
-    AssetsManagerLua lua_mgr;
-    unsigned int buf_size;
+{   
+    AssetsManagerLua lua_mgr;      
     std::string level_path = m_rootPath + ep_file;
-    const char *script = readBinaryFile(level_path.c_str(),&buf_size);
+    osg::ref_ptr<CharBuffer> char_buf;
+    if(m_assetList.count(ep_file)==0)
+    {
+        char_buf = new CharBuffer();
+        bool rf = char_buf->createFromFile(level_path.c_str());
+        if(rf==true)
+            m_assetList.insert(std::make_pair(ep_file, char_buf));
+    } 
+    else
+    {
+        LOG_INFO("Found level key for: %s\n", ep_file);
+    }
+    char_buf = dynamic_cast<CharBuffer*>(m_assetList[ep_file].get());
+    if(char_buf==NULL) 
+    {
+        LOG_ERROR("Invalid cast for CharBuffer, key: %s\n", ep_file);
+        return false;
+    }
+    const char *script = char_buf->getData();
     bool res = lua_mgr.loadScript(script);
     if (res==false)
     {
