@@ -57,7 +57,7 @@ class Entity : public osg::Referenced
         int  getSubType() { return m_subtype; }
         void updateInitialTransform();
 
-        virtual void update();
+        virtual void update(float);
         virtual void setPosition(osg::Vec3 pos);
         virtual osg::Vec3& getPosition();
         /* physics */

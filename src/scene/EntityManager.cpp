@@ -311,11 +311,14 @@ void EntityManager::clear()
         LOG_WARN("%s", "Disable physics first\n");
         return;
     }
+    m_sceneNode->removeChildren(0, m_entityList.size());
+    /*
     std::list< osg::ref_ptr<Entity> >::iterator it;
     for (it=m_entityList.begin(); it!=m_entityList.end(); ++it)
     {
-        m_sceneNode->removeChild((*it)->getEntityNode());
-    }    
+        m_sceneNode->removeChild((*it)->getEntityNode());        
+    } 
+    */   
     m_entityList.clear();
     m_entitiesNum = 0;
     m_brickNumber = 0;
@@ -332,7 +335,7 @@ void EntityManager::update(float passedTime)
     std::list<osg::ref_ptr<Entity> >::iterator it, tmp_it;
     for(it=m_entityList.begin(); it!=m_entityList.end(); it++)
     {
-        (*it)->update();
+        (*it)->update(passedTime);
         if ((*it)->isValid()==false)        
         {
             tmp_it=it++;

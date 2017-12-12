@@ -42,13 +42,13 @@ EntityPaddle::EntityPaddle(Entity &ent):Entity(ent)
     m_index = 0;
 }
 
-void EntityPaddle::update()
+void EntityPaddle::update(float passedTime)
 {
-    Entity::update();
+    Entity::update(passedTime);
     if((m_hasTurret == true) && (m_index > 60))
     {
         m_index = 0;
-        LOG_INFO("%s","spwnEntityBullet bullet");
+        LOG_INFO("%s\n","spwnEntityBullet bullet");
         /* 
             compute paddle position and canon_left/cannon right 
         */
@@ -65,8 +65,7 @@ void EntityPaddle::update()
             Scene::instance().getEntityManager().spawnEntity(ENTITY_BULLET, bullet_pos_l);
         }
     }
-    m_index++;
-        
+    m_index++;        
 }
 
 void EntityPaddle::beginContact(Entity *ent, b2Contact *contact)

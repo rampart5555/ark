@@ -12,15 +12,19 @@ EntityBullet::EntityBullet(Entity &ent):Entity(ent)
     
 }
 
-void EntityBullet::update()
+void EntityBullet::update(float passedTime)
 {
-    Entity::update();
+    Entity::update(passedTime);
     
 }
 
 void EntityBullet::beginContact(Entity *ent, b2Contact *contact)
-{    
-
+{       
+    if((ent->getType()==ENTITY_BRICK)||(ent->getType()==ENTITY_WALL_TOP))
+    {
+         printf("%d\n",ent->getType());
+         m_valid = false;
+    }
 }
 
 void EntityBullet::endContact(Entity *ent, b2Contact *contact)

@@ -6,7 +6,7 @@ class EntityBall : public Entity
      public:
         EntityBall();   
         EntityBall(Entity& ent);
-        virtual void update();
+        virtual void update(float );
         virtual void beginContact(Entity*, b2Contact*);
         virtual void endContact(Entity*, b2Contact*);
         virtual bool enablePhysics();

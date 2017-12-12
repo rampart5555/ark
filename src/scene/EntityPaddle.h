@@ -6,7 +6,7 @@ class EntityPaddle : public Entity
      public:
         EntityPaddle();   
         EntityPaddle(Entity& ent);
-        virtual void update();
+        virtual void update(float);
         virtual void beginContact(Entity*, b2Contact*);
         virtual void endContact(Entity*, b2Contact*);
         virtual bool enablePhysics();

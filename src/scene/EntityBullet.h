@@ -6,7 +6,7 @@ class EntityBullet : public Entity
      public:
         EntityBullet();   
         EntityBullet(Entity& ent);
-        virtual void update();
+        virtual void update(float passedTime);
         virtual void beginContact(Entity*, b2Contact*);
         virtual void endContact(Entity*, b2Contact*);
         virtual bool enablePhysics();

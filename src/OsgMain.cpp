@@ -122,8 +122,9 @@ bool OsgMain::init(int x, int y, int width, int height)
 	cam->setViewMatrixAsLookAt(osg::Vec3(0.0f, 2.0f, -7.0f)*bs.radius(), osg::Vec3(0.0,0.0,0.0),osg::Vec3(0.0f,1.0f,0.0f));	
 	osg::DisplaySettings::instance()->setNumMultiSamples( 4 ); 
     m_viewer->realize();
-    std::string osgtfile = LevelManager::instance().getOsgtFile();
-    build_scene_data(osgtfile.c_str());
+    // run this only to create levels.osgt for the first time
+    //std::string osgtfile = LevelManager::instance().getOsgtFile();
+    //build_scene_data(osgtfile.c_str());
     return true;
 }
 

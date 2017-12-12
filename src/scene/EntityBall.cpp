@@ -12,9 +12,9 @@ EntityBall::EntityBall(Entity &ent):Entity(ent)
     m_ajustBallDir=false;
 }
 
-void EntityBall::update()
+void EntityBall::update(float passedTime)
 {
-    Entity::update();
+    Entity::update(passedTime);
     if(m_ajustBallDir == true)
     {
         m_ajustBallDir = false;

@@ -127,7 +127,7 @@ void Entity::updateInitialTransform()
     
 }
 
-void Entity::update()
+void Entity::update(float passedTime)
 {
     if(m_phyActive==false)
         return;
@@ -258,12 +258,19 @@ bool Entity::disablePhysics()
 
 void Entity::beginContact(Entity *ent, b2Contact *contact)
 {
-    if( (m_type==ENTITY_BRICK) && (ent->getType() == ENTITY_BALL) )
+    if( m_type==ENTITY_BRICK )
     {
-        m_hits--;
+        if(ent->getType() == ENTITY_BALL)
+        {
+            m_hits--;            
+        }
+        else if(ent->getType() == ENTITY_BULLET)
+        {
+            m_hits--;
+        }
         if(m_hits <= 0 )
             m_valid = false;        
-    }
+    }    
     else if ( (m_type==ENTITY_POWERUP) && (ent->getType() == ENTITY_PADDLE))
     {
         m_valid = false;
