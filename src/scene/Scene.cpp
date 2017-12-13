@@ -184,14 +184,3 @@ void Scene::loadShaders()
 #endif    
     
 }
-
-void Scene::updateLevelScore(int score)
-{
-    m_levelScore += score;
-}
-
-int Scene::getLevelScore()
-{
-    return m_levelScore;
-}
-

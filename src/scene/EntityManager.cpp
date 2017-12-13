@@ -288,7 +288,7 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
         m_brickNumber--;
         // update score   
         int score =  entity->getValue();        
-        MenuSceneHud_update_score(&score);
+        Level_update_score(&score);
                 
         if(entity->getPowerup() > 0)
         {
@@ -395,10 +395,7 @@ void EntityManager::levelComplete()
 {
     LOG_INFO("%s", "*** LEVEL COMPLETE ***\n");
     m_physicsActive = false;
-    Scene_level_complete(NULL);
-    //EngineEventArgs args;
-    //args.arg1 = GameManager::instance()->getLevelScore();
-    //GameManager::instance()->handleMenuEvent(MENU_LEVEL_COMPLETE_SHOW, &args);
+    Scene_level_complete(NULL);    
 }
 
 /* debug function*/

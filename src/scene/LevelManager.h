@@ -43,13 +43,17 @@ class LevelManager
         void setLevelData(osg::Group *, SceneLevel*);
         void getEpisodeData(osg::Group *, SceneEpisode*);
         void getLevelData(osg::Group *, SceneLevel*);
-
+        //score
+        void updateScore(int);
+        int getScore();
+        void resetScore();
     private:        
         LevelManager();
         std::vector<SceneEpisode*> m_episodes;
         std::string m_osgFile;
         unsigned int m_epId;
-        unsigned int m_lvlId;                
+        unsigned int m_lvlId;
+        int m_levelScore;                
 };
 
 void build_scene_data(const char *);

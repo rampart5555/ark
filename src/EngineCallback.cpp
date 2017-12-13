@@ -97,7 +97,7 @@ void MenuSceneHud_show(void *args)
     MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();    
     msh->show();
 }
-
+#if 0
 void MenuSceneHud_update_score(void *args)
 {
 
@@ -107,7 +107,7 @@ void MenuSceneHud_update_score(void *args)
     msh->updateScore( Scene::instance().getLevelScore() );
 
 }
-
+#endif
 void MenuSceneHud_button_levels_push(void *args)
 {
     MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();    
@@ -180,6 +180,11 @@ void Scene_load_level(void *args)
     SceneEpisode* ep_data;
     SceneLevel *sdata = static_cast<SceneLevel*>(args);    
     ep_data = LevelManager::instance().getEpisode(sdata->m_epId);
+    
+    /* score */
+    LevelManager::instance().resetScore();
+    MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();
+    msh->updateScore( 0 );
 
     if(ep_data != NULL)
     {
@@ -257,6 +262,16 @@ void Scene_unlock_next_level(void *args)
     char buf[10];
     sprintf(buf, "%d", sl->m_id + 1);
     but->setLabel(buf);        
+}
+
+/*Levels Callback*/
+void Level_update_score(void *args)
+{
+    int *score = static_cast<int*>(args);            
+    LevelManager::instance().updateScore(*score);
+    MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();
+    msh->updateScore( LevelManager::instance().getScore() );
+    
 }
 
 
