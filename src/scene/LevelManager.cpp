@@ -53,7 +53,8 @@ void build_scene_data(const char *osgt_file)
 LevelManager::LevelManager()
 {
     m_osgFile = AssetsManager::instance().getRootPath() + "levels/levels.osgt";    
-    m_levelScore = 0;    
+    m_levelScore = 0;
+    m_lives = 3;    
     readLevelData();
     //dump();
 }
@@ -224,6 +225,7 @@ void LevelManager::unlockNextLevel(unsigned int& ep_id, unsigned int &lvl_id)
     if(sl!=NULL)
         sl->m_unlocked=true;
 }
+
 /* score */
 void LevelManager::updateScore(int  sc)
 {
@@ -236,4 +238,13 @@ int LevelManager::getScore()
 void LevelManager::resetScore()
 {
     m_levelScore = 0;
+}
+/*lives*/
+void LevelManager::updateLives(int life)
+{
+    m_lives += life;
+}
+int LevelManager::getLives()
+{
+    return m_lives;
 }

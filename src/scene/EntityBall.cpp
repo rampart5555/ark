@@ -77,6 +77,10 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
             m_ajustBallDir = true;
         }
     }
+    if(ent->getType()==ENTITY_WALL_BOTTOM)
+    {
+        m_valid = false;
+    }
 }
 void EntityBall::setSpeed(float speed)
 {

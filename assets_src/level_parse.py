@@ -5,6 +5,7 @@ Ep_1 = [
     "Level_03.tmx",
     "Level_04.tmx",
     "Level_05.tmx",
+    "Level_06.tmx",
 ]
 
 def buildLevel(fname):

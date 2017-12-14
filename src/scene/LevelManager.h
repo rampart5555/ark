@@ -47,13 +47,17 @@ class LevelManager
         void updateScore(int);
         int getScore();
         void resetScore();
+        /*lifes - a negative number will decrese the lives */        
+        void updateLives(int);
+        int  getLives();
     private:        
         LevelManager();
         std::vector<SceneEpisode*> m_episodes;
         std::string m_osgFile;
         unsigned int m_epId;
         unsigned int m_lvlId;
-        int m_levelScore;                
+        int m_levelScore;
+        int m_lives;                
 };
 
 void build_scene_data(const char *);

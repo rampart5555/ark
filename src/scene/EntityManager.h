@@ -38,6 +38,8 @@ class EntityManager
         
      private:        
         std::list < osg::ref_ptr<Entity> > m_entityList;
+        /* no ref_ptr for ball list */
+        std::list < EntityBall *> m_ballList;
         bool m_physicsActive;
         osg::MatrixTransform *m_sceneNode;
         EntityPaddle *m_paddle;

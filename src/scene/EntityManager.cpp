@@ -163,7 +163,9 @@ void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
         else if(entity->getType() == ENTITY_BRICK)                    
             m_brickNumber++;        
         else if(entity->getType() == ENTITY_POWERUP)        
-            m_powerupNumber++;        
+            m_powerupNumber++;
+        else if(entity->getType()==ENTITY_BALL)     
+            m_ballList.push_back(entity->asEntityBall());
         m_entitiesNum++;
         /* enable physics for spawned entities */       
         if(m_physicsActive == true)
@@ -301,6 +303,15 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
         m_powerupNumber--;
         PowerupType ptype = static_cast<PowerupType>(entity->getSubType());
         setPowerup(ptype);
+    }
+    else if(entity->getType() == ENTITY_BALL)
+    {
+        LOG_INFO("Removing ball from entity list: %s\n","");
+        m_ballList.remove(entity->asEntityBall());
+        if(m_ballList.size()==0)
+        {
+            Scene_level_failed(NULL);
+        }
     }
 }
 

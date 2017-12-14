@@ -37,6 +37,7 @@ void Scene_paddle_unselect(void *args);
 void Scene_level_complete(void *args);
 void Scene_level_complete(void *args);
 void Scene_unlock_next_level(void *args);
+void Scene_level_failed(void *args);
 
 /*levels*/
 void Level_update_score(void *args);

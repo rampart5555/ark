@@ -230,7 +230,10 @@ void Scene_level_complete(void *args)
     Scene_unlock_next_level(args);
     
 }
-
+void Scene_level_failed(void *args)
+{
+    LOG_INFO("SceneLevelFailed:%s\n","");
+}
 void Scene_unlock_next_level(void *args)
 {
     unsigned int ep_id, lvl_id;
