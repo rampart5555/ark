@@ -213,56 +213,43 @@ void EntityManager::setPowerup(PowerupType ptype)
         case POWERUP_BALLS:
             {
                 LOG_INFO("Powerup BALLS %d \n", ptype);
-                
-                std::list< osg::ref_ptr<EntityBall> > new_ball_list;
-                std::list< osg::ref_ptr<Entity> >::iterator it;                           
-                for (it = m_entityList.begin(); it != m_entityList.end(); ++it)
+                unsigned int blst_size = m_ballList.size();
+                std::list< EntityBall* >::iterator it = m_ballList.begin();
+                for(unsigned int i=0; i<blst_size; i++)
                 {
-                    if((*it)->getType() == ENTITY_BALL)
+                    EntityBall *ball = *it++;                    
+                    for(int j=0;j<3;j++)
                     {
-                        for(int i=0;i<3;i++)
-                        {
-                            //EntityBall *ball = dynamic_cast<EntityBall*> ((*it).get());
-                            EntityBall *ball = (*it)->asEntityBall();
-                            osg::ref_ptr<Entity> ent = createEntity(ENTITY_BALL);
-                            EntityBall *new_ball = ent->asEntityBall();
-                            osg::Vec3 &ent_pos = ball->getPosition();
-                            new_ball->setPosition(ent_pos);
-                            new_ball->setSpeed(2.0);
-                            if(i==0)
-                                new_ball->setDir(osg::Vec2(-0.5, 0.5) );
-                            if(i==1)    
-                                new_ball->setDir(osg::Vec2( 0.5, -0.5) );
-                            if (i==2)
-                                new_ball->setDir( osg::Vec2( 0.0, 1.0) );
-                            new_ball_list.push_back(new_ball);    
-                        }
-                    }                    
-                }
-                /* avoid infinite loop if new ball is added to m_entityList*/
-                std::list< osg::ref_ptr<EntityBall> >::iterator it_ball;    
-                for(it_ball = new_ball_list.begin(); it_ball != new_ball_list.end(); ++it_ball)
-                    addEntity(*it_ball);
-                new_ball_list.clear();    
+                        osg::ref_ptr<Entity> ent = createEntity(ENTITY_BALL);
+                        EntityBall *new_ball = ent->asEntityBall();
+                        osg::Vec3& ent_pos = ball->getPosition();
+                        new_ball->setPosition(ent_pos);
+                        new_ball->setSpeed(2.0);
+                        if(j==0)
+                            new_ball->setDir(osg::Vec2(-0.5, 0.5) );
+                        if(j==1)    
+                            new_ball->setDir(osg::Vec2( 0.5, -0.5) );
+                        if (j==2)
+                            new_ball->setDir( osg::Vec2( 0.0, 1.0) );
+                        addEntity(new_ball);                         
+                    }
+                }                                  
             }         
             break;
         case POWERUP_SLOW:    
         case POWERUP_FAST:
             {            
                 LOG_INFO("Powerup FAST/SLOW %d\n", ptype);            
-                std::list< osg::ref_ptr<Entity> >::iterator it;
-                for (it = m_entityList.begin(); it != m_entityList.end(); ++it)
-                {                    
-                    if((*it)->getType() == ENTITY_BALL)
-                    {
-                        EntityBall *ball = (*it)->asEntityBall();
-                        int speed = ball->getSpeed();
-                        if(ptype == POWERUP_SLOW)
-                            ball->setSpeed(speed - 1.0);
-                        else
-                            ball->setSpeed(speed + 1.0);
+                std::list<EntityBall*>::iterator it;
+                for (it = m_ballList.begin(); it != m_ballList.end(); ++it)
+                {                                        
+                    EntityBall *ball = (*it);
+                    int speed = ball->getSpeed();
+                    if(ptype == POWERUP_SLOW)
+                        ball->setSpeed(speed - 1.0);
+                    else
+                        ball->setSpeed(speed + 1.0);
                             
-                    }                        
                 }                                
             }    
             break;
