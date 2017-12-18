@@ -99,7 +99,10 @@ class MenuLevelComplete : public Menu
 {
     public:
         MenuLevelComplete(MenuManager*);
-        virtual void createMenu();            
+        virtual void createMenu();  
+        void updateScore(int);
+    protected:
+        osg::ref_ptr <Widget> m_score;          
 };
 
 class MenuLevelFailed : public Menu

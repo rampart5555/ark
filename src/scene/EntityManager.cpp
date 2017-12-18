@@ -207,12 +207,11 @@ void EntityManager::spawnEntity(EntityType etype, osg::Vec3 pos)
 
 void EntityManager::setPowerup(PowerupType ptype)
 {
-
+    LOG_INFO("setPowerup:% %s", powerupToStr( ptype));
     switch(ptype)
     {
         case POWERUP_BALLS:
-            {
-                LOG_INFO("Powerup BALLS %d \n", ptype);
+            {                
                 unsigned int blst_size = m_ballList.size();
                 std::list< EntityBall* >::iterator it = m_ballList.begin();
                 for(unsigned int i=0; i<blst_size; i++)
@@ -230,8 +229,8 @@ void EntityManager::setPowerup(PowerupType ptype)
                         if(j==1)    
                             new_ball->setDir(osg::Vec2( 0.5, -0.5) );
                         if (j==2)
-                            new_ball->setDir( osg::Vec2( 0.0, 1.0) );
-                        addEntity(new_ball);                         
+                            new_ball->setDir( osg::Vec2( 0.0, 1.0) );                        
+                        addEntity(ent);                         
                     }
                 }                                  
             }         
@@ -239,26 +238,24 @@ void EntityManager::setPowerup(PowerupType ptype)
         case POWERUP_SLOW:    
         case POWERUP_FAST:
             {            
-                LOG_INFO("Powerup FAST/SLOW %d\n", ptype);            
+                
                 std::list<EntityBall*>::iterator it;
-                for (it = m_ballList.begin(); it != m_ballList.end(); ++it)
+                for (it = m_ballList.begin(); it != m_ballList.end(); it++)
                 {                                        
                     EntityBall *ball = (*it);
-                    int speed = ball->getSpeed();
+                    float speed = ball->getSpeed();
                     if(ptype == POWERUP_SLOW)
-                        ball->setSpeed(speed - 1.0);
+                        ball->setSpeed(speed * 0.8);
                     else
-                        ball->setSpeed(speed + 1.0);
+                        ball->setSpeed(speed * 1.2);
                             
                 }                                
             }    
             break;
-        case POWERUP_LIFE:
-            LOG_INFO("Powerup LIFE %d\n", ptype);
+        case POWERUP_LIFE:            
             break;  
                   
-        case POWERUP_CANNON:
-            LOG_INFO("Powerup CANNON %d\n", ptype);
+        case POWERUP_CANNON:            
             break;
             
         default:

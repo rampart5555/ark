@@ -134,7 +134,9 @@ void MenuLevelComplete_show(void* args)
 {
     LOG_INFO("%s","MenuLevelComplete_show\n");
     MenuLevelComplete *mlc = MenuManager::instance().getMenuLevelComplete();    
-    mlc->show();
+    /* get current level score */
+    mlc->updateScore(LevelManager::instance().getScore());
+    mlc->show();    
     
 }
 

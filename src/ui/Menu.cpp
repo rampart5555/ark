@@ -347,10 +347,25 @@ void MenuLevelComplete::createMenu()
     }
     for (unsigned int i; i<items->size(); i++)
     {
-        Widget *w = new Widget(items->at(i));
+        MenuItem itm = items->at(i);
+        Widget *w = new Widget(itm);
         m_transform->addChild(w->getNode());
-        LOG_DEBUG("Add item:%s\n",(items->at(i)).m_label.c_str());
+        LOG_DEBUG("Add item:%s\n",(itm).m_label.c_str());
+        if(itm.m_name=="Score")
+        {
+            m_score=w;
+        }
     }
+}
+
+void MenuLevelComplete::updateScore(int score)
+{    
+    char buf[32];
+    sprintf(buf,"%d",score);
+    if(m_score.valid())    
+        m_score->setLabel(buf);
+    else
+        LOG_WARN("Invalid widget score:%s\n","");
 }
 
 /////////////////////////////////////////
