@@ -77,7 +77,7 @@ MenuSceneHud =
         model="widget_square", 
         cb="", 
         label="Scene Hud", 
-        x=0.0, y=4.0, width=4.0, height=0.75  
+        x=0.0, y=5.0, width=4.0, height=0.75  
     },    
     { 
         name="Start",
@@ -98,7 +98,7 @@ MenuSceneHud =
         model="widget_square", 
         cb="", 
         label="0", 
-        x=3.0, y=4.5, width=1.0, height=1.0  
+        x=3.0, y=5.0, width=1.0, height=0.75  
     }
     
 }

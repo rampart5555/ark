@@ -63,12 +63,11 @@ bool EntityBullet::enablePhysics()
     {
         LOG_WARN("%s", "EntityBall::enablePhysics(): Physics already active\n");
         return true;
-    }
-    printf("EntityBall::enablePhysics(): Physics enable for entity:%s\n", m_name.c_str());
+    }    
     osg::Geode *geo = dynamic_cast<osg::Geode*>(m_transform->getChild(0));
     if(geo==NULL)
     {
-        printf("EntityBall::enablePhysics(): dynamic cast to geode fail\n");
+        LOG_WARN("EntityBall::enablePhysics(): dynamic cast to geode fail %s\n","");
         return false;
     }
     setCircleShape(geo);

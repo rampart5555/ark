@@ -9,7 +9,7 @@ Scene::Scene()
 {
     m_sceneNode = new osg::MatrixTransform();
     m_entityProps = new EntityProps;
-    AssetsManager::instance().getEntityProps("lua/entity_props.lua", m_entityProps);
+    AssetsManager::instance().getEntityProps("lua/entity_props.lua", m_entityProps);    
 }
 
 Scene::~Scene()
@@ -27,6 +27,8 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
 {    
     clear();
     
+    loadStaticScene();
+
     EntityType ent_env_arr[] = {
         ENTITY_WALL_TOP,
         ENTITY_WALL_LEFT,
@@ -55,6 +57,7 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
         }
     }
     
+               
     //loadTMXMap(tmx_file);
     loadLevel(ep_file, lvl_name);
     loadShaders();
@@ -183,4 +186,26 @@ void Scene::loadShaders()
     ss->addUniform(baseTextureSampler);     
 #endif    
     
+}
+
+/* for static scene physics is not enabled */
+void Scene::loadStaticScene()
+{
+    osg::MatrixTransform *model = AssetsManager::instance().getEntityModel("entity_paddle_support");
+    osg::Vec3f pos, scale;
+    osg::Quat rot, so;
+    osg::Matrix m = model->getMatrix();
+    m.decompose(pos, rot, scale, so);       
+    m_sceneNode->addChild(model);
+    osg::MatrixTransform *pm = AssetsManager::instance().getEntityModel("entity_paddle");
+    float px=0;
+    for(int i=0;i<3;i++)
+    {        
+        osg::MatrixTransform *mt = new osg::MatrixTransform(*pm);        
+        osg::Matrix new_tr; 
+        new_tr.makeTranslate(pos.x()-1.0+px,pos.y(),pos.z());
+        mt->setMatrix(new_tr);
+        m_sceneNode->addChild(mt);
+        px+=0.5;
+    }
 }

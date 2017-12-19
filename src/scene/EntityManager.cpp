@@ -51,17 +51,16 @@ b2World *EntityManager::m_world = NULL;
 
 EntityManager::EntityManager()
 {
-    m_sceneNode = new osg::MatrixTransform();
+    m_sceneNode = NULL;
     m_paddle = NULL;
     m_entitiesNum = 0;
     m_brickNumber = 0;
-    m_powerupNumber = 0;
-    
+    m_powerupNumber = 0;        
 }
 
 void EntityManager::setSceneNode(osg::MatrixTransform *node)
 {
-    m_sceneNode = node;
+    m_sceneNode = node;    
 }
 
 void EntityManager::startPhysics()
@@ -306,14 +305,9 @@ void EntityManager::clear()
         LOG_WARN("%s", "Disable physics first\n");
         return;
     }
-    m_sceneNode->removeChildren(0, m_entityList.size());
-    /*
-    std::list< osg::ref_ptr<Entity> >::iterator it;
-    for (it=m_entityList.begin(); it!=m_entityList.end(); ++it)
-    {
-        m_sceneNode->removeChild((*it)->getEntityNode());        
-    } 
-    */   
+    if(m_sceneNode == NULL)
+        return;
+    m_sceneNode->removeChildren(0, m_entityList.size());       
     m_entityList.clear();
     m_entitiesNum = 0;
     m_brickNumber = 0;

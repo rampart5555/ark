@@ -18,6 +18,7 @@ class Scene
             return instance;
         }
         void clear();
+        void loadStaticScene(); // no physics for this scene
         void loadScene(const char*, const char*);
         bool loadLevel(const char*,const char*);
         osg::MatrixTransform *getSceneNode();

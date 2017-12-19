@@ -28,7 +28,7 @@ class EntityManager
         void levelComplete(); 
         void paddleSelect(void *args);
         void paddleMove(void *args);       
-        void paddleUnselect(void *args);
+        void paddleUnselect(void *args);        
         void spawnPowerup(Entity*);
         void spawnEntity(EntityType etype, osg::Vec3 pos);
         void setPowerup(PowerupType);
@@ -40,6 +40,7 @@ class EntityManager
         std::list < osg::ref_ptr<Entity> > m_entityList;
         /* no ref_ptr for ball list */
         std::list < EntityBall *> m_ballList;
+        std::list < osg::ref_ptr <Entity> > m_paddleList;
         bool m_physicsActive;
         osg::MatrixTransform *m_sceneNode;
         EntityPaddle *m_paddle;
