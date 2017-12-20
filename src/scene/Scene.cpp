@@ -9,7 +9,9 @@ Scene::Scene()
 {
     m_sceneNode = new osg::MatrixTransform();
     m_entityProps = new EntityProps;
-    AssetsManager::instance().getEntityProps("lua/entity_props.lua", m_entityProps);    
+    AssetsManager::instance().getEntityProps("lua/entity_props.lua", m_entityProps);  
+    m_sceneNode->addChild(m_entityMgr.getNodeEntMgr());
+    m_entityMgr.loadShaders();
 }
 
 Scene::~Scene()
@@ -26,7 +28,7 @@ void Scene::clear()
 void Scene::loadScene(const char *ep_file, const char* lvl_name)
 {    
     clear();
-    
+
     loadStaticScene();
 
     EntityType ent_env_arr[] = {
@@ -39,9 +41,7 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
         ENTITY_BACKGROUND,
         ENTITY_NONE //last entry        
     };    
-    
-    m_entityMgr.setSceneNode(m_sceneNode);
-    
+            
     osg::ref_ptr <Entity> ent;
     for(unsigned int i=0; ; i++ )
     {
@@ -176,7 +176,7 @@ osg::MatrixTransform* Scene::getSceneNode()
 void Scene::loadShaders()
 {
     //AssetsManager::loadShaders();
-    osg::Program *program = AssetsManager::instance().getProgram("model_color");
+    osg::Program *program = AssetsManager::instance().getProgram("default_color");
     osg::StateSet *ss = m_sceneNode->getOrCreateStateSet();
     ss->setAttributeAndModes(program, osg::StateAttribute::ON );
 #if 0    

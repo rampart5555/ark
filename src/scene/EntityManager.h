@@ -15,8 +15,7 @@ class EntityManager
     public:
         static b2World *m_world;
         
-        EntityManager();      
-        void setSceneNode(osg::MatrixTransform*);
+        EntityManager();              
         void startPhysics();
         void stopPhysics();
         osg::ref_ptr <Entity> createEntity(EntityType etype);
@@ -34,7 +33,8 @@ class EntityManager
         void setPowerup(PowerupType);
         //debug utilities
         const char* powerupToStr(PowerupType);
-        
+        osg::MatrixTransform* getNodeEntMgr();
+        void loadShaders();
         
      private:        
         std::list < osg::ref_ptr<Entity> > m_entityList;
@@ -42,7 +42,7 @@ class EntityManager
         std::list < EntityBall *> m_ballList;
         std::list < osg::ref_ptr <Entity> > m_paddleList;
         bool m_physicsActive;
-        osg::MatrixTransform *m_sceneNode;
+        osg::ref_ptr<osg::MatrixTransform> m_nodeEntMgr;
         EntityPaddle *m_paddle;
         int m_entitiesNum;
         int m_brickNumber;

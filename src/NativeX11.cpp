@@ -17,7 +17,7 @@ char* readBinaryFile(const char *filename, unsigned int *file_len)
         buffer[length]=0;
         fclose (fp);
     }
-    *file_len = length;
+    *file_len = length+1;
     return buffer;
 }    
 

@@ -17,8 +17,8 @@ typedef struct
 {
     std::string m_type;
     std::string m_id;
-    std::string m_path1;
-    std::string m_path2;
+    std::string m_path;    
+    
 }ResourceItem;
 
 typedef enum

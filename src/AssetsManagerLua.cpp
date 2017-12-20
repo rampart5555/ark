@@ -220,8 +220,7 @@ bool AssetsManagerLua::loadResources(const char *resource_table, std::vector<Res
         ResourceItem item;                
         getString(L,"rtype",item.m_type);
         getString(L,"rid",item.m_id);
-        getString(L,"file1_path",item.m_path1);
-        getString(L,"file2_path",item.m_path2);
+        getString(L,"file_path",item.m_path);        
         //printf("%s %s %s\n",item.m_type.c_str(),item.m_path1.c_str(),item.m_path2.c_str());
         //dumpMenuItem(item);
         lua_pop(L, 1);  

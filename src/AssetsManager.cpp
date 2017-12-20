@@ -128,11 +128,10 @@ bool AssetsManager::loadAssets()
     
     for (unsigned i=0;i<res_items.size();i++)
     {
-        item=&res_items[i];
-        printf("%s\n", item->m_path1.c_str());
+        item=&res_items[i];        
         if(item->m_type == "osgt")
         {
-            osg::Object *obj = loadObject(item->m_path1.c_str(),"osgt");
+            osg::Object *obj = loadObject(item->m_path.c_str(),"osgt");
             osg::Node *node = dynamic_cast<osg::Node*>(obj);
             if(node != NULL)
             {                   
@@ -143,38 +142,23 @@ bool AssetsManager::loadAssets()
         }
         else if(item->m_type == "ttf")
         {
-            osg::Object *obj = loadObject(item->m_path1.c_str(),"ttf");
+            osg::Object *obj = loadObject(item->m_path.c_str(),"ttf");
             osg::ref_ptr<osgText::Font> font = dynamic_cast<osgText::Font*>(obj);
             m_assetList.insert(std::make_pair(item->m_id, font.get()));
-        }
-        
+        }   
+
         else if(item->m_type=="glsl")
-        {
-            unsigned int buf_size;
-            LOG_INFO("AssetsManager::loadShaders=> %s %s %s\n",
-                item->m_id.c_str(), item->m_path1.c_str(), item->m_path2.c_str());
-            char *vert_shader = (char*)readBinaryFile(item->m_path1.c_str(), &buf_size);                
-            char *frag_shader = (char*)readBinaryFile(item->m_path2.c_str(), &buf_size);          
-                
-            if((vert_shader==NULL) || (frag_shader==NULL))
+        {            
+            LOG_INFO("AssetsManager::loadShaders=> %s\n", item->m_id.c_str(), item->m_path.c_str());
+            osg::ref_ptr<CharBuffer> glsl = new CharBuffer;            
+            
+            bool res = glsl->createFromFile(item->m_path.c_str());
+            if(res == false)
             {
                 LOG_WARN("AssetsManager::loadShaders=> Shader sources not found %s\n",item->m_id.c_str());
                 return false;
-            }  
-            //vert_shader[buf_size-1] = 0; 
-            //frag_shader[buf_size-1] = 0;
-            osg::ref_ptr<osg::Program> program = new osg::Program();
-            osg::Shader *shader=NULL;
-            shader = new osg::Shader(osg::Shader::VERTEX, vert_shader);
-            shader->setName(item->m_path1);
-            program->addShader(shader);
-            
-            shader = new osg::Shader(osg::Shader::FRAGMENT, frag_shader);
-            program->addShader(shader);
-            shader->setName(item->m_path2);
-            
-            program->setName(item->m_id);
-            m_assetList.insert(std::make_pair(item->m_id, program));
+            }                          
+            m_assetList.insert(std::make_pair(item->m_id, glsl));
         }
     }     
     return true;
@@ -340,6 +324,7 @@ osg::MatrixTransform* AssetsManager::getWidgetModel(const char* widget_model_nam
 
 osg::Program* AssetsManager::getProgram(const char* shader_name)
 {
+    LOG_INFO("AssetsManager::getProgram: %s\n",shader_name);
     if(m_assetList.count(shader_name)>0)
     {
         osg::Program *program = dynamic_cast<osg::Program*>(m_assetList[shader_name].get());
@@ -347,7 +332,28 @@ osg::Program* AssetsManager::getProgram(const char* shader_name)
     }
     else
     {
-        LOG_WARN("AssetsManager::getProgram=> not tound %s\n", shader_name);
+        std::string vert_str = shader_name; vert_str += "_vert";
+        std::string frag_str = shader_name; frag_str += "_frag";
+        CharBuffer *vert_obj = dynamic_cast<CharBuffer*>(m_assetList[vert_str].get());
+        CharBuffer *frag_obj = dynamic_cast<CharBuffer*>(m_assetList[frag_str].get());
+        if((vert_obj==NULL)||(frag_obj==NULL))
+        {
+            LOG_ERROR("Fail to create shader: %s\n", shader_name);
+            return NULL;
+        }
+        osg::ref_ptr<osg::Program> program = new osg::Program();        
+        osg::Shader *shader=NULL;
+        shader = new osg::Shader(osg::Shader::VERTEX, vert_obj->getData());
+        shader->setName(vert_str);
+        program->addShader(shader);
+            
+        shader = new osg::Shader(osg::Shader::FRAGMENT, frag_obj->getData());
+        program->addShader(shader);
+        shader->setName(frag_str);
+            
+        program->setName(shader_name);
+        m_assetList.insert(std::make_pair(shader_name, program));
+        return program.get();
     }
     return NULL;
 }

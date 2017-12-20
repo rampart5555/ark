@@ -51,16 +51,23 @@ b2World *EntityManager::m_world = NULL;
 
 EntityManager::EntityManager()
 {
-    m_sceneNode = NULL;
+    m_nodeEntMgr = new osg::MatrixTransform();
     m_paddle = NULL;
     m_entitiesNum = 0;
     m_brickNumber = 0;
     m_powerupNumber = 0;        
 }
 
-void EntityManager::setSceneNode(osg::MatrixTransform *node)
+osg::MatrixTransform* EntityManager::getNodeEntMgr()
 {
-    m_sceneNode = node;    
+    return m_nodeEntMgr.get();
+}
+
+void EntityManager::loadShaders()
+{
+    osg::Program *program = AssetsManager::instance().getProgram("model_color");
+    osg::StateSet *ss = m_nodeEntMgr->getOrCreateStateSet();
+    ss->setAttributeAndModes(program, osg::StateAttribute::ON );
 }
 
 void EntityManager::startPhysics()
@@ -90,7 +97,7 @@ void EntityManager::startPhysics()
     //m_paddle->getPhyBody()->Dump();
     //m_bottomWall->getPhyBody()->Dump();
     LOG_INFO("Number of entities:%lu\n", m_entityList.size());
-    m_sceneNode->setUpdateCallback(new EntityManagerCallback(this) );
+    m_nodeEntMgr->setUpdateCallback(new EntityManagerCallback(this) );
     
 }
 
@@ -118,7 +125,7 @@ void EntityManager::stopPhysics()
         EntityManager::m_world->DestroyBody(m_groundBody);
         m_groundBody = NULL;
     }
-    m_sceneNode->setUpdateCallback(NULL);
+    m_nodeEntMgr->setUpdateCallback(NULL);
 }
 
 osg::ref_ptr <Entity> EntityManager::createEntity(EntityType etype)
@@ -153,24 +160,23 @@ void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
         LOG_WARN("%s", "EntityManager::addEntity: NULL entity\n");
         return;
     }
-    if(m_sceneNode != NULL)
-    {        
-        m_entityList.push_back(entity);
-        m_sceneNode->addChild(entity->getEntityNode());
-        if(entity->getType() == ENTITY_PADDLE)
-            m_paddle = entity->asEntityPaddle();
-        else if(entity->getType() == ENTITY_BRICK)                    
-            m_brickNumber++;        
-        else if(entity->getType() == ENTITY_POWERUP)        
-            m_powerupNumber++;
-        else if(entity->getType()==ENTITY_BALL)     
-            m_ballList.push_back(entity->asEntityBall());
-        m_entitiesNum++;
-        /* enable physics for spawned entities */       
-        if(m_physicsActive == true)
-            entity->enablePhysics();
-        entity->setUniforms();
-    }
+    
+    m_entityList.push_back(entity);
+    m_nodeEntMgr->addChild(entity->getEntityNode());
+    if(entity->getType() == ENTITY_PADDLE)
+        m_paddle = entity->asEntityPaddle();
+    else if(entity->getType() == ENTITY_BRICK)                    
+        m_brickNumber++;        
+    else if(entity->getType() == ENTITY_POWERUP)        
+        m_powerupNumber++;
+    else if(entity->getType()==ENTITY_BALL)     
+        m_ballList.push_back(entity->asEntityBall());
+    m_entitiesNum++;
+    /* enable physics for spawned entities */       
+    if(m_physicsActive == true)
+        entity->enablePhysics();
+    entity->setUniforms();
+    
 }
 
 void EntityManager::spawnPowerup(Entity *entity)
@@ -266,7 +272,7 @@ void EntityManager::setPowerup(PowerupType ptype)
 void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
 {
     entity->disablePhysics();
-    m_sceneNode->removeChild(entity->getEntityNode());
+    m_nodeEntMgr->removeChild(entity->getEntityNode());
     if(entity->getType() == ENTITY_BRICK)
     {
         m_entitiesNum--;
@@ -304,10 +310,8 @@ void EntityManager::clear()
     {
         LOG_WARN("%s", "Disable physics first\n");
         return;
-    }
-    if(m_sceneNode == NULL)
-        return;
-    m_sceneNode->removeChildren(0, m_entityList.size());       
+    }    
+    m_nodeEntMgr->removeChildren(0, m_entityList.size());       
     m_entityList.clear();
     m_entitiesNum = 0;
     m_brickNumber = 0;
