@@ -17,11 +17,15 @@ class Scene
         Scene();
         virtual ~Scene();
         virtual void createScene();
-        osg::PositionAttitudeTransform* getSceneNode();
+        virtual void handleSceneEvent();
         virtual osg::ref_ptr <osg::Program> createProgram();
+        
+        osg::PositionAttitudeTransform* getSceneNode();
+       
         osg::Program* loadProgram(const char*, const char*);
         osg::Texture2D* loadTexture(const char*);
         osg::Node* loadSceneModel(const char*);
+        
     protected:
         osg::ref_ptr<osg::PositionAttitudeTransform> m_rootNode;        
 };

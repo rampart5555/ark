@@ -6,6 +6,7 @@
 #include "scenes/Particle.h"
 #include "scenes/Alpha.h"
 #include "scenes/Userdata.h"
+#include "scenes/Animation.h"
 //USE_OSGPLUGIN(osg2)
 //USE_SERIALIZER_WRAPPER_LIBRARY(osg)
 //USE_GRAPHICSWINDOW()
@@ -37,6 +38,7 @@ static const char *microshaderFragSource =
 OsgMain::OsgMain()
 {
     m_viewer = NULL;
+    m_currentScene = NULL;
 }
 
 OsgMain::~OsgMain()
@@ -79,15 +81,20 @@ osg::Camera* OsgMain::createOrthoCamera(int width, int height)
     w->setLabel("Stats");
     w->setCallback(show_statistics);
     camera->addChild(w->getNode());
-    //m_root->addChild(w->getNode());
     
+    w = new Widget();
+    w->setPosition(-1.5, -4.0, 0.0);
+    w->setLabel("Anim_1");
+    w->setCallback(play_animation);
+    camera->addChild(w->getNode());
+            
     return camera;
 }
 
 bool OsgMain::init(int x, int y, int width, int height)
 {
     //in StatsHandler.cpp change gupu stats from true to false collectStats("gpu",false);
-    //osg::setNotifyLevel(osg::INFO);
+    osg::setNotifyLevel(osg::INFO);
     m_viewer = new osgViewer::Viewer;
     m_window = m_viewer->setUpViewerAsEmbeddedInWindow(x, y, width, height);
     m_window->getEventQueue()->windowResize(x, y, width, height);
@@ -101,7 +108,7 @@ bool OsgMain::init(int x, int y, int width, int height)
     //loadScene("Simple");
     //loadScene("Particle");
     //loadScene("Alpha");
-    loadScene("Userdata");
+    loadScene("AnimationScene");
     m_viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     m_viewer->addEventHandler(new osgViewer::StatsHandler);  
     m_viewer->addEventHandler(new MouseHandler());  
@@ -183,30 +190,39 @@ void OsgMain::initScene()
 
 void OsgMain::loadScene(const char* scene_name)
 {
+    Scene *scene=NULL;
+    
     if(strcmp(scene_name,"Simple")==0)
     {
-        Scene* s = new Simple();
-        s->createScene();
-        m_sceneNode->addChild(s->getSceneNode());
+        scene = new Simple();
+        scene->createScene();
     }
     else if(strcmp(scene_name,"Particle")==0)
     {
-        Scene* s = new Particle();
-        s->createScene();
-        m_sceneNode->addChild(s->getSceneNode());
+        scene = new Particle();
+        scene->createScene();
+
     }
     else if(strcmp(scene_name,"Alpha")==0)
     {
-        Scene* s = new Alpha();
-        s->createScene();
-        m_sceneNode->addChild(s->getSceneNode());
+        scene = new Alpha();
+        scene->createScene();
+
     }
     else if(strcmp(scene_name,"Userdata")==0)
     {
-        Scene* s = new Userdata();
-        s->createScene();
+        scene = new Userdata();
+        scene->createScene();
         //m_sceneNode->addChild(s->getSceneNode());
     }
+    else if(strcmp(scene_name,"AnimationScene")==0)
+    {
+        scene = new AnimationScene();
+        scene->createScene();        
+    };
+    m_currentScene = scene;
+    if(scene != NULL)
+        m_sceneNode->addChild(scene->getSceneNode());
 }
 
 

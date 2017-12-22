@@ -17,7 +17,7 @@ OSG_STATIC_LIB=$(OSG_GLES2_LIB_PATH)/libosgdb_freetyped.a\
     $(OSG_GLES2_LIB_PATH)/libOpenThreadsd.a    
 
 OSG_DYNAMIC_LIB_PATH = $(HOME)/g_dev/gmengine/builds/debug_dynamic_gles2/lib
-OSG_DYNAMIC_LIBS = -losgGAd -losgd -lOpenThreadsd -losgUtild -losgViewerd -losgDBd -losgTextd -losgParticled
+OSG_DYNAMIC_LIBS = -losgGAd -losgd -lOpenThreadsd -losgUtild -losgViewerd -losgDBd -losgTextd -losgParticled -losgAnimationd
 SHARED_LIB = -ldl -lGLESv2 -lEGL -lX11 -lXrandr -lpthread -lXxf86vm -lXcursor -lXinerama
 
 #GLFW_INCLUDE=/home/dcioata/g_dev/libs/glfw-3.2.1/include 
@@ -41,7 +41,8 @@ LOCAL_OBJ_FILES:=\
     scenes/Particle.o\
     scenes/Alpha.o\
     scenes/PSystem.o\
-    scenes/Userdata.o
+    scenes/Userdata.o\
+    scenes/Animation.o
     
 
 

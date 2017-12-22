@@ -9,3 +9,16 @@ bool show_statistics(void *args)
     return true;
 }
 
+bool play_animation(void *args)
+{
+    printf("Callback: play_animation\n");
+    Scene *scene = OsgMain::instance().getCurrentScene();
+    if(scene==NULL)
+    {
+        printf("Null scene\n");
+        return false;
+    }
+    scene->handleSceneEvent();
+    return true;
+}
+

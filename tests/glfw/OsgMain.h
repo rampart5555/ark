@@ -29,6 +29,8 @@ class OsgMain
         void mouseMotion(float x, float y);        
         void keyPress(int key);
         void loadScene(const char*);
+        Scene* getCurrentScene() { return m_currentScene; }
+        osg::Group* getSceneNode() { return m_sceneNode; }
     private:
         osgViewer::Viewer *m_viewer;
         osg::observer_ptr<osgViewer::GraphicsWindow> m_window;    

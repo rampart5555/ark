@@ -104,7 +104,7 @@ static void write_user_data()
         }
         root->addChild(episode);
     }    
-    osgDB::writeNodeFile(*episode, "levels.osgt");
+    osgDB::writeNodeFile(*root, "levels.osgt");
 }
 
 static void read_user_data()
