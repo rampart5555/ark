@@ -307,29 +307,6 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
     }
 }
 
-void EntityManager::removeEntity(osg::ref_ptr<Entity> entity, bool soft)
-{
-    entity->disablePhysics();
-    m_nodeEntMgr->removeChild(entity->getEntityNode());
-    if(entity->getType() == ENTITY_POWERUP)
-    {
-        m_entitiesNum--;
-        m_powerupNumber--;
-    }
-    else if(entity->getType() == ENTITY_BALL)
-    {     
-        m_ballList.remove(entity->asEntityBall());
-    }
-    else if(entity->getType() == ENTITY_BULLET)
-    {
-        m_entitiesNum--;
-    }
-    else if(entity->getType() == ENTITY_PADDLE)
-    {
-        m_entitiesNum--;
-    }
-}
-
 void EntityManager::clear()
 {
     if(m_physicsActive==true)

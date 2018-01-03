@@ -20,8 +20,7 @@ class EntityManager
         void stopPhysics();
         osg::ref_ptr <Entity> createEntity(EntityType etype);
         void addEntity(osg::ref_ptr<Entity>);        
-        void removeEntity(osg::ref_ptr<Entity>);
-        void removeEntity(osg::ref_ptr<Entity>, bool);
+        void removeEntity(osg::ref_ptr<Entity>);        
         void clear();
         void update(float passedTime);
         std::list < osg::ref_ptr<Entity> >* getEntityList();
