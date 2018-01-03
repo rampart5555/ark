@@ -35,7 +35,7 @@ void MenuManager::createMenu()
     
     m_levelFailed = new MenuLevelFailed(this);
     m_levelFailed->createMenu();
-    m_menuNode->addChild(m_levelComplete->getMenuNode());        
+    m_menuNode->addChild(m_levelFailed->getMenuNode());        
     m_levelFailed->getMenuNode()->setNodeMask(0x0);
 #if 0    
     /* custom menu for testing */

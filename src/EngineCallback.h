@@ -20,7 +20,7 @@ void MenuLevelComplete_button_next_push(void *args);
 
 void MenuLevelFailed_show(void *args);
 void MenuLevelFailed_button_levels_push(void *args);
-void MenuLevelFailed_button_restart_push(void *args);
+void MenuLevelFailed_button_continue_push(void *args);
 
 void MenuSceneHud_show(void *args);
 void MenuSceneHud_update_score(void *args);
@@ -38,6 +38,7 @@ void Scene_level_complete(void *args);
 void Scene_level_complete(void *args);
 void Scene_unlock_next_level(void *args);
 void Scene_level_failed(void *args);
+void Scene_continue(void *args);
 
 /*levels*/
 void Level_update_score(void *args);

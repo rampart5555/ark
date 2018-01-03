@@ -36,7 +36,7 @@ Widget::Widget(MenuItem item)
     m_width = item.m_width;
     m_height = item.m_height;
     m_widgetId = widget_id++;
-    printf("name: %s position: %f, %f\n", item.m_name.c_str(), item.m_x, item.m_y);
+    //printf("name: %s position: %f, %f\n", item.m_name.c_str(), item.m_x, item.m_y);
     
 }
 

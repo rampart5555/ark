@@ -324,7 +324,7 @@ osg::MatrixTransform* AssetsManager::getWidgetModel(const char* widget_model_nam
 
 osg::Program* AssetsManager::getProgram(const char* shader_name)
 {
-    LOG_INFO("AssetsManager::getProgram: %s\n",shader_name);
+    LOG_DEBUG("AssetsManager::getProgram: %s\n",shader_name);
     if(m_assetList.count(shader_name)>0)
     {
         osg::Program *program = dynamic_cast<osg::Program*>(m_assetList[shader_name].get());

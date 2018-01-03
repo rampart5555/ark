@@ -104,6 +104,9 @@ void EntityManager::startPhysics()
 void EntityManager::stopPhysics()
 {
     LOG_DEBUG("%s", "*** EntityManager::disablePhysics() *** \n");
+
+    paddleUnselect(NULL); //avoid crash here
+
     if(m_physicsActive==false)
     {
         LOG_INFO("%s", "Physics already disabled\n");
@@ -299,8 +302,31 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
         m_ballList.remove(entity->asEntityBall());
         if(m_ballList.size()==0)
         {
-            Scene_level_failed(NULL);
+            levelFailed();
         }
+    }
+}
+
+void EntityManager::removeEntity(osg::ref_ptr<Entity> entity, bool soft)
+{
+    entity->disablePhysics();
+    m_nodeEntMgr->removeChild(entity->getEntityNode());
+    if(entity->getType() == ENTITY_POWERUP)
+    {
+        m_entitiesNum--;
+        m_powerupNumber--;
+    }
+    else if(entity->getType() == ENTITY_BALL)
+    {     
+        m_ballList.remove(entity->asEntityBall());
+    }
+    else if(entity->getType() == ENTITY_BULLET)
+    {
+        m_entitiesNum--;
+    }
+    else if(entity->getType() == ENTITY_PADDLE)
+    {
+        m_entitiesNum--;
     }
 }
 
@@ -389,6 +415,18 @@ void EntityManager::levelComplete()
     LOG_INFO("%s", "*** LEVEL COMPLETE ***\n");
     m_physicsActive = false;
     Scene_level_complete(NULL);    
+}
+
+void EntityManager::levelFailed()
+{
+    paddleUnselect(NULL);
+    stopPhysics();    
+    Scene_level_failed(NULL);
+}
+
+void EntityManager::levelContinue()
+{    
+    
 }
 
 /* debug function*/

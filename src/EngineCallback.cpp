@@ -18,13 +18,14 @@ static struct cb_item cb_map[]={
     { "MenuLevelComplete_button_next_push", MenuLevelComplete_button_next_push },
     
     { "MenuLevelFailed_button_levels_push",  MenuLevelFailed_button_levels_push },
-    { "MenuLevelFailed_button_restart_push", MenuLevelFailed_button_restart_push },
+    { "MenuLevelFailed_button_continue_push", MenuLevelFailed_button_continue_push },
     
     { "MenuSceneHud_button_levels_push", MenuLevelComplete_button_levels_push },
     { "MenuSceneHud_button_lc_push", MenuSceneHud_button_lc_push },
     { "MenuSceneHud_button_lf_push", MenuSceneHud_button_lf_push },
     { "Scene_start_physics", Scene_start_physics},
     { "Scene_stop_physics", Scene_stop_physics},
+    { "Scene_continue", Scene_continue},
     { NULL,NULL}
 };
 
@@ -34,7 +35,7 @@ EngineCallback getCallback(std::string cb_name)
     {   
         if(cb_map[i].cb_name==NULL)
         {
-            LOG_WARN("Callback function not found:%s", cb_name.c_str());
+            LOG_WARN("Callback function not found:%s\n", cb_name.c_str());
             break;
         }
         else if(cb_name == cb_map[i].cb_name)
@@ -170,7 +171,7 @@ void MenuLevelFailed_button_levels_push(void* args)
     mlf->hide(MenuLevelSelect_show, args);
 }
 
-void MenuLevelFailed_button_restart_push(void* args)
+void MenuLevelFailed_button_continue_push(void* args)
 {
     MenuLevelFailed *mlf = MenuManager::instance().getMenuLevelFailed();
     mlf->hide(MenuSceneHud_show, args);
@@ -232,10 +233,14 @@ void Scene_level_complete(void *args)
     Scene_unlock_next_level(args);
     
 }
+
 void Scene_level_failed(void *args)
 {
-    LOG_INFO("SceneLevelFailed:%s\n","");
+    LOG_INFO("Scene_level_failed:%s\n","");       
+    MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();
+    msh->hide(MenuLevelFailed_show, args);        
 }
+
 void Scene_unlock_next_level(void *args)
 {
     unsigned int ep_id, lvl_id;
@@ -268,7 +273,10 @@ void Scene_unlock_next_level(void *args)
     sprintf(buf, "%d", sl->m_id + 1);
     but->setLabel(buf);        
 }
-
+void Scene_continue(void *args)
+{
+    Scene::instance().getEntityManager().levelContinue();
+}
 /*Levels Callback*/
 void Level_update_score(void *args)
 {

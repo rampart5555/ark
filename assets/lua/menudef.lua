@@ -64,8 +64,8 @@ MenuLevelFailed=
     { 
         name="Restart", 
         model="widget_square",  
-        cb="MenuLevelFailed_button_restart_push", 
-        label="Restart",
+        cb="MenuLevelFailed_button_continue_push", 
+        label="Continue",
         x = 1.75, y=-1.3, width=1.0, height=1.0
     },
 }
@@ -85,7 +85,7 @@ MenuSceneHud =
         cb="Scene_start_physics", 
         label="Start", 
         x=1.75, y=-4.0, width=1.0, height=1.0  
-    },
+    },    
     { 
         name="Pause",
         model="widget_square", 

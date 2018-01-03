@@ -21,16 +21,20 @@ class EntityManager
         osg::ref_ptr <Entity> createEntity(EntityType etype);
         void addEntity(osg::ref_ptr<Entity>);        
         void removeEntity(osg::ref_ptr<Entity>);
+        void removeEntity(osg::ref_ptr<Entity>, bool);
         void clear();
         void update(float passedTime);
         std::list < osg::ref_ptr<Entity> >* getEntityList();
         void levelComplete(); 
+        void levelContinue();
+        void levelFailed();
         void paddleSelect(void *args);
         void paddleMove(void *args);       
         void paddleUnselect(void *args);        
         void spawnPowerup(Entity*);
         void spawnEntity(EntityType etype, osg::Vec3 pos);
         void setPowerup(PowerupType);
+        
         //debug utilities
         const char* powerupToStr(PowerupType);
         osg::MatrixTransform* getNodeEntMgr();

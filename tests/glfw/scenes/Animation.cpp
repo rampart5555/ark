@@ -81,7 +81,7 @@ void AnimationScene::animTranslate(const osg::Vec3& center, float radius, double
     
     m_animTranslate = new osgAnimation::Animation;
     m_animTranslate->addChannel(channelAnimation1);
-    m_animTranslate->setPlayMode(osgAnimation::Animation::PPONG);   
+    m_animTranslate->setPlayMode(osgAnimation::Animation::ONCE);   
     
     m_animMgr = new osgAnimation::BasicAnimationManager();    
     m_animMgr->registerAnimation(m_animTranslate);    
