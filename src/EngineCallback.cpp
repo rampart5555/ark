@@ -175,6 +175,7 @@ void MenuLevelFailed_button_continue_push(void* args)
 {
     MenuLevelFailed *mlf = MenuManager::instance().getMenuLevelFailed();
     mlf->hide(MenuSceneHud_show, args);
+    Scene::instance().getEntityManager().levelContinue();
 }
 
 /*** Scene ***/

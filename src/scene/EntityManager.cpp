@@ -298,7 +298,7 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
     }
     else if(entity->getType() == ENTITY_BALL)
     {
-        LOG_INFO("Removing ball from entity list: %s\n","");
+        LOG_INFO("Removing ball from entity list: %ul\n",m_ballList.size());
         m_ballList.remove(entity->asEntityBall());
         if(m_ballList.size()==0)
         {
@@ -316,6 +316,7 @@ void EntityManager::clear()
     }    
     m_nodeEntMgr->removeChildren(0, m_entityList.size());       
     m_entityList.clear();
+    m_ballList.clear();
     m_entitiesNum = 0;
     m_brickNumber = 0;
     m_powerupNumber = 0;
@@ -403,7 +404,12 @@ void EntityManager::levelFailed()
 
 void EntityManager::levelContinue()
 {    
-    
+    LOG_INFO("%s", "*** LEVEL CONTINUE ***\n");
+    osg::ref_ptr<Entity> ent = createEntity(ENTITY_BALL);
+    EntityBall *new_ball=ent->asEntityBall();
+    new_ball->setDir(osg::Vec2(0.5,0.5));
+    new_ball->setSpeed(2.0);
+    addEntity(ent);
 }
 
 /* debug function*/
