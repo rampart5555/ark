@@ -82,9 +82,25 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
         m_valid = false;
     }
 }
+
 void EntityBall::setSpeed(float speed)
 {
-    m_ballSpeed = speed;
+    m_ballSpeed = speed;    
+}
+
+void EntityBall::changeSpeed(float new_speed)
+{
+    m_ballSpeed = new_speed;
+    if(m_phyActive == true)
+    {
+        b2Vec2 s_vec = m_phyBody->GetLinearVelocity();
+        s_vec *= new_speed;
+        m_phyBody->SetLinearVelocity(s_vec);
+    }
+}
+
+void EntityBall::start()
+{
     if(m_phyActive == true)
     {
         b2Vec2 ball_vel = m_dir;
@@ -132,12 +148,11 @@ bool EntityBall::enablePhysics()
     m_ballSpeed = 2.0;
     b2Vec2 ball_vel(1.0f,1.0f);
     ball_vel.Normalize();
-    ball_vel = m_dir * m_ballSpeed;
-#endif    
+    ball_vel = m_dir * m_ballSpeed; 
     b2Vec2 ball_vel = m_dir;
     ball_vel *= m_ballSpeed;
     m_phyBody->SetLinearVelocity(ball_vel);
-    
+#endif       
     return m_phyActive;
 }
 

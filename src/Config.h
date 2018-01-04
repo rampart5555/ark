@@ -13,6 +13,8 @@ const unsigned int MASK_00 = 0x00000000;
 #define WIN_WIDTH 480.0
 #define WIN_HEIGHT 640.0
 
+const float DEFAULT_BALL_SPEED = 1.2;
+
 typedef struct 
 {
     std::string m_type;

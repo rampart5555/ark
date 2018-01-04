@@ -45,6 +45,7 @@ class EntityManager
         std::list < EntityBall *> m_ballList;
         std::list < osg::ref_ptr <Entity> > m_paddleList;
         bool m_physicsActive;
+        bool m_paddleSelected;
         osg::ref_ptr<osg::MatrixTransform> m_nodeEntMgr;
         EntityPaddle *m_paddle;
         int m_entitiesNum;
@@ -52,7 +53,9 @@ class EntityManager
         int m_powerupNumber;
         ContactListener *m_contactListener;
         b2MouseJoint *m_mouseJoint;
+        b2WeldJoint  *m_ballJoint;
         b2Body* m_groundBody;
+        
         
 };
 #endif

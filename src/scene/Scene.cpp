@@ -52,7 +52,7 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
         if(ent->getType() == ENTITY_BALL)
         {
             EntityBall *eball = ent->asEntityBall();
-            eball->setSpeed(2.0);
+            eball->setSpeed(0.0);
             eball->setDir(osg::Vec2(0.5, 0.5));
         }
     }

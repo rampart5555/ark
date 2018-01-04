@@ -13,8 +13,10 @@ class EntityBall : public Entity
         virtual bool disablePhysics();
         virtual EntityBall* asEntityBall(){ return this; }
         void setSpeed(float);
-        float  getSpeed();  
+        void changeSpeed(float);
+        float getSpeed();  
         void setDir(osg::Vec2 dir);
+        void start();
         //osg::Vec2& getDir();
         
      private:

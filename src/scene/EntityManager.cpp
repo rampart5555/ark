@@ -55,7 +55,8 @@ EntityManager::EntityManager()
     m_paddle = NULL;
     m_entitiesNum = 0;
     m_brickNumber = 0;
-    m_powerupNumber = 0;        
+    m_powerupNumber = 0;
+    m_paddleSelected=false;
 }
 
 osg::MatrixTransform* EntityManager::getNodeEntMgr()
@@ -98,6 +99,15 @@ void EntityManager::startPhysics()
     //m_bottomWall->getPhyBody()->Dump();
     LOG_INFO("Number of entities:%lu\n", m_entityList.size());
     m_nodeEntMgr->setUpdateCallback(new EntityManagerCallback(this) );
+
+    /*create a joint between paddle and ball */
+    EntityBall *ball = m_ballList.front();
+    b2WeldJointDef jointDef;
+    jointDef.bodyA = m_paddle->getPhyBody();
+    jointDef.bodyB = ball->getPhyBody();       
+    jointDef.localAnchorA.y = 0.05;        
+    jointDef.localAnchorB.y = -0.05;
+    m_ballJoint = (b2WeldJoint*) EntityManager::m_world->CreateJoint(&jointDef);
     
 }
 
@@ -231,14 +241,15 @@ void EntityManager::setPowerup(PowerupType ptype)
                         EntityBall *new_ball = ent->asEntityBall();
                         osg::Vec3& ent_pos = ball->getPosition();
                         new_ball->setPosition(ent_pos);
-                        new_ball->setSpeed(2.0);
+                        new_ball->setSpeed(DEFAULT_BALL_SPEED);
                         if(j==0)
                             new_ball->setDir(osg::Vec2(-0.5, 0.5) );
                         if(j==1)    
                             new_ball->setDir(osg::Vec2( 0.5, -0.5) );
                         if (j==2)
-                            new_ball->setDir( osg::Vec2( 0.0, 1.0) );                        
-                        addEntity(ent);                         
+                            new_ball->setDir( osg::Vec2( 0.0, 1.0) );                           
+                        addEntity(ent);
+                        new_ball->start();
                     }
                 }                                  
             }         
@@ -253,9 +264,9 @@ void EntityManager::setPowerup(PowerupType ptype)
                     EntityBall *ball = (*it);
                     float speed = ball->getSpeed();
                     if(ptype == POWERUP_SLOW)
-                        ball->setSpeed(speed * 0.8);
+                        ball->changeSpeed(speed * 0.8);
                     else
-                        ball->setSpeed(speed * 1.2);
+                        ball->changeSpeed(speed * 1.2);
                             
                 }                                
             }    
@@ -352,7 +363,7 @@ void EntityManager::paddleSelect(void *args)
     //debug_log(ENTRY, "LEVEL_PADDLE_SELECT\n");
     if( (m_paddle==NULL) || (m_paddle->phyActive()==false)|| (args==NULL) )
         return;
-    
+    m_paddleSelected=true;
     Event_XY *event_xy = static_cast<Event_XY*>(args);        
     b2Body *body = m_paddle->getPhyBody();    
     b2Vec2 p(event_xy->x, event_xy->y);
@@ -380,12 +391,26 @@ void EntityManager::paddleMove(void *args)
 
 void EntityManager::paddleUnselect(void *args)
 {
-    LOG_DEBUG("%s", "LEVEL_PADDLE_UNSELECT\n");
+    if(m_paddleSelected==false)
+        return;
+
+    LOG_INFO("%s", "LEVEL_PADDLE_UNSELECT\n");
     if (m_mouseJoint != NULL)
     {
         EntityManager::m_world->DestroyJoint(m_mouseJoint);
         m_mouseJoint = NULL;
     }
+    if(m_ballJoint!=NULL)
+    {
+        EntityManager::m_world->DestroyJoint(m_ballJoint);
+        m_ballJoint=NULL;
+        EntityBall *ball = m_ballList.front();
+        ball->setDir(osg::Vec2(0.11,1.0));
+        ball->setSpeed(DEFAULT_BALL_SPEED);
+        ball->start();
+       
+    }
+    m_paddleSelected=false;
 }
 
 void EntityManager::levelComplete()
@@ -408,7 +433,7 @@ void EntityManager::levelContinue()
     osg::ref_ptr<Entity> ent = createEntity(ENTITY_BALL);
     EntityBall *new_ball=ent->asEntityBall();
     new_ball->setDir(osg::Vec2(0.5,0.5));
-    new_ball->setSpeed(2.0);
+    new_ball->setSpeed(DEFAULT_BALL_SPEED);
     addEntity(ent);
 }
 
