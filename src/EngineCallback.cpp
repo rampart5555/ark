@@ -20,7 +20,7 @@ static struct cb_item cb_map[]={
     { "MenuLevelFailed_button_levels_push",  MenuLevelFailed_button_levels_push },
     { "MenuLevelFailed_button_continue_push", MenuLevelFailed_button_continue_push },
     
-    { "MenuSceneHud_button_levels_push", MenuLevelComplete_button_levels_push },
+    { "MenuSceneHud_button_levels_push", MenuSceneHud_button_levels_push },
     { "MenuSceneHud_button_lc_push", MenuSceneHud_button_lc_push },
     { "MenuSceneHud_button_lf_push", MenuSceneHud_button_lf_push },
     { "Scene_start_physics", Scene_start_physics},
@@ -111,8 +111,10 @@ void MenuSceneHud_update_score(void *args)
 #endif
 void MenuSceneHud_button_levels_push(void *args)
 {
+    LOG_INFO("MenuSceneHud_button_levels_push:%s\n","");
     MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();    
     msh->hide(MenuLevelSelect_show, args);
+    Scene_stop_physics(args);
 }
 
 /*test level complete and level failed functions */
@@ -151,6 +153,11 @@ void MenuLevelComplete_button_levels_push(void* args)
 void MenuLevelComplete_button_next_push(void* args)
 {
     LOG_INFO("%s","MenuLevelComplete_button_next_push\n");
+    MenuLevelComplete *mlc = MenuManager::instance().getMenuLevelComplete();    
+    mlc->hide(MenuSceneHud_show, args);  
+    SceneLevel *sdata = LevelManager::instance().getNextLevel();   
+    Scene_load_level((void*)sdata);
+
 }
 
 void MenuLevelComplete_button_restart_push(void* args)
@@ -232,6 +239,7 @@ void Scene_level_complete(void *args)
     MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();
     msh->hide(MenuLevelComplete_show, args);    
     Scene_unlock_next_level(args);
+    LevelManager::instance().writeLevelData();
     
 }
 

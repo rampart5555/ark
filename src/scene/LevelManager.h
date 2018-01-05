@@ -36,6 +36,7 @@ class LevelManager
         SceneEpisode* getEpisode(unsigned int);
         SceneLevel* getLevel(unsigned  int, unsigned int);
         SceneLevel* getCurrentLevel();
+        SceneLevel* getNextLevel();
         void setCurrent(unsigned int, unsigned int);
         void getCurrent(unsigned int&, unsigned int&);
         void unlockNextLevel(unsigned int&, unsigned int&);

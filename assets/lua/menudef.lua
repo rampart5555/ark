@@ -32,7 +32,7 @@ MenuLevelComplete=
     { 
         name="Next", 
         model="widget_square",  
-        cb="MenuLevelComplete_button_restart_push",
+        cb="MenuLevelComplete_button_next_push",
         label="Next",
         x=1.75,  y=-1.3, width=1.0, height=1.0
     }
@@ -84,14 +84,21 @@ MenuSceneHud =
         model="widget_square", 
         cb="Scene_start_physics", 
         label="Start", 
-        x=1.75, y=-4.0, width=1.0, height=1.0  
+        x=2.0, y=-4.0, width=1.0, height=1.0  
+    },    
+    { 
+        name="Levels",
+        model="widget_square", 
+        cb="MenuSceneHud_button_levels_push", 
+        label="Levels", 
+        x=0.0, y=-4.0, width=1.0, height=1.0  
     },    
     { 
         name="Pause",
         model="widget_square", 
         cb="Scene_stop_physics", 
         label="Pause", 
-        x=-1.75, y=-4.0, width=1.0, height=1.0  
+        x=-2.0, y=-4.0, width=1.0, height=1.0  
     },
     { 
         name="HudScore",

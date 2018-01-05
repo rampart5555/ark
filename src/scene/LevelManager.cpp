@@ -107,7 +107,7 @@ bool LevelManager::writeLevelData()
     unsigned int i,j;
     SceneEpisode *ep;
     SceneLevel *lvl;
-
+    LOG_INFO("LevelManager::writeLevelData=> %s\n",m_osgFile.c_str());
     osg::ref_ptr<osg::Group> rootGroup = new osg::Group;
     for(i=0;i<m_episodes.size();i++)
     {
@@ -122,7 +122,8 @@ bool LevelManager::writeLevelData()
             setLevelData(lvl_group ,lvl);
             ep_group->addChild(lvl_group);
         }        
-    }        
+    }
+    AssetsManager::instance().writeNode(*rootGroup, m_osgFile.c_str());        
     return true;
 }
 
@@ -197,6 +198,12 @@ void LevelManager::getCurrent(unsigned int& ep_id, unsigned int& lvl_id)
 {
     ep_id = m_epId;
     lvl_id = m_lvlId;
+}
+
+SceneLevel* LevelManager::getNextLevel()
+{
+    m_lvlId += 1;
+    return getLevel(m_epId, m_lvlId);
 }
 
 void LevelManager::dump()
