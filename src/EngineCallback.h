@@ -29,8 +29,8 @@ void MenuSceneHud_button_lc_push(void *args); //level complete test funtion
 void MenuSceneHud_button_lf_push(void *args); //level failed test funtion
 
 void Scene_load_level(void *args);
-void Scene_start_physics(void *args);
-void Scene_stop_physics(void *args);
+void Scene_resume(void *args);
+void Scene_pause(void *args);
 void Scene_paddle_select(void *args);
 void Scene_paddle_move(void *args);
 void Scene_paddle_unselect(void *args);

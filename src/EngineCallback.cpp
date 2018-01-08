@@ -23,8 +23,8 @@ static struct cb_item cb_map[]={
     { "MenuSceneHud_button_levels_push", MenuSceneHud_button_levels_push },
     { "MenuSceneHud_button_lc_push", MenuSceneHud_button_lc_push },
     { "MenuSceneHud_button_lf_push", MenuSceneHud_button_lf_push },
-    { "Scene_start_physics", Scene_start_physics},
-    { "Scene_stop_physics", Scene_stop_physics},
+    { "Scene_resume", Scene_resume},
+    { "Scene_pause", Scene_pause},
     { "Scene_continue", Scene_continue},
     { NULL,NULL}
 };
@@ -114,7 +114,7 @@ void MenuSceneHud_button_levels_push(void *args)
     LOG_INFO("MenuSceneHud_button_levels_push:%s\n","");
     MenuSceneHud *msh = MenuManager::instance().getMenuSceneHud();    
     msh->hide(MenuLevelSelect_show, args);
-    Scene_stop_physics(args);
+    Scene::instance().getEntityManager().stopPhysics();
 }
 
 /*test level complete and level failed functions */
@@ -207,14 +207,14 @@ void Scene_load_level(void *args)
 
 }
 
-void Scene_start_physics(void *args)
+void Scene_resume(void *args)
 {
-    Scene::instance().getEntityManager().startPhysics();
+    Scene::instance().getEntityManager().resumePhysics();
 }
 
-void Scene_stop_physics(void *args)
+void Scene_pause(void *args)
 {
-    Scene::instance().getEntityManager().stopPhysics();
+    Scene::instance().getEntityManager().pausePhysics();
 }
 
 void Scene_paddle_select(void *args)

@@ -166,6 +166,7 @@ osg::Group {
                 osg::BoolValueObject {
                   UniqueID 36 
                   Name "lvl_unlocked" 
+                  Value TRUE 
                 }
                 osg::StringValueObject {
                   UniqueID 37 
@@ -194,6 +195,7 @@ osg::Group {
                 osg::BoolValueObject {
                   UniqueID 42 
                   Name "lvl_unlocked" 
+                  Value TRUE 
                 }
                 osg::StringValueObject {
                   UniqueID 43 
@@ -222,6 +224,7 @@ osg::Group {
                 osg::BoolValueObject {
                   UniqueID 48 
                   Name "lvl_unlocked" 
+                  Value TRUE 
                 }
                 osg::StringValueObject {
                   UniqueID 49 
@@ -250,6 +253,7 @@ osg::Group {
                 osg::BoolValueObject {
                   UniqueID 54 
                   Name "lvl_unlocked" 
+                  Value TRUE 
                 }
                 osg::StringValueObject {
                   UniqueID 55 

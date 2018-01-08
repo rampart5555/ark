@@ -61,6 +61,7 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
     //loadTMXMap(tmx_file);
     loadLevel(ep_file, lvl_name);
     loadShaders();
+    m_entityMgr.startPhysics();
     
 }
 

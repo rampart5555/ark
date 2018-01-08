@@ -141,6 +141,16 @@ void EntityManager::stopPhysics()
     m_nodeEntMgr->setUpdateCallback(NULL);
 }
 
+void EntityManager::pausePhysics()
+{
+    m_nodeEntMgr->setUpdateCallback(NULL);
+}
+
+void EntityManager::resumePhysics()
+{
+    m_nodeEntMgr->setUpdateCallback(new EntityManagerCallback(this) );
+}
+
 osg::ref_ptr <Entity> EntityManager::createEntity(EntityType etype)
 {
     osg::MatrixTransform *model;

@@ -438,10 +438,15 @@ bool AssetsManager::getLevelData(const char *ep_file, const char *lvl_name, Leve
     }
         
     LOG_INFO("Loading level name:%s from:%s \n", lvl_name, ep_file);
-    lua_mgr.loadLevelData(lvl_name, data);
+    res = lua_mgr.loadLevelData(lvl_name, data);
     lua_mgr.close();
-        
-    return true;
+    
+    if(res==false)
+        LOG_ERROR("Level name:%s from:%s not found \n", lvl_name, ep_file);    
+    else
+        LOG_INFO("Loading level name:%s from:%s \n", lvl_name, ep_file);
+            
+    return res;
 }
 
 std::vector<MenuItem>* AssetsManager::getMenuItems(const char* menu_name)

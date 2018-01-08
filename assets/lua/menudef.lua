@@ -80,10 +80,10 @@ MenuSceneHud =
         x=0.0, y=5.0, width=4.0, height=0.75  
     },    
     { 
-        name="Start",
+        name="Resume",
         model="widget_square", 
-        cb="Scene_start_physics", 
-        label="Start", 
+        cb="Scene_resume", 
+        label="Resume", 
         x=2.0, y=-4.0, width=1.0, height=1.0  
     },    
     { 
@@ -96,7 +96,7 @@ MenuSceneHud =
     { 
         name="Pause",
         model="widget_square", 
-        cb="Scene_stop_physics", 
+        cb="Scene_pause", 
         label="Pause", 
         x=-2.0, y=-4.0, width=1.0, height=1.0  
     },

@@ -246,7 +246,8 @@ bool Entity::enablePhysics()
 bool Entity::disablePhysics()
 {
     if(m_phyActive==false)
-        return false;        
+        return false;  
+    LOG_INFO("Entity::disablePhysics(): Physics disable for entity:%s\n", m_name.c_str());           
     m_phyActive=false;
     if(m_phyBody != NULL)
     {

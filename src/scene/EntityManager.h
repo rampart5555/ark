@@ -18,6 +18,8 @@ class EntityManager
         EntityManager();              
         void startPhysics();
         void stopPhysics();
+        void pausePhysics();
+        void resumePhysics();
         osg::ref_ptr <Entity> createEntity(EntityType etype);
         void addEntity(osg::ref_ptr<Entity>);        
         void removeEntity(osg::ref_ptr<Entity>);        
