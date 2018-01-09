@@ -22,7 +22,7 @@ class EntityManagerCallback : public osg::NodeCallback
         {
             
         }
-        void operator()(osg::Node* node, osg::NodeVisitor* nv)
+        virtual void operator()(osg::Node* node, osg::NodeVisitor* nv)
         {
             if (nv->getVisitorType() == osg::NodeVisitor::UPDATE_VISITOR)
             {
@@ -40,6 +40,7 @@ class EntityManagerCallback : public osg::NodeCallback
                 //printf("%f\n",dt);
                 m_entityMgr->update(dt);
             }
+            traverse(node,nv);
         }        
     private:
         EntityManager *m_entityMgr;

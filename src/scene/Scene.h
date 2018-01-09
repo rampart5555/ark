@@ -6,6 +6,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "SceneDefs.h"
+#include "SceneAnimation.h"
 
 class Scene
 {
@@ -27,11 +28,12 @@ class Scene
         void addEntityProps(Entity *ent);
         bool loadTMXMap( const char* );
         EntityManager& getEntityManager() { return m_entityMgr; }
-
+        
     protected:
         osg::MatrixTransform *m_sceneNode;
         EntityManager m_entityMgr;
         int m_levelScore;
         EntityProps *m_entityProps;
+        SceneAnimation *m_sceneAnimMgr;
 };
 #endif

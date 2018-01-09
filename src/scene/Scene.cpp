@@ -209,4 +209,11 @@ void Scene::loadStaticScene()
         m_sceneNode->addChild(mt);
         px+=0.5;
     }
+#if 1/* better understend this animation thing !!!!!!!!!!!!!!! */    
+    m_sceneAnimMgr = new SceneAnimation();
+    m_sceneAnimMgr->createPaddleAnimation();
+    osg::MatrixTransform *paddle = new osg::MatrixTransform(*pm); 
+    m_sceneNode->addChild(m_sceneAnimMgr->getAnimNode());    
+    m_sceneAnimMgr->playPaddleAnimation(paddle); 
+#endif   
 }
