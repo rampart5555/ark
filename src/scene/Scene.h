@@ -33,7 +33,6 @@ class Scene
         osg::MatrixTransform *m_sceneNode;
         EntityManager m_entityMgr;
         int m_levelScore;
-        EntityProps *m_entityProps;
-        SceneAnimation *m_sceneAnimMgr;
+        EntityProps *m_entityProps;        
 };
 #endif

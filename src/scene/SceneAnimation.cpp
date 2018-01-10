@@ -1,89 +1,57 @@
+#include <stdio.h>
+#include <osg/NodeVisitor>
+#include <osg/Node>
+#include <osg/Vec3>
 #include "SceneAnimation.h"
-#if 0
-void SceneAnimation::animTranslate(const osg::Vec3& center, float radius, double looptime)
-{
-    m_rootNode->addChild( createPlane(this) );
-    /* animated cube */
-    osg::Geode *geode = new osg::Geode;
-    geode->addDrawable(new osg::ShapeDrawable(new osg::Box(osg::Vec3(-4.5f,4.5f,0.5f),1.0)));
-    
-    osgAnimation::UpdateMatrixTransform* updatecb = new osgAnimation::UpdateMatrixTransform("AnimatedCallback");
-    updatecb->getStackedTransforms().push_back(new osgAnimation::StackedTranslateElement("position"));
-    
-    osg::MatrixTransform *trans = new osg::MatrixTransform();
-    trans->setName("AnimatedNode");    
-    trans->setDataVariance(osg::Object::DYNAMIC);
-    trans->setMatrix(osg::Matrix::identity());
-    trans->addChild(geode);
-    trans->setUpdateCallback(updatecb);
-    m_rootNode->addChild(trans);
-    
-    osgAnimation::Vec3LinearChannel* channelAnimation1 = new osgAnimation::Vec3LinearChannel;
-    channelAnimation1->setTargetName("AnimatedCallback");
-    channelAnimation1->setName("position");
-    channelAnimation1->getOrCreateSampler()->getOrCreateKeyframeContainer()->push_back(
-        osgAnimation::Vec3Keyframe(0, osg::Vec3(0,0,0)));
-    channelAnimation1->getOrCreateSampler()->getOrCreateKeyframeContainer()->push_back(
-        osgAnimation::Vec3Keyframe(2, osg::Vec3(0,0,0.5)));
-    channelAnimation1->getOrCreateSampler()->getOrCreateKeyframeContainer()->push_back(
-        osgAnimation::Vec3Keyframe(4, osg::Vec3(5,-5,0.5)));
-    channelAnimation1->getOrCreateSampler()->getOrCreateKeyframeContainer()->push_back(
-        osgAnimation::Vec3Keyframe(6, osg::Vec3(5,-5,0.0)));
-    
-    m_animTranslate = new osgAnimation::Animation;
-    m_animTranslate->addChannel(channelAnimation1);
-    m_animTranslate->setPlayMode(osgAnimation::Animation::ONCE);   
-    
-    m_animMgr = new osgAnimation::BasicAnimationManager();    
-    m_animMgr->registerAnimation(m_animTranslate);    
-    m_rootNode->setUpdateCallback(m_animMgr);
-    //m_animMgr->playAnimation(m_animTranslate);
-}
-#endif
 
-SceneAnimation::SceneAnimation()
+PaddleAnimationCallback::PaddleAnimationCallback() : osg::AnimationPathCallback()
 {
-    m_animMgr = new osgAnimation::BasicAnimationManager();
-    m_animNode = new osg::Group();  
-    m_animNode->setUpdateCallback(m_animMgr);
 }
 
-void SceneAnimation::createPaddleAnimation()
-{    
-    osgAnimation::Vec3LinearChannel* channel = new osgAnimation::Vec3LinearChannel;    
-    osgAnimation::Vec3KeyframeContainer* keyframe = channel->getOrCreateSampler()->getOrCreateKeyframeContainer();
-    keyframe->push_back(osgAnimation::Vec3Keyframe(0, osg::Vec3(0,0,0)));
-    keyframe->push_back(osgAnimation::Vec3Keyframe(1, osg::Vec3(0,0,0.5)));
-    keyframe->push_back(osgAnimation::Vec3Keyframe(2, osg::Vec3(0.0,-1.0,0.5)));
-    keyframe->push_back(osgAnimation::Vec3Keyframe(3, osg::Vec3(0.0,-1.0,0.0)));
-    channel->setTargetName("AnimatedCallback");
-    channel->setName("position");
-    m_animPaddle = new osgAnimation::Animation;
-    m_animPaddle->addChannel(channel);
-    m_animPaddle->setPlayMode(osgAnimation::Animation::PPONG); 
-    m_animMgr->registerAnimation(m_animPaddle);  
-    
-#if 0    
-    osg::MatrixTransform *trans = new osg::MatrixTransform();
-    trans->setName("AnimatedNode");    
-    trans->setDataVariance(osg::Object::DYNAMIC);
-    trans->setMatrix(osg::Matrix::identity());
-    trans->addChild(node);
-    trans->setUpdateCallback(updatecb);
-    m_animNode->addChild(trans);    
-#endif    
+void PaddleAnimationCallback::operator()(osg::Node* node, osg::NodeVisitor* nv)
+{
+    if (_animationPath.valid() &&
+        nv->getVisitorType()==osg::NodeVisitor::UPDATE_VISITOR &&
+        nv->getFrameStamp())
+    {
+        double time = nv->getFrameStamp()->getSimulationTime();
+        _latestTime = time;
+
+        if (!_pause)
+        {
+            // Only update _firstTime the first time, when its value is still DBL_MAX
+            if (_firstTime==DBL_MAX) _firstTime = time;
+            update(*node);
+            if( getAnimationTime() > _animationPath->getLastTime() )
+            {
+                //printf("animation complete\n");
+            }
+        }
+    }
+
+    // must call any nested node callbacks and continue subgraph traversal.
+    osg::NodeCallback::traverse(node,nv);
+}       
+
+PaddleAnimation::PaddleAnimation()
+{
+    m_animSpawnCb = NULL;
 }
 
-void SceneAnimation::playPaddleAnimation(osg::MatrixTransform *node)
+PaddleAnimationCallback* PaddleAnimation::getAnimation(const char *anim_name)
 {
-    osgAnimation::UpdateMatrixTransform* updatecb = new osgAnimation::UpdateMatrixTransform("AnimatedCallback");
-    updatecb->getStackedTransforms().push_back(new osgAnimation::StackedTranslateElement("position"));
-    osg::MatrixTransform *trans = new osg::MatrixTransform();
-    trans->setName("AnimatedNode");    
-    trans->setDataVariance(osg::Object::DYNAMIC);
-    trans->setMatrix(osg::Matrix::identity());
-    trans->addChild(node);
-    trans->setUpdateCallback(updatecb);        
-    m_animNode->addChild(trans);
-    m_animMgr->playAnimation(m_animPaddle);
+    return m_animSpawnCb;
+    //return m_animSpawn;
+}
+
+void PaddleAnimation::createSpawnAnim(osg::Vec3 start_pos, osg::Vec3 end_pos)
+{
+    osg::AnimationPath *animPath = new osg::AnimationPath;
+    animPath->setLoopMode(osg::AnimationPath::LOOP);    
+    animPath->insert(0.0,osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
+    animPath->insert(1.0,osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z()+1.0)));
+    animPath->insert(2.0,osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), start_pos.z()+1.0)));
+    animPath->insert(3.0,osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), start_pos.z()+1.0)));    
+    m_animSpawnCb = new PaddleAnimationCallback();
+    m_animSpawnCb->setAnimationPath(animPath);    
 }

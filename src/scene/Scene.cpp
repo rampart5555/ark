@@ -209,11 +209,19 @@ void Scene::loadStaticScene()
         m_sceneNode->addChild(mt);
         px+=0.5;
     }
-#if 1/* better understend this animation thing !!!!!!!!!!!!!!! */    
-    m_sceneAnimMgr = new SceneAnimation();
-    m_sceneAnimMgr->createPaddleAnimation();
-    osg::MatrixTransform *paddle = new osg::MatrixTransform(*pm); 
-    m_sceneNode->addChild(m_sceneAnimMgr->getAnimNode());    
-    m_sceneAnimMgr->playPaddleAnimation(paddle); 
-#endif   
+#if 0    
+    osg::MatrixTransform *paddle = new osg::MatrixTransform(*pm);
+    osg::Matrix tr; 
+    tr.makeTranslate(pos.x()-1, pos.y()+0.2, pos.z());        
+    paddle->setMatrix(tr);
+    PaddleAnimation pa;    
+    m_sceneNode->addChild(paddle);
+    osg::Vec3 start_pos(pos);
+    osg::Vec3 end_pos(osg::Vec3(0.0,0.0,0.0));
+    pa.createSpawnAnim(start_pos,end_pos);
+    PaddleAnimationCallback *pac=pa.getAnimation("paddle_spawn");
+        
+    paddle->setUpdateCallback(pac);
+#endif
+
 }

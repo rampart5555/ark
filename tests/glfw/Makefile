@@ -42,7 +42,8 @@ LOCAL_OBJ_FILES:=\
     scenes/Alpha.o\
     scenes/PSystem.o\
     scenes/Userdata.o\
-    scenes/Animation.o
+    scenes/Animation.o\
+    scenes/AnimationPath.o\
     
 
 
