@@ -282,10 +282,12 @@ void Scene_unlock_next_level(void *args)
     sprintf(buf, "%d", sl->m_id + 1);
     but->setLabel(buf);        
 }
+
 void Scene_continue(void *args)
 {
     Scene::instance().getEntityManager().levelContinue();
 }
+
 /*Levels Callback*/
 void Level_update_score(void *args)
 {

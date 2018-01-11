@@ -140,18 +140,24 @@ void OsgMain::reshape(int width, int height)
 }
 
 void OsgMain::draw()
-{
+{    
     if(m_viewer != NULL)
+    {
+        double timeOfLastMerge = m_viewer->getFrameStamp()->getReferenceTime();
         m_viewer->frame();
+        double currentTime = m_viewer->getFrameStamp()->getReferenceTime();
+        double delta_t = currentTime - timeOfLastMerge;
+        Scene::instance().update(delta_t);
+    }
 }
 
 void OsgMain::run()
 {
     if(m_viewer != NULL)
-    {
+    {         
          while( !m_viewer->done() )
          {
-            draw();
+            draw();                
          }
     }
 }

@@ -28,7 +28,7 @@ class Scene
         void addEntityProps(Entity *ent);
         bool loadTMXMap( const char* );
         EntityManager& getEntityManager() { return m_entityMgr; }
-        
+        void update(float);
     protected:
         osg::MatrixTransform *m_sceneNode;
         EntityManager m_entityMgr;

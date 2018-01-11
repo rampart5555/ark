@@ -9,45 +9,6 @@
 #include "EntityManager.h"
 #include "EngineCallback.h"
 
-
-class EntityManagerCallback : public osg::NodeCallback
-{
-    public:
-        EntityManagerCallback(EntityManager *em)
-        {
-            m_entityMgr = em;
-            m_active = false;
-        }
-        ~EntityManagerCallback()
-        {
-            
-        }
-        virtual void operator()(osg::Node* node, osg::NodeVisitor* nv)
-        {
-            if (nv->getVisitorType() == osg::NodeVisitor::UPDATE_VISITOR)
-            {
-                /* skip first frame */
-                float dt;
-                const osg::FrameStamp* fs = nv->getFrameStamp();
-                if(m_active==false)
-                {
-                    dt = 0.016;
-                    m_active=true;
-                }
-                else                
-                    dt = fs->getSimulationTime() - m_passedTime;
-                m_passedTime = fs->getSimulationTime();
-                //printf("%f\n",dt);
-                m_entityMgr->update(dt);
-            }
-            traverse(node,nv);
-        }        
-    private:
-        EntityManager *m_entityMgr;
-        bool m_active;
-        float m_passedTime;
-};
-
 b2World *EntityManager::m_world = NULL;
 
 EntityManager::EntityManager()
@@ -98,8 +59,7 @@ void EntityManager::startPhysics()
     m_paddle->setJoint(m_groundBody);
     //m_paddle->getPhyBody()->Dump();
     //m_bottomWall->getPhyBody()->Dump();
-    LOG_INFO("Number of entities:%lu\n", m_entityList.size());
-    m_nodeEntMgr->setUpdateCallback(new EntityManagerCallback(this) );
+    LOG_INFO("Number of entities:%lu\n", m_entityList.size());    
 
     /*create a joint between paddle and ball */
     EntityBall *ball = m_ballList.front();
@@ -138,18 +98,17 @@ void EntityManager::stopPhysics()
     {
         EntityManager::m_world->DestroyBody(m_groundBody);
         m_groundBody = NULL;
-    }
-    m_nodeEntMgr->setUpdateCallback(NULL);
+    }    
 }
 
 void EntityManager::pausePhysics()
 {
-    m_nodeEntMgr->setUpdateCallback(NULL);
+    m_physicsActive = false;
 }
 
 void EntityManager::resumePhysics()
 {
-    m_nodeEntMgr->setUpdateCallback(new EntityManagerCallback(this) );
+    m_physicsActive = true;
 }
 
 osg::ref_ptr <Entity> EntityManager::createEntity(EntityType etype)
@@ -427,7 +386,7 @@ void EntityManager::paddleUnselect(void *args)
 void EntityManager::levelComplete()
 {
     LOG_INFO("%s", "*** LEVEL COMPLETE ***\n");
-    m_physicsActive = false;
+    stopPhysics();
     Scene_level_complete(NULL);    
 }
 
@@ -446,6 +405,7 @@ void EntityManager::levelContinue()
     new_ball->setDir(osg::Vec2(0.5,0.5));
     new_ball->setSpeed(DEFAULT_BALL_SPEED);
     addEntity(ent);
+    startPhysics();
 }
 
 /* debug function*/

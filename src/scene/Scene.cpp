@@ -225,3 +225,7 @@ void Scene::loadStaticScene()
 #endif
 
 }
+void Scene::update(float passedTime)
+{
+    m_entityMgr.update(passedTime);
+}
