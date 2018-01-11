@@ -6,7 +6,6 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "SceneDefs.h"
-#include "SceneAnimation.h"
 
 class Scene
 {
@@ -33,6 +32,7 @@ class Scene
         osg::MatrixTransform *m_sceneNode;
         EntityManager m_entityMgr;
         int m_levelScore;
-        EntityProps *m_entityProps;        
+        EntityProps *m_entityProps;
+        osg::ref_ptr<Entity> m_animPaddle;     
 };
 #endif

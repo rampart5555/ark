@@ -7,6 +7,8 @@
 #include <osg/Geode>
 #include <Box2D/Box2D.h>
 #include "Config.h"
+#include "EntityAnimation.h"
+
 const unsigned int CAT_WALL           = 0x0001;
 const unsigned int CAT_BALL           = 0x0002;
 const unsigned int CAT_BRICK          = 0x0004;
@@ -58,6 +60,10 @@ class Entity : public osg::Referenced
         void updateInitialTransform();
 
         virtual void update(float);
+
+        virtual void setAnimation(EntityAnimation*);
+        virtual void playAnimation();
+
         virtual void setPosition(osg::Vec3 pos);
         virtual osg::Vec3& getPosition();
         /* physics */
@@ -105,6 +111,7 @@ class Entity : public osg::Referenced
         PowerupType m_powerup;
         unsigned int m_color;
         osg::Vec3 m_position;
+        osg::ref_ptr<EntityAnimation> m_entityAnimation;
 };
 
 class ContactListener : public b2ContactListener

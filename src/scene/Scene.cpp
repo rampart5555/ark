@@ -195,34 +195,23 @@ void Scene::loadStaticScene()
     osg::MatrixTransform *model = AssetsManager::instance().getEntityModel("entity_paddle_support");
     osg::Vec3f pos, scale;
     osg::Quat rot, so;
-    osg::Matrix m = model->getMatrix();
-    m.decompose(pos, rot, scale, so);       
+    osg::Matrix m = model->getMatrix();    
+    m.decompose(pos, rot, scale, so);      
     m_sceneNode->addChild(model);
-    osg::MatrixTransform *pm = AssetsManager::instance().getEntityModel("entity_paddle");
-    float px=0;
-    for(int i=0;i<3;i++)
-    {        
-        osg::MatrixTransform *mt = new osg::MatrixTransform(*pm);        
-        osg::Matrix new_tr; 
-        new_tr.makeTranslate(pos.x()-1.0+px,pos.y(),pos.z());
-        mt->setMatrix(new_tr);
-        m_sceneNode->addChild(mt);
-        px+=0.5;
-    }
-#if 0    
-    osg::MatrixTransform *paddle = new osg::MatrixTransform(*pm);
-    osg::Matrix tr; 
-    tr.makeTranslate(pos.x()-1, pos.y()+0.2, pos.z());        
-    paddle->setMatrix(tr);
-    PaddleAnimation pa;    
-    m_sceneNode->addChild(paddle);
-    osg::Vec3 start_pos(pos);
-    osg::Vec3 end_pos(osg::Vec3(0.0,0.0,0.0));
-    pa.createSpawnAnim(start_pos,end_pos);
-    PaddleAnimationCallback *pac=pa.getAnimation("paddle_spawn");
-        
-    paddle->setUpdateCallback(pac);
-#endif
+
+    osg::MatrixTransform *spn = AssetsManager::instance().getEntityModel("spawn_entity_paddle");
+    osg::Vec3f spn_pos, spn_scale;
+    osg::Quat spn_rot, spn_so;
+    osg::Matrix spn_m = spn->getMatrix();
+    spn_m.decompose(spn_pos, spn_rot, spn_scale, spn_so);             
+
+    m_animPaddle = m_entityMgr.createEntity(ENTITY_PADDLE);
+    m_animPaddle->setPosition(pos);
+    m_sceneNode->addChild(m_animPaddle->getEntityNode());
+    EntityAnimation *ea = new EntityAnimation;
+    ea->createAnimation(pos, spn_pos);
+    m_animPaddle->setAnimation(ea);
+    m_animPaddle->playAnimation();
 
 }
 void Scene::update(float passedTime)

@@ -4,7 +4,7 @@
 #include "Logging.h"
 #include "EntityManager.h"
 #include "Entity.h"
-
+#include "EntityAnimation.h"
 
 Entity::Entity()
 {
@@ -140,6 +140,26 @@ void Entity::update(float passedTime)
     osg::Matrix rot; 
     rot.makeRotate(bodyAngle, 0, 0, 1);
     m_transform->setMatrix(rot*osg_pos);        
+}
+
+void Entity::setAnimation(EntityAnimation *anim )
+{
+    m_entityAnimation = anim;
+}
+
+void Entity::playAnimation()
+{
+    if(m_phyActive==true)
+    {
+        LOG_WARN("Physics active, Animation not played %s\n","");
+        return;
+    }
+    if(m_entityAnimation.valid()==false)
+    {
+        LOG_WARN("Animation not valid %s\n","");
+        return;
+    }
+    m_transform->setUpdateCallback(m_entityAnimation);        
 }
 
 void Entity::setCategoryBits( EntityType etype)

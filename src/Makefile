@@ -70,13 +70,13 @@ LOCAL_OBJ_FILES:=main.o\
     ui/MenuManager.o\
     ui/Widget.o\
     scene/Scene.o\
-    scene/SceneAnimation.o\
     scene/LevelManager.o\
     scene/Entity.o\
     scene/EntityBall.o\
     scene/EntityBullet.o\
     scene/EntityPaddle.o\
-    scene/EntityManager.o
+    scene/EntityManager.o\
+    scene/EntityAnimation.o
     
 SHARED_LIB = -ldl -lGLESv2 -lEGL -pthread -lz -lX11 -lXrandr -lXxf86vm -lXcursor -lXinerama
 
