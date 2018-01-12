@@ -24,8 +24,7 @@ static struct cb_item cb_map[]={
     { "MenuSceneHud_button_lc_push", MenuSceneHud_button_lc_push },
     { "MenuSceneHud_button_lf_push", MenuSceneHud_button_lf_push },
     { "Scene_resume", Scene_resume},
-    { "Scene_pause", Scene_pause},
-    { "Scene_continue", Scene_continue},
+    { "Scene_pause", Scene_pause},    
     { NULL,NULL}
 };
 
@@ -181,8 +180,8 @@ void MenuLevelFailed_button_levels_push(void* args)
 void MenuLevelFailed_button_continue_push(void* args)
 {
     MenuLevelFailed *mlf = MenuManager::instance().getMenuLevelFailed();
-    mlf->hide(MenuSceneHud_show, args);
-    Scene::instance().getEntityManager().levelContinue();
+    mlf->hide(MenuSceneHud_show, args);    
+    Scene::instance().levelContinue();
 }
 
 /*** Scene ***/
@@ -283,8 +282,9 @@ void Scene_unlock_next_level(void *args)
     but->setLabel(buf);        
 }
 
-void Scene_continue(void *args)
+void Scene_level_continue(void *args)
 {
+    LOG_INFO("Callback Scene_Continue:%s\n","");
     Scene::instance().getEntityManager().levelContinue();
 }
 

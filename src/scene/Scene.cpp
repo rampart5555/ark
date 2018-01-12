@@ -198,22 +198,25 @@ void Scene::loadStaticScene()
     osg::Matrix m = model->getMatrix();    
     m.decompose(pos, rot, scale, so);      
     m_sceneNode->addChild(model);
-
-    osg::MatrixTransform *spn = AssetsManager::instance().getEntityModel("spawn_entity_paddle");
-    osg::Vec3f spn_pos, spn_scale;
-    osg::Quat spn_rot, spn_so;
-    osg::Matrix spn_m = spn->getMatrix();
-    spn_m.decompose(spn_pos, spn_rot, spn_scale, spn_so);             
+    
 
     m_animPaddle = m_entityMgr.createEntity(ENTITY_PADDLE);
     m_animPaddle->setPosition(pos);
     m_sceneNode->addChild(m_animPaddle->getEntityNode());
-    EntityAnimation *ea = new EntityAnimation;
-    ea->createAnimation(pos, spn_pos);
-    m_animPaddle->setAnimation(ea);
-    m_animPaddle->playAnimation();
+
 
 }
+void Scene::levelContinue()
+{    
+    osg::Vec3 start_pos = m_animPaddle->getPosition();
+    osg::Vec3 end_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
+    EntityAnimation *ea = new EntityAnimation;
+    ea->setCallback(Scene_level_continue);
+    ea->createAnimation(start_pos, end_pos);
+    m_animPaddle->setAnimation(ea);
+    m_animPaddle->playAnimation();
+}
+
 void Scene::update(float passedTime)
 {
     m_entityMgr.update(passedTime);

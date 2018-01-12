@@ -287,6 +287,22 @@ bool AssetsManager::loadMenuEntries()
     return true;
 }         
 /// get ///
+osg::Vec3f AssetsManager::getEntityModelPosition(const char* model_name) 
+{
+    osg::MatrixTransform *model = NULL;
+    if(m_assetList.count(model_name)>0)
+        model = dynamic_cast<osg::MatrixTransform*>(m_assetList[model_name].get());    
+    else
+        LOG_WARN("AssetsManager::getEntityModelPosition=> Entity model not found: :%s\n", model_name);
+    
+    osg::Vec3f pos, scale;
+    osg::Quat rot, so;
+    osg::Matrix matrix = model->getMatrix();
+    matrix.decompose(pos, rot, scale, so);     
+        
+    return pos;
+}
+
 osg::MatrixTransform* AssetsManager::getEntityModel(EntityType etype) 
 {
     osg::MatrixTransform *model = NULL;

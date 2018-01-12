@@ -26,6 +26,7 @@ class AssetsManager
         void addModelAsset(osg::MatrixTransform&);
         osg::MatrixTransform* getEntityModel(EntityType);
         osg::MatrixTransform* getEntityModel(const char*);
+        osg::Vec3f getEntityModelPosition(const char* model_name);
         osg::MatrixTransform* getWidgetModel(const char*);
         osg::Program* getProgram(const char*);
         osg::Texture2D* getTexture(const char*);

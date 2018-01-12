@@ -6,13 +6,15 @@
 
 EntityAnimation::EntityAnimation() : osg::AnimationPathCallback()
 {
+    m_status = RUNNING;
+    m_callback = NULL;
 }
 
 void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
 {
     if (_animationPath.valid() &&
         nv->getVisitorType()==osg::NodeVisitor::UPDATE_VISITOR &&
-        nv->getFrameStamp())
+        nv->getFrameStamp() && (m_status==RUNNING) ) 
     {
         double time = nv->getFrameStamp()->getSimulationTime();
         _latestTime = time;
@@ -25,6 +27,9 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
             if( getAnimationTime() > _animationPath->getLastTime() )
             {
                 //printf("animation complete\n");
+                m_status = COMPLETE;
+                if(m_callback!=NULL)
+                    m_callback(NULL);
             }
         }
     }
@@ -36,9 +41,14 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
 void EntityAnimation::createAnimation(osg::Vec3 start_pos, osg::Vec3 end_pos)
 {
     _animationPath = new osg::AnimationPath;
-    _animationPath->setLoopMode(osg::AnimationPath::LOOP);    
+    _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);    
     _animationPath->insert(0.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
     _animationPath->insert(1.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z()+1.0)));
     _animationPath->insert(2.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), start_pos.z()+1.0)));
     _animationPath->insert(3.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));        
+}
+
+void EntityAnimation::setCallback(EngineCallback cb)
+{
+    m_callback=cb;
 }

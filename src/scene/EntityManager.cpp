@@ -405,6 +405,8 @@ void EntityManager::levelContinue()
     new_ball->setDir(osg::Vec2(0.5,0.5));
     new_ball->setSpeed(DEFAULT_BALL_SPEED);
     addEntity(ent);
+    osg::Vec3 paddle_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
+    m_paddle->setPosition(paddle_pos);
     startPhysics();
 }
 
