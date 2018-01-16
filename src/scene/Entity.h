@@ -78,6 +78,7 @@ class Entity : public osg::Referenced
         virtual EntityBullet* asEntityBullet() { return 0; }
         b2Body* getPhyBody() { return m_phyBody; }
         bool phyActive()     { return m_phyActive; }
+        void setValid(bool valid) { m_valid=valid; }
         bool isValid()       { return m_valid; }
         void setUniforms();
         

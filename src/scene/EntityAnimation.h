@@ -5,6 +5,7 @@
 #include "Logging.h"
 #include "EngineCallback.h"
 
+class Entity;
 typedef enum
 {       
     RUNNING ,
@@ -16,9 +17,11 @@ class EntityAnimation: public osg::AnimationPathCallback
 {
     public:
         EntityAnimation();       
+        void setEntity(Entity*);
         void createAnimation(osg::Vec3, osg::Vec3);
-        void setCallback(EngineCallback);
+        void setCallback(EngineCallback);        
         virtual void operator()(osg::Node* node, osg::NodeVisitor* nv);
+        
 
     private:
         ~EntityAnimation()
@@ -27,6 +30,7 @@ class EntityAnimation: public osg::AnimationPathCallback
         }
         AnimationStatus m_status;
         EngineCallback m_callback;
+        Entity *m_entity;
 };
 
 #endif

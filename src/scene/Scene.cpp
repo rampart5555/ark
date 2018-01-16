@@ -11,7 +11,8 @@ Scene::Scene()
     m_entityProps = new EntityProps;
     AssetsManager::instance().getEntityProps("lua/entity_props.lua", m_entityProps);  
     m_sceneNode->addChild(m_entityMgr.getNodeEntMgr());
-    m_entityMgr.loadShaders();
+    m_entityMgr.loadShaders();    
+    m_sceneLoaded=false;
 }
 
 Scene::~Scene()
@@ -28,7 +29,7 @@ void Scene::clear()
 void Scene::loadScene(const char *ep_file, const char* lvl_name)
 {    
     clear();
-
+    
     loadStaticScene();
 
     EntityType ent_env_arr[] = {
@@ -169,6 +170,55 @@ osg::ref_ptr <Entity> Scene::createEntity(EntityType etype)
     return ent;
 }
 
+bool Scene::addEntity(osg::ref_ptr<Entity> entity)
+{
+    if(entity->getType()==ENTITY_PADDLE)
+    {
+        for(unsigned i=0;i<m_paddleSlots.size();i++)
+        {
+            if(m_paddleSlots[i].m_entity.valid()==false)
+            {
+                m_paddleSlots[i].m_entity = entity;
+                m_paddleSlots[i].m_entity->setPosition(m_paddleSlots[i].m_pos);
+                m_sceneNode->addChild(entity->getEntityNode());
+                break;
+            }
+        }
+    }
+    return true;
+}
+
+bool Scene::removeEntity(unsigned int slot_id)
+{
+    EntitySlot *es = &m_paddleSlots[slot_id];
+    m_sceneNode->removeChild(es->m_entity->getEntityNode());
+    es->m_entity = NULL;
+    return true;
+}
+
+const EntitySlot* Scene::getEntitySlot(EntityPos epos, bool valid)
+{    
+    unsigned int i;
+    if(epos == FIRST)
+    {
+        for(i = 0; i<m_paddleSlots.size(); i++)
+        {
+            if(m_paddleSlots[i].m_entity.valid()==valid)
+                return &m_paddleSlots[i];
+        }
+    }
+    if(epos == LAST)
+    {
+        for(i = m_paddleSlots.size(); i>0; i--)
+        {
+            int j = i-1;
+            if(m_paddleSlots[j].m_entity.valid()==valid)
+                return &m_paddleSlots[j];
+        }
+    }    
+    return NULL;    
+}
+
 osg::MatrixTransform* Scene::getSceneNode()
 {
     return m_sceneNode;
@@ -192,32 +242,80 @@ void Scene::loadShaders()
 /* for static scene physics is not enabled */
 void Scene::loadStaticScene()
 {
+    if(m_sceneLoaded == true)
+        return;
+    m_sceneLoaded = true;
+
     osg::MatrixTransform *model = AssetsManager::instance().getEntityModel("entity_paddle_support");
     osg::Vec3f pos, scale;
     osg::Quat rot, so;
     osg::Matrix m = model->getMatrix();    
     m.decompose(pos, rot, scale, so);      
     m_sceneNode->addChild(model);
-    
+        
+    /* init paddle support slots */
+    for(int i=0;i<3; i++)
+    {
+        EntitySlot es;
+        float x = pos.x() -1 + 0.5*i;
+        es.m_pos.set(x, pos.y(), pos.z());
+        m_paddleSlots.push_back(es);        
+    }
+    /* add paddle to paddle slots*/
+    for(int i=0;i<3;i++)
+    {
+        osg::ref_ptr<Entity> paddle = m_entityMgr.createEntity(ENTITY_PADDLE);                
+        addEntity(paddle);
+    }
 
-    m_animPaddle = m_entityMgr.createEntity(ENTITY_PADDLE);
-    m_animPaddle->setPosition(pos);
-    m_sceneNode->addChild(m_animPaddle->getEntityNode());
-
+#if 0    
+    osg::ref_ptr<Entity> paddle = m_entityMgr.createEntity(ENTITY_PADDLE);
+    paddle->setPosition(pos);
+    m_sceneNode->addChild(paddle->getEntityNode());
+    m_sceneEntityList.push_back(paddle);
+#endif
 
 }
 void Scene::levelContinue()
-{    
-    osg::Vec3 start_pos = m_animPaddle->getPosition();
+{   
+    const EntitySlot *es;
+    es = getEntitySlot(LAST, true);
+    if(es != NULL)
+    {
+        Entity *paddle = es->m_entity->asEntityPaddle();
+        osg::Vec3 start_pos = paddle->getPosition();
+        osg::Vec3 end_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
+        EntityAnimation *ea = new EntityAnimation;
+        ea->setCallback(Scene_level_continue);
+        ea->createAnimation(start_pos, end_pos);
+        ea->setEntity(paddle);
+        paddle->setAnimation(ea);
+        paddle->playAnimation();
+    }
+    else
+    {
+        LOG_INFO("No more paddle in paddle slots: %s\n","");
+    }
+#if 0    
+    osg::ref_ptr<Entity> paddle = m_sceneEntityList.front(); 
+    osg::Vec3 start_pos = paddle->getPosition();
     osg::Vec3 end_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
     EntityAnimation *ea = new EntityAnimation;
     ea->setCallback(Scene_level_continue);
     ea->createAnimation(start_pos, end_pos);
-    m_animPaddle->setAnimation(ea);
-    m_animPaddle->playAnimation();
+    
+    paddle->setAnimation(ea);
+    paddle->playAnimation();
+#endif    
 }
 
 void Scene::update(float passedTime)
 {
     m_entityMgr.update(passedTime);
+    /* remove invalid entity from paddle slots */
+    for(unsigned i = 0; i<m_paddleSlots.size(); i++)
+    {
+        if(m_paddleSlots[i].m_entity.valid() && m_paddleSlots[i].m_entity->isValid()==false)
+            removeEntity(i);
+    }
 }

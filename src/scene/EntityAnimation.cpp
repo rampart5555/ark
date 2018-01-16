@@ -2,12 +2,15 @@
 #include <osg/NodeVisitor>
 #include <osg/Node>
 #include <osg/Vec3>
+#include "Entity.h"
 #include "EntityAnimation.h"
+
 
 EntityAnimation::EntityAnimation() : osg::AnimationPathCallback()
 {
     m_status = RUNNING;
     m_callback = NULL;
+    m_entity = NULL;
 }
 
 void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
@@ -28,8 +31,10 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
             {
                 //printf("animation complete\n");
                 m_status = COMPLETE;
-                if(m_callback!=NULL)
+                if(m_callback != NULL)
                     m_callback(NULL);
+                if(m_entity != NULL)
+                    m_entity->setValid(false);
             }
         }
     }
@@ -37,6 +42,11 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
     // must call any nested node callbacks and continue subgraph traversal.
     osg::NodeCallback::traverse(node,nv);
 }       
+
+void EntityAnimation::setEntity(Entity *ent)
+{
+    m_entity = ent;
+}
 
 void EntityAnimation::createAnimation(osg::Vec3 start_pos, osg::Vec3 end_pos)
 {

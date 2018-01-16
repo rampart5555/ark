@@ -8,6 +8,7 @@
 #include "scenes/Userdata.h"
 #include "scenes/Animation.h"
 #include "scenes/AnimationPath.h"
+#include "scenes/TestRefptr.h"
 //USE_OSGPLUGIN(osg2)
 //USE_SERIALIZER_WRAPPER_LIBRARY(osg)
 //USE_GRAPHICSWINDOW()
@@ -109,7 +110,8 @@ bool OsgMain::init(int x, int y, int width, int height)
     //loadScene("Simple");
     //loadScene("Particle");
     //loadScene("Alpha");
-    loadScene("TestAnimationPath");
+    //loadScene("TestAnimationPath");
+    loadScene("TestRefptr");
     m_viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     m_viewer->addEventHandler(new osgViewer::StatsHandler);  
     m_viewer->addEventHandler(new MouseHandler());  
@@ -224,6 +226,11 @@ void OsgMain::loadScene(const char* scene_name)
     else if(strcmp(scene_name,"TestAnimationPath")==0)
     {
         scene = new TestAnimationPath();
+        scene->createScene();        
+    }
+    else if(strcmp(scene_name,"TestRefptr")==0)
+    {
+        scene = new TestRefptr();
         scene->createScene();        
     }
     m_currentScene = scene;
