@@ -33,6 +33,10 @@ Scene::~Scene()
     printf("Scene Destructor\n");
 }
 
+void Scene::handleSceneEvent()
+{
+}
+
 osg::ref_ptr<osg::Program> Scene::createProgram()
 {
     return NULL;

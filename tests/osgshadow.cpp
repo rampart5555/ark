@@ -15,6 +15,7 @@
 #include <osgDB/ReadFile>
 
 #include <osgShadow/ShadowedScene>
+#include <osgShadow/ShadowMap>
 #include "ArkShadowMap"
 
 
@@ -53,15 +54,19 @@ osgShadow::ShadowedScene* createShadowScene(osg::Group *scene_models)
     
     int mapres = 1024;
     ArkShadowMap *shadowMap = new ArkShadowMap;
-    //shadowMap->setTextureSize(osg::Vec2s(mapres, mapres));
-    
-    osg::ref_ptr<osg::Light> light = new osg::Light();
-    light->setPosition( osg::Vec4( -3.0f, -3.0f, 3.0f, 0.0f ) );
-    light->setAmbient( osg::Vec4( 1.0f, 0.0f, 0.0f, 1.0f ) );
+    //osgShadow::ShadowMap *shadowMap = new osgShadow::ShadowMap;
+    shadowMap->setTextureSize(osg::Vec2s(mapres, mapres));
     osg::LightSource *ls=new osg::LightSource();
+    osg::Vec4 lightpos(3.0f, 0.0f, 5.0f, 0.0f );
+    osg::ref_ptr<osg::Light> light = new osg::Light();
+    light->setPosition( lightpos);
+    osg::Vec3f lightDir(-lightpos.x(),-lightpos.y(),-lightpos.z());
+    lightDir.normalize();
+    light->setDirection(lightDir);
+    //light->setSpotCutoff(80.0f );
+
     ls->setLight(light);
-    
-    //shadowMap->setLight(ls);
+    shadowMap->setLight(light);
 
     //osg::Shader *shadow_frag_1 = new osg::Shader(osg::Shader::FRAGMENT,fragmentShaderSource_noBaseTexture);
     //shadowMap->addShader(shadow_frag_1);
@@ -73,7 +78,7 @@ osgShadow::ShadowedScene* createShadowScene(osg::Group *scene_models)
     settings->setReceivesShadowTraversalMask(ReceivesShadowTraversalMask);
     settings->setCastsShadowTraversalMask(CastsShadowTraversalMask);    
     shadowScene->setShadowTechnique(shadowMap);  
-    shadowScene->addChild(ls);    
+    //shadowScene->addChild(ls);    
 
     
     for(unsigned int i=0;i<scene_models->getNumChildren();i++)
@@ -83,6 +88,14 @@ osgShadow::ShadowedScene* createShadowScene(osg::Group *scene_models)
         if(model->getName()=="entity_light")
             continue;
         setShader(model);
+        if(model->getName()=="entity_background")
+            model->setNodeMask(ReceivesShadowTraversalMask);
+        else
+        {
+            model->setNodeMask(CastsShadowTraversalMask);
+            setShader(model);
+        }
+            
         shadowScene->addChild(model);
     }
         
@@ -120,7 +133,7 @@ int main()
     osgViewer::Viewer::Windows windows;    
     m_viewer->getWindows(windows);        
 
-    osgShadow::ShadowMap* sm = dynamic_cast<osgShadow::ShadowMap*>(shadowScene->getShadowTechnique());
+    ArkShadowMap* sm = dynamic_cast<ArkShadowMap*>(shadowScene->getShadowTechnique());
     if( sm ) 
     {
         osg::ref_ptr<osg::Camera> hudCamera = sm->makeDebugHUD();

@@ -28,7 +28,7 @@ using namespace osgShadow;
 #include <osg/Geometry>
 #include <osgDB/ReadFile>
 #include <osgText/Text>
-
+#include <stdio.h>
 #include "ArkShadowMap"
 
 #define IMPROVE_TEXGEN_PRECISION 1
@@ -336,7 +336,7 @@ void ArkShadowMap::cull(osgUtil::CullVisitor& cv)
     const osg::Light* selectLight = 0;
     osg::Vec4 lightpos;
     osg::Vec3 lightDir;
-
+#if 0
     //MR testing giving a specific light
     osgUtil::PositionalStateContainer::AttrMatrixList& aml = orig_rs->getPositionalStateContainer()->getAttrMatrixList();
     for(osgUtil::PositionalStateContainer::AttrMatrixList::iterator itr = aml.begin();
@@ -369,7 +369,17 @@ void ArkShadowMap::cull(osgUtil::CullVisitor& cv)
 
         }
     }
-
+#endif
+    if(_light.valid())
+    {
+        lightpos = _light->getPosition();
+        lightDir = _light->getDirection();
+        selectLight = _light.get();
+    }
+    else
+    {
+        printf("Invalid light\n");
+    }
     osg::Matrix eyeToWorld;
     eyeToWorld.invert(*cv.getModelViewMatrix());
 

@@ -1,6 +1,6 @@
 
-#OSG_BUILD_TYPE=debug_dynamic_gles2
-OSG_BUILD_TYPE=debug_dynamic
+OSG_BUILD_TYPE=debug_dynamic_gles2
+#OSG_BUILD_TYPE=debug_dynamic
 OSG_INCLUDE=$HOME/g_dev/gmengine/src/OpenSceneGraph/include
 OSG_PLATFORM_INCLUDE=$HOME/g_dev/gmengine/builds/$OSG_BUILD_TYPE/include
 OSG_LIB_PATH=$HOME/g_dev/gmengine/builds/$OSG_BUILD_TYPE/lib
