@@ -137,13 +137,13 @@ osg::ref_ptr <Entity> EntityManager::createEntity(EntityType etype)
 
 void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
 {   
-    LOG_DEBUG("EntityManager::addEntity=> %s\n",entity->getName().c_str());
+    
     if(entity  == NULL)
     {
         LOG_WARN("%s", "EntityManager::addEntity: NULL entity\n");
         return;
     }
-    
+    LOG_DEBUG("EntityManager::addEntity=> %s\n",entity->getName().c_str());
     m_entityList.push_back(entity);
     m_nodeEntMgr->addChild(entity->getEntityNode());
     if(entity->getType() == ENTITY_PADDLE)

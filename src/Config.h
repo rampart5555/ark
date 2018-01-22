@@ -55,8 +55,10 @@ typedef enum
     ENTITY_BACKGROUND   = 10,
     ENTITY_TURRET       = 11,
     ENTITY_CANNON       = 12,
-    ENTITY_BULLET       = 13
     
+    ENTITY_BULLET       = 13,
+    ENTITY_DOOR_LEFT    = 14,
+    ENTITY_DOOR_RIGHT   = 15        
     
 }EntityType;
 

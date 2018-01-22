@@ -169,7 +169,9 @@ void Entity::setCategoryBits( EntityType etype)
     b2Filter filter = fixture->GetFilterData();
     
     if((m_type==ENTITY_WALL_TOP) || (m_type == ENTITY_WALL_BOTTOM) || 
-       (m_type == ENTITY_WALL_LEFT) || (m_type == ENTITY_WALL_RIGHT))
+       (m_type == ENTITY_WALL_LEFT) || (m_type == ENTITY_WALL_RIGHT)||
+       (m_type == ENTITY_DOOR_LEFT) || (m_type == ENTITY_DOOR_RIGHT))
+    
     {
         filter.categoryBits = CAT_WALL;
         filter.maskBits = CAT_BALL | CAT_PADDLE | CAT_BULLET;
@@ -247,6 +249,8 @@ bool Entity::enablePhysics()
         case ENTITY_WALL_LEFT:  
         case ENTITY_WALL_RIGHT:    
         case ENTITY_POWERUP:
+        case ENTITY_DOOR_LEFT:
+        case ENTITY_DOOR_RIGHT:
         {               
             setBoxShape(geo);
             m_phyActive = true;

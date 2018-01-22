@@ -40,6 +40,8 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
         ENTITY_BALL,
         ENTITY_PADDLE,
         ENTITY_BACKGROUND,
+        ENTITY_DOOR_LEFT,
+        ENTITY_DOOR_RIGHT,
         ENTITY_NONE //last entry        
     };    
             
@@ -49,6 +51,11 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
         if (ent_env_arr[i] == ENTITY_NONE) 
             break;
         ent = m_entityMgr.createEntity(ent_env_arr[i]);
+        if(ent==NULL)
+        {
+            LOG_ERROR("Entity not found type:%d\n", ent_env_arr[i]);
+            continue;
+        }    
         m_entityMgr.addEntity(ent);
         if(ent->getType() == ENTITY_BALL)
         {

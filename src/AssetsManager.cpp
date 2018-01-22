@@ -86,7 +86,8 @@ AssetsManager::AssetsManager()
     m_etypeToString.insert(std::make_pair(ENTITY_BACKGROUND, "entity_background"));
     m_etypeToString.insert(std::make_pair(ENTITY_TURRET, "entity_turret"));
     m_etypeToString.insert(std::make_pair(ENTITY_BULLET, "entity_bullet"));
-    
+    m_etypeToString.insert(std::make_pair(ENTITY_DOOR_LEFT, "entity_door_left"));
+    m_etypeToString.insert(std::make_pair(ENTITY_DOOR_RIGHT, "entity_door_right"));
 }
 
 AssetsManager& AssetsManager::instance()
