@@ -5,6 +5,17 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "EntityAnimation.h"
+/* 
+Static scene node should contain
+ - walls
+ - doors
+ - doors sensor
+ - paddle 
+ Dynamic scene node should cointain
+  - bricks
+  - new balls
+  - powerups
+  */
 
 Entity::Entity()
 {
@@ -44,6 +55,12 @@ Entity::~Entity()
 void Entity::setModel(osg::MatrixTransform& tr)
 {
     m_transform = new osg::MatrixTransform(tr, osg::CopyOp::DEEP_COPY_ALL);
+    osg::Vec3f osg_pos,scale;
+    osg::Quat osg_rot, so;
+    osg::Matrix m = m_transform->getMatrix();
+    m.decompose(osg_pos, osg_rot, scale, so);   
+    /* set initital position for this entity */
+    m_position = osg_pos;
 }
 
 void Entity::setUniforms()
@@ -119,11 +136,13 @@ void Entity::updateInitialTransform()
     }
     if(m_phyActive==false)
         return;    
+#if 0        
     osg::Vec3f osg_pos,scale;
     osg::Quat osg_rot, so;
     osg::Matrix m = m_transform->getMatrix();
     m.decompose(osg_pos, osg_rot, scale, so);   
-    m_phyBody->SetTransform(b2Vec2(osg_pos.x(), osg_pos.y()), 0.0);
+#endif    
+    m_phyBody->SetTransform(b2Vec2(m_position.x(), m_position.y()), 0.0);
     
 }
 
@@ -170,7 +189,8 @@ void Entity::setCategoryBits( EntityType etype)
     
     if((m_type==ENTITY_WALL_TOP) || (m_type == ENTITY_WALL_BOTTOM) || 
        (m_type == ENTITY_WALL_LEFT) || (m_type == ENTITY_WALL_RIGHT)||
-       (m_type == ENTITY_DOOR_LEFT) || (m_type == ENTITY_DOOR_RIGHT))
+       (m_type == ENTITY_DOOR_LEFT) || (m_type == ENTITY_DOOR_RIGHT)||
+       (m_type == ENTITY_DOOR_LEFT_SENSOR) || (m_type == ENTITY_DOOR_RIGHT_SENSOR))
     
     {
         filter.categoryBits = CAT_WALL;
@@ -251,6 +271,8 @@ bool Entity::enablePhysics()
         case ENTITY_POWERUP:
         case ENTITY_DOOR_LEFT:
         case ENTITY_DOOR_RIGHT:
+        case ENTITY_DOOR_LEFT_SENSOR:
+        case ENTITY_DOOR_RIGHT_SENSOR:
         {               
             setBoxShape(geo);
             m_phyActive = true;

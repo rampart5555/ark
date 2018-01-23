@@ -297,6 +297,13 @@ void Level_update_score(void *args)
     msh->updateScore( LevelManager::instance().getScore() );
     
 }
+void Level_cleared(void *args)
+{
 
+}
 
+void Level_completed(void *args)
+{
+    
+}
 

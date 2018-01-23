@@ -11,6 +11,7 @@ EntityAnimation::EntityAnimation() : osg::AnimationPathCallback()
     m_status = RUNNING;
     m_callback = NULL;
     m_entity = NULL;
+    m_animType = ANIM_NONE;
 }
 
 void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
@@ -48,14 +49,33 @@ void EntityAnimation::setEntity(Entity *ent)
     m_entity = ent;
 }
 
+
 void EntityAnimation::createAnimation(osg::Vec3 start_pos, osg::Vec3 end_pos)
 {
-    _animationPath = new osg::AnimationPath;
-    _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);    
-    _animationPath->insert(0.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
-    _animationPath->insert(1.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z()+1.0)));
-    _animationPath->insert(2.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), start_pos.z()+1.0)));
-    _animationPath->insert(3.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));        
+    switch(m_animType)
+    {
+        case PADDLE_MOVE_FROM_SLOT:
+            {
+                _animationPath = new osg::AnimationPath;
+                _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);    
+                _animationPath->insert(0.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
+                _animationPath->insert(1.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z()+1.0)));
+                _animationPath->insert(2.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), start_pos.z()+1.0)));
+                _animationPath->insert(3.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));        
+            }
+            break;
+        case DOOR_CLOSE:
+        case DOOR_OPEN:
+            {                                
+                _animationPath = new osg::AnimationPath;
+                _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);
+                _animationPath->insert(0.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
+                _animationPath->insert(1.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));                            
+            } 
+            break;
+        default:
+            break;
+    }
 }
 
 void EntityAnimation::setCallback(EngineCallback cb)

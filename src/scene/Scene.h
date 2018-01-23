@@ -46,6 +46,7 @@ class Scene
         EntityManager& getEntityManager() { return m_entityMgr; }
         void update(float);
         void levelContinue();
+        void playAnimation(Entity *ent, osg::Vec3 , EngineCallback , AnimType );
 
     protected:
         osg::MatrixTransform *m_sceneNode;
@@ -54,5 +55,7 @@ class Scene
         EntityProps *m_entityProps;        
         std::vector <EntitySlot> m_paddleSlots;
         bool m_sceneLoaded;
+        osg::ref_ptr<Entity> m_doorLeft;
+        osg::ref_ptr<Entity> m_doorRight;
 };
 #endif

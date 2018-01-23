@@ -42,4 +42,6 @@ void Scene_level_continue(void *args);
 
 /*levels*/
 void Level_update_score(void *args);
+void Level_cleared(void* args);
+void Level_completed(void* args);
 #endif

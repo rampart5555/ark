@@ -3,19 +3,257 @@
 #Generator osgexport 0.14.2
 
 osg::Group {
-  UniqueID 364
+  UniqueID 157
   Name "Root"
-  Children 18 {
+  Children 19 {
     osg::MatrixTransform {
-      UniqueID 292
+      UniqueID 79
+      Name "entity_door_left_sensor"
+      Children 1 {
+        osg::Geode {
+          UniqueID 82
+          Name "GeodeCube.006"
+          Drawables 1 {
+            osg::Geometry {
+              UniqueID 81
+              Name "entity_door_left_sensor"
+              PrimitiveSetList 1 {
+                  DrawElementsUByte GL_TRIANGLES 30 {
+                    0 1 2 
+                    3 4 5 
+                    6 7 8 
+                    9 10 11 
+                    12 13 14 
+                    0 15 1 
+                    3 16 4 
+                    6 17 7 
+                    9 18 10 
+                    12 19 13 
+                  }
+              }
+              VertexData {
+                Array TRUE ArrayID 51 Vec3fArray 20 {
+                  -0.04156 -0.13464 0.05163
+                  -0.04156 0.13464 -0.05163
+                  -0.04156 -0.13464 -0.05163
+                  -0.04156 0.13464 0.05163
+                  0.04156 0.13464 -0.05163
+                  -0.04156 0.13464 -0.05163
+                  0.04156 0.13464 0.05163
+                  0.04156 -0.13464 -0.05163
+                  0.04156 0.13464 -0.05163
+                  0.04156 -0.13464 0.05163
+                  -0.04156 -0.13464 -0.05163
+                  0.04156 -0.13464 -0.05163
+                  -0.04156 0.13464 0.05163
+                  0.04156 -0.13464 0.05163
+                  0.04156 0.13464 0.05163
+                  -0.04156 0.13464 0.05163
+                  0.04156 0.13464 0.05163
+                  0.04156 -0.13464 0.05163
+                  -0.04156 -0.13464 0.05163
+                  -0.04156 -0.13464 0.05163
+                }
+                Indices FALSE
+                Binding BIND_PER_VERTEX
+                Normalize 0
+              }
+              NormalData {
+                Array TRUE ArrayID 52 Vec3fArray 20 {
+                  -1.00000 0.00000 0.00000
+                  -1.00000 0.00000 0.00000
+                  -1.00000 0.00000 0.00000
+                  0.00000 1.00000 -0.00000
+                  0.00000 1.00000 -0.00000
+                  0.00000 1.00000 -0.00000
+                  1.00000 0.00000 -0.00000
+                  1.00000 0.00000 -0.00000
+                  1.00000 0.00000 -0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 0.00000 1.00000
+                  0.00000 0.00000 1.00000
+                  0.00000 0.00000 1.00000
+                  -1.00000 0.00000 0.00000
+                  0.00000 1.00000 -0.00000
+                  1.00000 0.00000 0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 -0.00000 1.00000
+                }
+                Indices FALSE
+                Binding BIND_PER_VERTEX
+                Normalize 0
+              }
+              TexCoordData 1 {
+                Data {
+                  Array TRUE ArrayID 53 Vec2fArray 20 {
+                    0.21706 0.39171
+                    0.78294 0.60868
+                    0.21706 0.60868
+                    0.78294 0.39171
+                    0.99992 0.21706
+                    0.99992 0.39171
+                    0.78294 0.21706
+                    0.21706 0.00008
+                    0.78294 0.00008
+                    0.21706 0.21706
+                    0.00008 0.39171
+                    0.00008 0.21706
+                    0.78294 0.39171
+                    0.21706 0.21706
+                    0.78294 0.21706
+                    0.78294 0.39171
+                    0.78294 0.21706
+                    0.21706 0.21706
+                    0.21706 0.39171
+                    0.21706 0.39171
+                  }
+                  Indices FALSE
+                  Binding BIND_PER_VERTEX
+                  Normalize 0
+                }
+              }
+            }
+          }
+        }
+      }
+      Matrix {
+        1.00000 0.00000 0.00000 0.00000
+        0.00000 1.00000 0.00000 0.00000
+        0.00000 0.00000 1.00000 0.00000
+        -1.28000 -1.13979 0.00000 1.00000
+      }
+    }
+    osg::MatrixTransform {
+      UniqueID 83
+      Name "entity_door_right_sensor"
+      Children 1 {
+        osg::Geode {
+          UniqueID 86
+          Name "GeodeCube.005"
+          Drawables 1 {
+            osg::Geometry {
+              UniqueID 85
+              Name "entity_door_right_sensor"
+              PrimitiveSetList 1 {
+                  DrawElementsUByte GL_TRIANGLES 30 {
+                    0 1 2 
+                    3 4 5 
+                    6 7 8 
+                    9 10 11 
+                    12 13 14 
+                    0 15 1 
+                    3 16 4 
+                    6 17 7 
+                    9 18 10 
+                    12 19 13 
+                  }
+              }
+              VertexData {
+                Array TRUE ArrayID 54 Vec3fArray 20 {
+                  -0.04156 -0.13464 0.05163
+                  -0.04156 0.13464 -0.05163
+                  -0.04156 -0.13464 -0.05163
+                  -0.04156 0.13464 0.05163
+                  0.04156 0.13464 -0.05163
+                  -0.04156 0.13464 -0.05163
+                  0.04156 0.13464 0.05163
+                  0.04156 -0.13464 -0.05163
+                  0.04156 0.13464 -0.05163
+                  0.04156 -0.13464 0.05163
+                  -0.04156 -0.13464 -0.05163
+                  0.04156 -0.13464 -0.05163
+                  -0.04156 0.13464 0.05163
+                  0.04156 -0.13464 0.05163
+                  0.04156 0.13464 0.05163
+                  -0.04156 0.13464 0.05163
+                  0.04156 0.13464 0.05163
+                  0.04156 -0.13464 0.05163
+                  -0.04156 -0.13464 0.05163
+                  -0.04156 -0.13464 0.05163
+                }
+                Indices FALSE
+                Binding BIND_PER_VERTEX
+                Normalize 0
+              }
+              NormalData {
+                Array TRUE ArrayID 55 Vec3fArray 20 {
+                  -1.00000 0.00000 0.00000
+                  -1.00000 0.00000 0.00000
+                  -1.00000 0.00000 0.00000
+                  0.00000 1.00000 -0.00000
+                  0.00000 1.00000 -0.00000
+                  0.00000 1.00000 -0.00000
+                  1.00000 0.00000 -0.00000
+                  1.00000 0.00000 -0.00000
+                  1.00000 0.00000 -0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 0.00000 1.00000
+                  0.00000 0.00000 1.00000
+                  0.00000 0.00000 1.00000
+                  -1.00000 0.00000 0.00000
+                  0.00000 1.00000 -0.00000
+                  1.00000 0.00000 0.00000
+                  0.00000 -1.00000 0.00000
+                  0.00000 -0.00000 1.00000
+                }
+                Indices FALSE
+                Binding BIND_PER_VERTEX
+                Normalize 0
+              }
+              TexCoordData 1 {
+                Data {
+                  Array TRUE ArrayID 56 Vec2fArray 20 {
+                    0.21706 0.39171
+                    0.78294 0.60868
+                    0.21706 0.60868
+                    0.78294 0.39171
+                    0.99992 0.21706
+                    0.99992 0.39171
+                    0.78294 0.21706
+                    0.21706 0.00008
+                    0.78294 0.00008
+                    0.21706 0.21706
+                    0.00008 0.39171
+                    0.00008 0.21706
+                    0.78294 0.39171
+                    0.21706 0.21706
+                    0.78294 0.21706
+                    0.78294 0.39171
+                    0.78294 0.21706
+                    0.21706 0.21706
+                    0.21706 0.39171
+                    0.21706 0.39171
+                  }
+                  Indices FALSE
+                  Binding BIND_PER_VERTEX
+                  Normalize 0
+                }
+              }
+            }
+          }
+        }
+      }
+      Matrix {
+        1.00000 0.00000 0.00000 0.00000
+        0.00000 1.00000 0.00000 0.00000
+        0.00000 0.00000 1.00000 0.00000
+        1.28000 -1.13979 0.00000 1.00000
+      }
+    }
+    osg::MatrixTransform {
+      UniqueID 87
       Name "entity_left_corner"
       Children 1 {
         osg::Geode {
-          UniqueID 295
+          UniqueID 90
           Name "GeodePlane.016"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 294
+              UniqueID 89
               Name "entity_left_corner"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 30 {
@@ -32,7 +270,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 180 Vec3fArray 20 {
+                Array TRUE ArrayID 57 Vec3fArray 20 {
                   -0.05201 -0.05201 -0.05201
                   -0.05201 0.05201 0.05201
                   -0.05201 0.05201 -0.05201
@@ -59,7 +297,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 181 Vec3fArray 20 {
+                Array TRUE ArrayID 58 Vec3fArray 20 {
                   -1.00000 -0.00000 0.00000
                   -1.00000 -0.00000 0.00000
                   -1.00000 -0.00000 0.00000
@@ -87,7 +325,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 182 Vec2fArray 20 {
+                  Array TRUE ArrayID 59 Vec2fArray 20 {
                     0.60205 0.84712
                     0.62626 0.87133
                     0.60205 0.87133
@@ -126,15 +364,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 296
+      UniqueID 91
       Name "entity_wall_left"
       Children 1 {
         osg::Geode {
-          UniqueID 299
+          UniqueID 94
           Name "GeodePlane.015"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 298
+              UniqueID 93
               Name "entity_wall_left"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 96 {
@@ -173,7 +411,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 183 Vec3fArray 68 {
+                Array TRUE ArrayID 60 Vec3fArray 68 {
                   -0.04619 1.00000 -0.01913
                   -0.05000 -1.00000 -0.00000
                   -0.05000 1.00000 -0.00000
@@ -248,7 +486,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 184 Vec3fArray 68 {
+                Array TRUE ArrayID 61 Vec3fArray 68 {
                   -0.98078 -0.00000 -0.19510
                   -0.98078 -0.00000 -0.19510
                   -0.98078 -0.00000 -0.19510
@@ -324,7 +562,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 185 Vec2fArray 68 {
+                  Array TRUE ArrayID 62 Vec2fArray 68 {
                     0.87751 0.65806
                     0.52947 0.65199
                     0.87756 0.65199
@@ -411,15 +649,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 300
+      UniqueID 95
       Name "entity_door_left"
       Children 1 {
         osg::Geode {
-          UniqueID 303
+          UniqueID 98
           Name "GeodePlane.014"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 302
+              UniqueID 97
               Name "entity_door_left"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 96 {
@@ -458,7 +696,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 186 Vec3fArray 64 {
+                Array TRUE ArrayID 63 Vec3fArray 64 {
                   -0.04527 0.13735 0.01875
                   -0.03465 -0.13735 0.03465
                   -0.03465 0.13735 0.03465
@@ -529,7 +767,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 187 Vec3fArray 64 {
+                Array TRUE ArrayID 64 Vec3fArray 64 {
                   -0.83147 -0.00000 0.55557
                   -0.83147 -0.00000 0.55557
                   -0.83147 -0.00000 0.55557
@@ -601,7 +839,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 188 Vec2fArray 64 {
+                  Array TRUE ArrayID 65 Vec2fArray 64 {
                     0.73905 0.83626
                     0.67510 0.83181
                     0.73905 0.83181
@@ -684,15 +922,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 304
+      UniqueID 99
       Name "entity_right_corner"
       Children 1 {
         osg::Geode {
-          UniqueID 307
+          UniqueID 102
           Name "GeodePlane.013"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 306
+              UniqueID 101
               Name "entity_right_corner"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 30 {
@@ -709,7 +947,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 189 Vec3fArray 20 {
+                Array TRUE ArrayID 66 Vec3fArray 20 {
                   -0.05201 -0.05201 -0.05201
                   -0.05201 0.05201 0.05201
                   -0.05201 0.05201 -0.05201
@@ -736,7 +974,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 190 Vec3fArray 20 {
+                Array TRUE ArrayID 67 Vec3fArray 20 {
                   -1.00000 -0.00000 0.00000
                   -1.00000 -0.00000 0.00000
                   -1.00000 -0.00000 0.00000
@@ -764,7 +1002,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 191 Vec2fArray 20 {
+                  Array TRUE ArrayID 68 Vec2fArray 20 {
                     0.52900 0.84712
                     0.55321 0.87133
                     0.52900 0.87133
@@ -803,15 +1041,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 308
+      UniqueID 103
       Name "entity_wall_top"
       Children 1 {
         osg::Geode {
-          UniqueID 311
+          UniqueID 106
           Name "GeodePlane.012"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 310
+              UniqueID 105
               Name "entity_wall_top"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 96 {
@@ -850,7 +1088,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 192 Vec3fArray 76 {
+                Array TRUE ArrayID 69 Vec3fArray 76 {
                   -1.20000 -0.00000 -0.05000
                   1.20000 -0.01913 -0.04619
                   -1.20000 -0.01913 -0.04619
@@ -933,7 +1171,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 193 Vec3fArray 76 {
+                Array TRUE ArrayID 70 Vec3fArray 76 {
                   -0.00000 -0.19509 -0.98079
                   -0.00000 -0.19509 -0.98079
                   -0.00000 -0.19509 -0.98079
@@ -1017,7 +1255,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 194 Vec2fArray 76 {
+                  Array TRUE ArrayID 71 Vec2fArray 76 {
                     0.52937 0.77390
                     0.87741 0.77997
                     0.52932 0.77997
@@ -1112,15 +1350,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 312
+      UniqueID 107
       Name "entity_wall_right"
       Children 1 {
         osg::Geode {
-          UniqueID 315
+          UniqueID 110
           Name "GeodePlane.011"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 314
+              UniqueID 109
               Name "entity_wall_right"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 96 {
@@ -1159,7 +1397,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 195 Vec3fArray 66 {
+                Array TRUE ArrayID 72 Vec3fArray 66 {
                   -0.00000 1.00000 0.05000
                   0.01913 -1.00000 0.04619
                   0.01913 1.00000 0.04619
@@ -1232,7 +1470,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 196 Vec3fArray 66 {
+                Array TRUE ArrayID 73 Vec3fArray 66 {
                   0.19509 -0.00000 0.98079
                   0.19509 -0.00000 0.98079
                   0.19509 -0.00000 0.98079
@@ -1306,7 +1544,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 197 Vec2fArray 66 {
+                  Array TRUE ArrayID 74 Vec2fArray 66 {
                     0.87708 0.62728
                     0.52904 0.62120
                     0.87713 0.62120
@@ -1391,15 +1629,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 316
+      UniqueID 111
       Name "entity_door_right"
       Children 1 {
         osg::Geode {
-          UniqueID 319
+          UniqueID 114
           Name "GeodePlane.010"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 318
+              UniqueID 113
               Name "entity_door_right"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 96 {
@@ -1438,7 +1676,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 198 Vec3fArray 66 {
+                Array TRUE ArrayID 75 Vec3fArray 66 {
                   -0.01875 -0.13735 0.04527
                   -0.03465 0.13735 0.03465
                   -0.03465 -0.13735 0.03465
@@ -1511,7 +1749,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 199 Vec3fArray 66 {
+                Array TRUE ArrayID 76 Vec3fArray 66 {
                   -0.55557 -0.00000 0.83147
                   -0.55557 -0.00000 0.83147
                   -0.55557 -0.00000 0.83147
@@ -1585,7 +1823,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 200 Vec2fArray 66 {
+                  Array TRUE ArrayID 77 Vec2fArray 66 {
                     0.73946 0.82736
                     0.80341 0.83181
                     0.73946 0.83181
@@ -1670,15 +1908,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 320
+      UniqueID 115
       Name "entity_background"
       Children 1 {
         osg::Geode {
-          UniqueID 323
+          UniqueID 118
           Name "GeodePlane.009"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 322
+              UniqueID 117
               Name "entity_background"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 6 {
@@ -1687,7 +1925,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 201 Vec3fArray 4 {
+                Array TRUE ArrayID 78 Vec3fArray 4 {
                   -1.20000 -1.13718 0.00000
                   1.20000 1.13718 0.00000
                   -1.20000 1.13718 0.00000
@@ -1698,7 +1936,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 202 Vec3fArray 4 {
+                Array TRUE ArrayID 79 Vec3fArray 4 {
                   -0.00000 0.00000 1.00000
                   -0.00000 0.00000 1.00000
                   -0.00000 0.00000 1.00000
@@ -1710,7 +1948,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 203 Vec2fArray 4 {
+                  Array TRUE ArrayID 80 Vec2fArray 4 {
                     0.99459 0.52967
                     0.52900 0.00021
                     0.99459 0.00021
@@ -1733,15 +1971,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 324
+      UniqueID 119
       Name "entity_wall_bottom"
       Children 1 {
         osg::Geode {
-          UniqueID 327
+          UniqueID 122
           Name "GeodePlane"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 326
+              UniqueID 121
               Name "entity_wall_bottom"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 30 {
@@ -1758,7 +1996,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 204 Vec3fArray 20 {
+                Array TRUE ArrayID 81 Vec3fArray 20 {
                   -1.25000 -0.04094 0.04094
                   -1.25000 0.04094 -0.04094
                   -1.25000 -0.04094 -0.04094
@@ -1785,7 +2023,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 205 Vec3fArray 20 {
+                Array TRUE ArrayID 82 Vec3fArray 20 {
                   -1.00000 0.00000 0.00000
                   -1.00000 0.00000 0.00000
                   -1.00000 0.00000 0.00000
@@ -1813,7 +2051,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 206 Vec2fArray 20 {
+                  Array TRUE ArrayID 83 Vec2fArray 20 {
                     0.01927 0.49048
                     0.00021 0.50954
                     0.00021 0.49048
@@ -1852,25 +2090,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 328
-      Name "Camera"
-      Matrix {
-        0.68592 0.72768 0.00000 0.00000
-        -0.32401 0.30542 0.89540 0.00000
-        0.65156 -0.61417 0.44527 0.00000
-        7.48113 -6.50764 5.34367 1.00000
-      }
-    }
-    osg::MatrixTransform {
-      UniqueID 330
+      UniqueID 123
       Name "entity_ball"
       Children 1 {
         osg::Geode {
-          UniqueID 333
+          UniqueID 126
           Name "GeodeSphere"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 332
+              UniqueID 125
               Name "entity_ball"
               PrimitiveSetList 1 {
                   DrawElementsUShort GL_TRIANGLES 2880 {
@@ -2837,7 +3065,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 207 Vec3fArray 2024 {
+                Array TRUE ArrayID 84 Vec3fArray 2024 {
                   0.00000 0.04619 -0.01913
                   0.00811 0.04077 -0.02778
                   0.00000 0.04157 -0.02778
@@ -4868,7 +5096,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 208 Vec3fArray 2024 {
+                Array TRUE ArrayID 85 Vec3fArray 2024 {
                   0.08653 0.87861 -0.46963
                   0.08653 0.87861 -0.46963
                   0.08653 0.87861 -0.46963
@@ -6900,7 +7128,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 209 Vec2fArray 2024 {
+                  Array TRUE ArrayID 86 Vec2fArray 2024 {
                     0.20101 0.09091
                     0.23673 0.11820
                     0.21099 0.12355
@@ -8943,15 +9171,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 334
+      UniqueID 127
       Name "entity_brick"
       Children 1 {
         osg::Geode {
-          UniqueID 337
+          UniqueID 130
           Name "GeodeCube"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 336
+              UniqueID 129
               Name "entity_brick"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 132 {
@@ -9002,7 +9230,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 210 Vec3fArray 96 {
+                Array TRUE ArrayID 87 Vec3fArray 96 {
                   0.08157 -0.05000 0.03157
                   -0.08157 -0.05000 -0.03157
                   0.08157 -0.05000 -0.03157
@@ -9105,7 +9333,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 211 Vec3fArray 96 {
+                Array TRUE ArrayID 88 Vec3fArray 96 {
                   0.00000 -1.00000 0.00000
                   0.00000 -1.00000 0.00000
                   0.00000 -1.00000 0.00000
@@ -9209,7 +9437,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 212 Vec2fArray 96 {
+                  Array TRUE ArrayID 89 Vec2fArray 96 {
                     0.45723 0.92685
                     0.00014 0.74993
                     0.45723 0.74993
@@ -9324,15 +9552,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 338
+      UniqueID 131
       Name "entity_bullet"
       Children 1 {
         osg::Geode {
-          UniqueID 341
+          UniqueID 134
           Name "GeodeIcosphere"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 340
+              UniqueID 133
               Name "entity_bullet"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 240 {
@@ -9419,7 +9647,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 213 Vec3fArray 240 {
+                Array TRUE ArrayID 90 Vec3fArray 240 {
                   0.00000 0.00000 0.00759
                   -0.00323 0.00235 0.00646
                   0.00123 0.00380 0.00646
@@ -9666,7 +9894,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 214 Vec3fArray 240 {
+                Array TRUE ArrayID 91 Vec3fArray 240 {
                   0.10238 -0.31509 -0.94352
                   0.10238 -0.31509 -0.94352
                   0.10238 -0.31509 -0.94352
@@ -9924,15 +10152,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 342
+      UniqueID 135
       Name "entity_paddle"
       Children 1 {
         osg::Geode {
-          UniqueID 345
+          UniqueID 138
           Name "GeodeSphere.001"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 344
+              UniqueID 137
               Name "entity_paddle"
               PrimitiveSetList 1 {
                   DrawElementsUShort GL_TRIANGLES 768 {
@@ -10195,7 +10423,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 215 Vec3fArray 570 {
+                Array TRUE ArrayID 92 Vec3fArray 570 {
                   0.20000 0.03536 -0.03536
                   0.20732 0.01768 -0.04619
                   0.20000 0.01913 -0.04619
@@ -10772,7 +11000,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 216 Vec3fArray 570 {
+                Array TRUE ArrayID 93 Vec3fArray 570 {
                   0.10984 0.55221 -0.82644
                   0.10984 0.55221 -0.82644
                   0.10984 0.55221 -0.82644
@@ -11350,7 +11578,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 217 Vec2fArray 570 {
+                  Array TRUE ArrayID 94 Vec2fArray 570 {
                     0.86355 0.07810
                     0.87100 0.11558
                     0.85884 0.11217
@@ -11939,15 +12167,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 346
+      UniqueID 139
       Name "entity_paddle_support"
       Children 1 {
         osg::Geode {
-          UniqueID 349
+          UniqueID 142
           Name "GeodePlane.008"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 348
+              UniqueID 141
               Name "entity_paddle_support"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 6 {
@@ -11956,7 +12184,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 218 Vec3fArray 4 {
+                Array TRUE ArrayID 95 Vec3fArray 4 {
                   1.25698 -0.06914 0.00000
                   -1.25698 0.06914 0.00000
                   -1.25698 -0.06914 0.00000
@@ -11967,7 +12195,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 219 Vec3fArray 4 {
+                Array TRUE ArrayID 96 Vec3fArray 4 {
                   -0.00000 0.00000 1.00000
                   -0.00000 0.00000 1.00000
                   -0.00000 0.00000 1.00000
@@ -11979,7 +12207,7 @@ osg::Group {
               }
               TexCoordData 1 {
                 Data {
-                  Array TRUE ArrayID 220 Vec2fArray 4 {
+                  Array TRUE ArrayID 97 Vec2fArray 4 {
                     0.99998 0.00002
                     0.00002 0.05503
                     0.00002 0.00002
@@ -12002,15 +12230,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 350
+      UniqueID 143
       Name "entity_powerup"
       Children 1 {
         osg::Geode {
-          UniqueID 353
+          UniqueID 146
           Name "GeodeCube.002"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 352
+              UniqueID 145
               Name "entity_powerup"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_QUADS 24 {
@@ -12023,7 +12251,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 221 Vec3fArray 24 {
+                Array TRUE ArrayID 98 Vec3fArray 24 {
                   -0.05000 -0.05000 -0.05000
                   -0.05000 -0.05000 0.05000
                   -0.05000 0.05000 0.05000
@@ -12054,7 +12282,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 222 Vec3fArray 24 {
+                Array TRUE ArrayID 99 Vec3fArray 24 {
                   -1.00000 -0.00000 0.00000
                   -1.00000 -0.00000 0.00000
                   -1.00000 -0.00000 0.00000
@@ -12096,15 +12324,15 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 354
+      UniqueID 147
       Name "entity_turret"
       Children 3 {
         osg::Geode {
-          UniqueID 357
+          UniqueID 150
           Name "GeodeCube.001"
           Drawables 1 {
             osg::Geometry {
-              UniqueID 356
+              UniqueID 149
               Name "entity_turret"
               PrimitiveSetList 1 {
                   DrawElementsUByte GL_TRIANGLES 210 {
@@ -12181,7 +12409,7 @@ osg::Group {
                   }
               }
               VertexData {
-                Array TRUE ArrayID 223 Vec3fArray 150 {
+                Array TRUE ArrayID 100 Vec3fArray 150 {
                   -0.11446 0.07253 0.00436
                   -0.13168 0.08056 0.01672
                   -0.13168 0.07253 0.01687
@@ -12338,7 +12566,7 @@ osg::Group {
                 Normalize 0
               }
               NormalData {
-                Array TRUE ArrayID 224 Vec3fArray 150 {
+                Array TRUE ArrayID 101 Vec3fArray 150 {
                   0.58772 0.01504 0.80893
                   0.58772 0.01504 0.80893
                   0.58772 0.01504 0.80893
@@ -12498,7 +12726,7 @@ osg::Group {
           }
         }
         osg::MatrixTransform {
-          UniqueID 358
+          UniqueID 151
           Name "spawn_entity_bullet_left"
           Matrix {
             1.00000 0.00000 0.00000 0.00000
@@ -12508,7 +12736,7 @@ osg::Group {
           }
         }
         osg::MatrixTransform {
-          UniqueID 360
+          UniqueID 153
           Name "spawn_entity_bullet_right"
           Matrix {
             1.00000 0.00000 0.00000 0.00000
@@ -12526,7 +12754,7 @@ osg::Group {
       }
     }
     osg::MatrixTransform {
-      UniqueID 362
+      UniqueID 155
       Name "spawn_entity_paddle"
       Matrix {
         0.11964 0.00000 0.00000 0.00000

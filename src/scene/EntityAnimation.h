@@ -13,6 +13,15 @@ typedef enum
 
 } AnimationStatus;
 
+typedef enum 
+{
+    ANIM_NONE,
+    PADDLE_MOVE_FROM_SLOT,
+    DOOR_OPEN,
+    DOOR_CLOSE
+
+}AnimType;
+
 class EntityAnimation: public osg::AnimationPathCallback
 {
     public:
@@ -21,6 +30,7 @@ class EntityAnimation: public osg::AnimationPathCallback
         void createAnimation(osg::Vec3, osg::Vec3);
         void setCallback(EngineCallback);        
         virtual void operator()(osg::Node* node, osg::NodeVisitor* nv);
+        void setAnimationType(AnimType atype) { m_animType = atype; }
         
 
     private:
@@ -31,6 +41,7 @@ class EntityAnimation: public osg::AnimationPathCallback
         AnimationStatus m_status;
         EngineCallback m_callback;
         Entity *m_entity;
+        AnimType m_animType;
 };
 
 #endif
