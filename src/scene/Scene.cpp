@@ -294,13 +294,7 @@ void Scene::levelContinue()
         Entity *paddle = es->m_entity->asEntityPaddle();        
         osg::Vec3 end_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");        
         playAnimation(paddle, end_pos, Scene_level_continue, PADDLE_MOVE_FROM_SLOT);
-
-        if(m_doorRight.valid())
-        {
-            osg::Vec3 dpos = m_doorRight->getPosition();
-            dpos+=osg::Vec3(0.0,0.5,0.0);
-            playAnimation(m_doorRight.get(), dpos, NULL, DOOR_OPEN);
-        }
+        
     }
     else
     {
@@ -320,6 +314,17 @@ void Scene::playAnimation(Entity *ent, osg::Vec3 end_pos, EngineCallback cb, Ani
     ent->setAnimation(ea);
     ent->playAnimation();
 
+}
+void Scene::playAnimation(std::string anim_name)
+{    
+    if((anim_name=="door_right_open") && m_doorRight.valid() )
+    {   
+        m_doorRight->disablePhysics();     
+        osg::Vec3 dpos = m_doorRight->getPosition();
+        dpos+=osg::Vec3(0.0,0.5,0.0);
+        playAnimation(m_doorRight.get(), dpos, NULL, DOOR_OPEN);  
+              
+    }
 }
 
 void Scene::update(float passedTime)

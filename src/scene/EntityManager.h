@@ -29,6 +29,7 @@ class EntityManager
         void levelComplete(); 
         void levelContinue();
         void levelFailed();
+        void levelCleared();
         void paddleSelect(void *args);
         void paddleMove(void *args);       
         void paddleUnselect(void *args);        
@@ -48,6 +49,7 @@ class EntityManager
         std::list < osg::ref_ptr <Entity> > m_paddleList;
         bool m_physicsActive;
         bool m_paddleSelected;
+        bool m_levelCleared;
         osg::ref_ptr<osg::MatrixTransform> m_nodeEntMgr;
         EntityPaddle *m_paddle;
         int m_entitiesNum;

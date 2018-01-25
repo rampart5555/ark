@@ -89,6 +89,12 @@ void EntityPaddle::beginContact(Entity *ent, b2Contact *contact)
         /* has turret */
         m_hasTurret = true;
     }
+    else if((m_type==ENTITY_PADDLE) && (ent->getType() == ENTITY_DOOR_RIGHT_SENSOR))    
+    {
+        EngineEvent ev;
+        ev.m_type=LEVEL_COMPLETE;
+        EngineEventQueue::instance().setEvent(ev);
+    }
 }
 
 void EntityPaddle::endContact(Entity *ent, b2Contact *contact)

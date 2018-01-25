@@ -5,6 +5,7 @@
 #include "ui/MenuManager.h"
 #include "scene/Scene.h"
 #include "scene/LevelManager.h"
+#include "EngineCallback.h"
 
 USE_OSGPLUGIN(osg2)
 USE_OSGPLUGIN(jpeg)
@@ -148,6 +149,8 @@ void OsgMain::draw()
         double currentTime = m_viewer->getFrameStamp()->getReferenceTime();
         double delta_t = currentTime - timeOfLastMerge;
         Scene::instance().update(delta_t);
+        EngineEventQueue::instance().processEvents();
+
     }
 }
 

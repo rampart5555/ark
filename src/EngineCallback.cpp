@@ -297,13 +297,31 @@ void Level_update_score(void *args)
     msh->updateScore( LevelManager::instance().getScore() );
     
 }
+
 void Level_cleared(void *args)
 {
 
 }
 
 void Level_completed(void *args)
-{
+{    
+    LOG_INFO("%s", "*** LEVEL COMPLETE ***\n");
+    Scene::instance().getEntityManager().stopPhysics();
+
+    unsigned int ep_id, lvl_id;
+    SceneEpisode *episode;
+    SceneLevel* level;        
+    
+    LevelManager::instance().unlockNextLevel(ep_id, lvl_id);    
+    LevelManager::instance().writeLevelData();    
+    episode = LevelManager::instance().getEpisode(ep_id);
+    level  = LevelManager::instance().getNextLevel();
+
+    if((episode==NULL)||(level==NULL))
+    {
+        LOG_ERROR("Level_completed => episode or level not found for :%d lvl: %d\n",ep_id, lvl_id);
+    }
+    Scene::instance().loadScene(episode->m_file.c_str(), level->m_name.c_str());
     
 }
 

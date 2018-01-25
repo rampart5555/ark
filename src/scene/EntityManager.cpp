@@ -19,6 +19,7 @@ EntityManager::EntityManager()
     m_brickNumber = 0;
     m_powerupNumber = 0;
     m_paddleSelected=false;
+    m_levelCleared = false;
 }
 
 osg::MatrixTransform* EntityManager::getNodeEntMgr()
@@ -301,6 +302,7 @@ void EntityManager::clear()
     m_entitiesNum = 0;
     m_brickNumber = 0;
     m_powerupNumber = 0;
+    m_levelCleared=false;
 }
 
 void EntityManager::update(float passedTime)
@@ -322,10 +324,13 @@ void EntityManager::update(float passedTime)
             
         }
     }
-    if(m_brickNumber <= 0)
-    {        
-        levelComplete();
-    }
+    if((m_brickNumber <= 0)&&(m_levelCleared==false))
+    {       
+        //levelComplete()
+        levelCleared();
+        m_levelCleared=true;        
+    }        
+   
 }
 
 void EntityManager::paddleSelect(void *args)
@@ -408,6 +413,11 @@ void EntityManager::levelContinue()
     osg::Vec3 paddle_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
     m_paddle->setPosition(paddle_pos);
     startPhysics();
+}
+
+void EntityManager::levelCleared()
+{
+    Scene::instance().playAnimation("door_right_open");
 }
 
 /* debug function*/

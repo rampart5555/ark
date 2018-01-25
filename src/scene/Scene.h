@@ -47,6 +47,7 @@ class Scene
         void update(float);
         void levelContinue();
         void playAnimation(Entity *ent, osg::Vec3 , EngineCallback , AnimType );
+        void playAnimation(std::string);
 
     protected:
         osg::MatrixTransform *m_sceneNode;

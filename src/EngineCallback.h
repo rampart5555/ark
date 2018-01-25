@@ -1,6 +1,7 @@
 #ifndef __ENGINE_CALLBACK__
 #define __ENGINE_CALLBACK__
 #include <string>
+#include <list>
 
 typedef void (*EngineCallback)(void *args);
 EngineCallback getCallback(std::string);
@@ -44,4 +45,45 @@ void Scene_level_continue(void *args);
 void Level_update_score(void *args);
 void Level_cleared(void* args);
 void Level_completed(void* args);
+
+typedef enum 
+{
+    LEVEL_COMPLETE
+}EventType;
+
+typedef struct
+{
+    EventType m_type;    
+
+}EngineEvent;
+
+class EngineEventQueue
+{
+    public:
+        EngineEventQueue(){}
+        static EngineEventQueue& instance()
+        {
+            static EngineEventQueue instance;
+            return instance;
+        }
+        void setEvent(EngineEvent event)
+        {
+            m_eventQueue.push_back(event);
+        }
+        void processEvents()
+        {
+            if (m_eventQueue.empty())
+                return;
+            std::list<EngineEvent>::iterator it;
+            while( !m_eventQueue.empty() )
+            {
+                it=m_eventQueue.begin();
+                if( (*it).m_type==LEVEL_COMPLETE )
+                    Level_completed(NULL);
+                m_eventQueue.pop_front();
+            }
+        }
+    private:
+        std::list <EngineEvent> m_eventQueue;
+};
 #endif

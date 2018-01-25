@@ -70,7 +70,7 @@ void EntityAnimation::createAnimation(osg::Vec3 start_pos, osg::Vec3 end_pos)
                 _animationPath = new osg::AnimationPath;
                 _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);
                 _animationPath->insert(0.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
-                _animationPath->insert(1.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));                            
+                _animationPath->insert(3.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));                            
             } 
             break;
         default:
