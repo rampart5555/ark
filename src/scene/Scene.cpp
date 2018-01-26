@@ -5,6 +5,31 @@
 #include "EntityBall.h"
 #include "Logging.h"
 
+void animation_left_door_open(void*)
+{
+    Entity *door = Scene::instance().getDoorLeft();
+    door->disablePhysics();     
+    osg::Vec3 dpos = door->getPosition();
+    dpos+=osg::Vec3(0.0,0.5,0.0);
+    Scene::instance().playAnimation(door, dpos, NULL, DOOR_OPEN);  
+}
+
+void animation_right_door_open(void*)
+{
+   Entity *door = Scene::instance().getDoorRight();     
+   door->disablePhysics();     
+   osg::Vec3 dpos = door->getPosition();
+   dpos += osg::Vec3(0.0,0.5,0.0);
+   Scene::instance().playAnimation(door, dpos, animation_left_door_open, DOOR_OPEN);    
+}
+
+void animation_add_new_paddle(void*)
+{
+
+}
+
+
+
 Scene::Scene()
 {
     m_sceneNode = new osg::MatrixTransform();
@@ -317,13 +342,13 @@ void Scene::playAnimation(Entity *ent, osg::Vec3 end_pos, EngineCallback cb, Ani
 }
 void Scene::playAnimation(std::string anim_name)
 {    
-    if((anim_name=="door_right_open") && m_doorRight.valid() )
+    if((anim_name=="door_right_open"))
     {   
-        m_doorRight->disablePhysics();     
-        osg::Vec3 dpos = m_doorRight->getPosition();
-        dpos+=osg::Vec3(0.0,0.5,0.0);
-        playAnimation(m_doorRight.get(), dpos, NULL, DOOR_OPEN);  
-              
+        animation_right_door_open(NULL);                             
+    }
+    else if (anim_name=="level_complete")
+    {
+        
     }
 }
 
@@ -336,4 +361,14 @@ void Scene::update(float passedTime)
         if(m_paddleSlots[i].m_entity.valid() && m_paddleSlots[i].m_entity->isValid()==false)
             removeEntity(i);
     }
+}
+
+Entity* Scene::getDoorLeft()
+{
+    return m_doorLeft.get();
+}
+
+Entity* Scene::getDoorRight()
+{
+    return m_doorRight.get();
 }
