@@ -93,6 +93,30 @@ void AssetsManagerLua::getIntVector(lua_State* L, const char *table_name, std::v
     lua_pop(L, 1);
 }
 
+void AssetsManagerLua::getFloatVector(lua_State* L, const char *table_name, std::vector<float> *vect)
+{    
+    lua_pushstring(L, table_name);    
+    lua_gettable(L, -2);
+    
+    if(!lua_istable(L,-1))
+    {
+        printf("Fail to get table: %s\n", table_name);
+        lua_pop(L, 1);
+        return;
+    }
+   
+    lua_pushnil(L);
+
+    while(lua_next(L, -2) != 0)
+    {
+        float val;                
+        val = (float)lua_tonumber(L, -1);        
+        vect->push_back(val);
+        lua_pop(L, 1);
+    }
+    lua_pop(L, 1);
+}
+
 void AssetsManagerLua::getPropVector(lua_State* L, const char *table_name, std::vector<EntityProp> *items)
 {
     lua_pushstring(L, table_name);    
@@ -244,6 +268,44 @@ bool AssetsManagerLua::loadLevelData(const char *table_name, LevelData *data)
     printf("name:%s\n", data->m_name.c_str());    
     getIntVector(L,"brick", &data->m_brick);
     getIntVector(L,"powerup", &data->m_powerup);
+    return true;
+}
+
+bool AssetsManagerLua::loadAnimations(std::vector<Animation> *anim_vec)
+{    
+        
+    lua_getglobal(L, "getAnimationTableSize");    
+    if (lua_pcall(L, 0, 1, 0) != 0)
+    {
+        printf("Error running function : %s",lua_tostring(L, -1));
+        return false;
+    }
+    if (!lua_isnumber(L, -1))
+    {
+        printf("Function must return a number");
+        return false;
+    }
+    int table_size = lua_tonumber(L, -1);             
+    for(int i=0;i<table_size;i++)
+    {
+         lua_getglobal(L, "getAnimation");
+         lua_pushnumber(L, i+1);
+         if (lua_pcall(L, 1, 1, 0) != 0)
+         {
+            printf("Error running function : %s\n",lua_tostring(L, -1));
+            return false;
+        }
+        if(!lua_istable(L,-1))
+        {        
+            printf("Return type is not a table\n");
+            return false;
+        }
+        Animation anim;
+        getString(L,"name", anim.m_name);        
+        getFloatVector(L,"frames",&anim.m_frames);
+        anim_vec->push_back(anim);
+    }
+    lua_pop(L, 1);
     return true;
 }
 

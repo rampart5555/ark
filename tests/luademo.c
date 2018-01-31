@@ -93,9 +93,24 @@ void test_resource_data()
     
 }
 
+void test_animation_data()
+{
+    AssetsManagerLua assets_lua;
+    const char *script = read_file("../assets/lua/animations.lua");
+    std::vector<Animation> anims;
+    bool res = assets_lua.loadScript(script);
+    if(res)
+    {
+        assets_lua.loadAnimations("Animations",&anims);
+        assets_lua.close();
+    }
+    
+}
+
 int main()
 {
     //test_resource_data();
     //test_entity_props();
-    test_level_data();
+    //test_level_data();
+    test_animation_data();
 }

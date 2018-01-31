@@ -5,30 +5,6 @@
 #include "EntityBall.h"
 #include "Logging.h"
 
-void animation_left_door_open(void*)
-{
-    Entity *door = Scene::instance().getDoorLeft();
-    door->disablePhysics();     
-    osg::Vec3 dpos = door->getPosition();
-    dpos+=osg::Vec3(0.0,0.5,0.0);
-    Scene::instance().playAnimation(door, dpos, NULL, DOOR_OPEN);  
-}
-
-void animation_right_door_open(void*)
-{
-   Entity *door = Scene::instance().getDoorRight();     
-   door->disablePhysics();     
-   osg::Vec3 dpos = door->getPosition();
-   dpos += osg::Vec3(0.0,0.5,0.0);
-   Scene::instance().playAnimation(door, dpos, animation_left_door_open, DOOR_OPEN);    
-}
-
-void animation_add_new_paddle(void*)
-{
-
-}
-
-
 
 Scene::Scene()
 {
@@ -342,14 +318,15 @@ void Scene::playAnimation(Entity *ent, osg::Vec3 end_pos, EngineCallback cb, Ani
 }
 void Scene::playAnimation(std::string anim_name)
 {    
-    if((anim_name=="door_right_open"))
+    if(anim_name=="door_right_open")
     {   
-        animation_right_door_open(NULL);                             
-    }
-    else if (anim_name=="level_complete")
-    {
-        
-    }
+        EntityAnimation *ea = new EntityAnimation;        
+        Animation *anim = AssetsManager::instance().getAnimation(anim_name.c_str());        
+        ea->createAnimation(anim);
+        m_doorRight->disablePhysics();
+        m_doorRight->setAnimation(ea);       
+        m_doorRight->playAnimation();
+    }    
 }
 
 void Scene::update(float passedTime)

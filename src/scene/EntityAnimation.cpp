@@ -44,6 +44,31 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
     osg::NodeCallback::traverse(node,nv);
 }       
 
+void EntityAnimation::createAnimation(Animation *anim)
+{
+    if(anim==NULL)
+    {
+        LOG_WARN("EntityAnimation::playAnimation: null animation:%s\n","");
+        return;
+    }
+    
+    if(anim->m_frames.size() % 4 != 0)
+    {
+        LOG_WARN("EntityAnimation::playAnimation: animation invalid number of frames:%s\n","");
+        return;
+    }
+    _animationPath = new osg::AnimationPath;
+    _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);    
+    for(unsigned int i=0;i<anim->m_frames.size();i+=4)
+    {
+        osg::Vec3 pos;
+        osg::AnimationPath::ControlPoint cp;
+        pos.set(anim->m_frames[i+1], anim->m_frames[i+2], anim->m_frames[i+3]);
+        cp.setPosition(pos);
+        _animationPath->insert(anim->m_frames[i],cp);
+    }    
+}
+
 void EntityAnimation::setEntity(Entity *ent)
 {
     m_entity = ent;

@@ -300,7 +300,7 @@ void Level_update_score(void *args)
 
 void Level_cleared(void *args)
 {
-
+    Scene::instance().playAnimation("door_right_open");
 }
 
 void Level_completed(void *args)

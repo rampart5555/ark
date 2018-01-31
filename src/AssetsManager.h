@@ -34,8 +34,9 @@ class AssetsManager
         bool getLevelData(const char *, const char*, LevelData *);
         void getEntityProps(const char *, EntityProps *);
         std::vector<MenuItem>*getMenuItems(const char*);
-        
+        Animation* getAnimation(const char*);
 
+        bool loadAnimations();
         bool loadAssets();
         bool loadTextures();        
         bool loadMenuEntries();    
@@ -44,6 +45,7 @@ class AssetsManager
        std::map<std::string, std::vector<MenuItem>* > m_menuEntries;
        std::map<EntityType, std::string> m_etypeToString;
        std::map<std::string,  osg::ref_ptr<osg::Object> > m_assetList;
+       std::vector<Animation> m_animationList;
        std::string m_rootPath;
        
         

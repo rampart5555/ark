@@ -25,6 +25,7 @@ class AssetsManagerLua
         bool loadEntityProps(const char*, EntityProps * );
         bool loadLevelData(const char*, LevelData*);
         bool loadResources(const char*, std::vector<ResourceItem>*);
+        bool loadAnimations(std::vector<Animation>*);
         bool close();
         void dumpMenuItem(MenuItem&);
     private:
@@ -33,6 +34,7 @@ class AssetsManagerLua
         void getFloat(lua_State* , const char*, float&);
         void getInt(lua_State* , const char*, int&);
         void getIntVector(lua_State*, const char*, std::vector<int>*);
+        void getFloatVector(lua_State*, const char*, std::vector<float>*);
         void getPropVector(lua_State*, const char*, std::vector<EntityProp>*);
 };
 

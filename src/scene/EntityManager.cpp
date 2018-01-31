@@ -417,7 +417,7 @@ void EntityManager::levelContinue()
 
 void EntityManager::levelCleared()
 {
-    Scene::instance().playAnimation("door_right_open");
+    Level_cleared(NULL);
 }
 
 /* debug function*/

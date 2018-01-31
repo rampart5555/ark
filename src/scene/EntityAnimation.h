@@ -2,6 +2,7 @@
 #define __ENTITY_ANIMATION__
 
 #include <osg/AnimationPath>
+#include "SceneDefs.h"
 #include "Logging.h"
 #include "EngineCallback.h"
 
@@ -31,7 +32,7 @@ class EntityAnimation: public osg::AnimationPathCallback
         void setCallback(EngineCallback);        
         virtual void operator()(osg::Node* node, osg::NodeVisitor* nv);
         void setAnimationType(AnimType atype) { m_animType = atype; }
-        
+        void createAnimation(Animation *anim);
 
     private:
         ~EntityAnimation()

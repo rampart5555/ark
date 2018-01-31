@@ -1,5 +1,6 @@
 #ifndef __SCENE_DEFS__
 #define __SCENE_DEFS__
+
 struct EntityProp
 {
     int m_id;
@@ -22,6 +23,13 @@ struct LevelData
     std::vector<int> m_brick;
     std::vector<int> m_powerup;      
 };
+
+struct Animation
+{
+    std::string m_name;
+    std::vector<float> m_frames;
+};
+
 #endif
 
 
