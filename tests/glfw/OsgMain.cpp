@@ -9,6 +9,7 @@
 #include "scenes/Animation.h"
 #include "scenes/AnimationPath.h"
 #include "scenes/TestRefptr.h"
+#include "scenes/TimelineAnimation.h"
 //USE_OSGPLUGIN(osg2)
 //USE_SERIALIZER_WRAPPER_LIBRARY(osg)
 //USE_GRAPHICSWINDOW()
@@ -96,7 +97,7 @@ osg::Camera* OsgMain::createOrthoCamera(int width, int height)
 bool OsgMain::init(int x, int y, int width, int height)
 {
     //in StatsHandler.cpp change gupu stats from true to false collectStats("gpu",false);
-    osg::setNotifyLevel(osg::INFO);
+    //osg::setNotifyLevel(osg::INFO);
     m_viewer = new osgViewer::Viewer;
     m_window = m_viewer->setUpViewerAsEmbeddedInWindow(x, y, width, height);
     m_window->getEventQueue()->windowResize(x, y, width, height);
@@ -111,7 +112,7 @@ bool OsgMain::init(int x, int y, int width, int height)
     //loadScene("Particle");
     //loadScene("Alpha");
     //loadScene("TestAnimationPath");
-    loadScene("TestRefptr");
+    loadScene("TimelineAnimation");
     m_viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     m_viewer->addEventHandler(new osgViewer::StatsHandler);  
     m_viewer->addEventHandler(new MouseHandler());  
@@ -231,6 +232,11 @@ void OsgMain::loadScene(const char* scene_name)
     else if(strcmp(scene_name,"TestRefptr")==0)
     {
         scene = new TestRefptr();
+        scene->createScene();        
+    }
+    else if(strcmp(scene_name,"TimelineAnimation")==0)
+    {
+        scene = new  TimelineAnimation();
         scene->createScene();        
     }
     m_currentScene = scene;

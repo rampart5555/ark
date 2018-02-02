@@ -44,7 +44,8 @@ LOCAL_OBJ_FILES:=\
     scenes/Userdata.o\
     scenes/Animation.o\
     scenes/AnimationPath.o\
-    scenes/TestRefptr.o
+    scenes/TestRefptr.o\
+    scenes/TimelineAnimation.o
     
 
 
