@@ -8,11 +8,13 @@ class TestAnimationPath: public Scene
         TestAnimationPath();
         virtual ~TestAnimationPath();
         virtual void createScene(); 
-        virtual void handleSceneEvent();  
+        virtual void handleSceneEvent();          
         
     private:
         void createAnimationPath();
-        osg::MatrixTransform *m_cubeEntity;
+        osg::AnimationPath* createAnimationPath(std::string, float, osg::Vec3, osg::Vec3);
+        osg::PositionAttitudeTransform *m_cubeEntity_1;
+        osg::PositionAttitudeTransform *m_cubeEntity_2;
 
 };
 

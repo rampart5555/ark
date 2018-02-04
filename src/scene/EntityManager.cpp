@@ -210,7 +210,7 @@ void EntityManager::setPowerup(PowerupType ptype)
                     {
                         osg::ref_ptr<Entity> ent = createEntity(ENTITY_BALL);
                         EntityBall *new_ball = ent->asEntityBall();
-                        osg::Vec3& ent_pos = ball->getPosition();
+                        const osg::Vec3d& ent_pos = ball->getPosition();
                         new_ball->setPosition(ent_pos);
                         new_ball->setSpeed(DEFAULT_BALL_SPEED);
                         if(j==0)

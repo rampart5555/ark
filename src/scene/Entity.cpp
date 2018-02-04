@@ -39,7 +39,7 @@ Entity::Entity(Entity& ent)
     m_name = ent.m_name;
     m_hits = ent.m_hits;
     m_value = ent.m_value;
-    m_transform = new osg::MatrixTransform(*(ent.m_transform), osg::CopyOp::DEEP_COPY_ALL);
+    m_transform = new osg::PositionAttitudeTransform(*(ent.m_transform),osg::CopyOp::DEEP_COPY_ALL);    
     m_phyBody = NULL;
     m_valid = true;
     m_phyActive = false; 
@@ -54,13 +54,14 @@ Entity::~Entity()
 
 void Entity::setModel(osg::MatrixTransform& tr)
 {
-    m_transform = new osg::MatrixTransform(tr, osg::CopyOp::DEEP_COPY_ALL);
+    m_transform = new osg::PositionAttitudeTransform();
+    m_transform->addChild(tr.getChild(0));
     osg::Vec3f osg_pos,scale;
     osg::Quat osg_rot, so;
-    osg::Matrix m = m_transform->getMatrix();
+    osg::Matrix m = tr.getMatrix();
     m.decompose(osg_pos, osg_rot, scale, so);   
     /* set initital position for this entity */
-    m_position = osg_pos;
+    setPosition(osg_pos);
 }
 
 void Entity::setUniforms()
@@ -101,20 +102,19 @@ void Entity::setUniforms()
 #endif    
 }
 
-osg::MatrixTransform* Entity::getEntityNode()
+osg::PositionAttitudeTransform* Entity::getEntityNode()
 {
     return m_transform;
 }
 
 void Entity::setPosition(osg::Vec3 pos)
-{
-    m_position = pos;
-    m_transform->setMatrix(osg::Matrix::translate(m_position));
+{    
+    m_transform->setPosition(pos);
 }
 
-osg::Vec3& Entity::getPosition()
+const osg::Vec3d& Entity::getPosition()
 {
-    return m_position;
+    return m_transform->getPosition();
 }
 
 void Entity::setType(EntityType etype)
@@ -142,7 +142,8 @@ void Entity::updateInitialTransform()
     osg::Matrix m = m_transform->getMatrix();
     m.decompose(osg_pos, osg_rot, scale, so);   
 #endif    
-    m_phyBody->SetTransform(b2Vec2(m_position.x(), m_position.y()), 0.0);
+    const osg::Vec3& pos=getPosition();
+    m_phyBody->SetTransform(b2Vec2(pos.x(), pos.y()), 0.0);
     
 }
 
@@ -154,11 +155,14 @@ void Entity::update(float passedTime)
         return;
         
     const b2Vec2& pos = m_phyBody->GetPosition();
+    setPosition(osg::Vec3(pos.x,pos.y,0.0));
+#if 0    
     osg::Matrix osg_pos = osg::Matrix::translate(pos.x, pos.y, 0.0);
     float bodyAngle = m_phyBody->GetAngle();
     osg::Matrix rot; 
     rot.makeRotate(bodyAngle, 0, 0, 1);
     m_transform->setMatrix(rot*osg_pos);        
+#endif    
 }
 
 void Entity::setAnimation(EntityAnimation *anim )

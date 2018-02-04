@@ -7,12 +7,13 @@
 #include "scene/LevelManager.h"
 #include "EngineCallback.h"
 
+#if 0 //use 1 for static build
 USE_OSGPLUGIN(osg2)
 USE_OSGPLUGIN(jpeg)
 USE_OSGPLUGIN(freetype)
 USE_SERIALIZER_WRAPPER_LIBRARY(osg)
 //USE_GRAPHICSWINDOW()
-
+#endif
 
 static const char *microshaderVertSource = 
 {

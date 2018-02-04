@@ -4,6 +4,7 @@
 #include <osg/Referenced>
 #include <osg/ref_ptr>
 #include <osg/MatrixTransform>
+#include <osg/PositionAttitudeTransform>
 #include <osg/Geode>
 #include <Box2D/Box2D.h>
 #include "Config.h"
@@ -50,7 +51,7 @@ class Entity : public osg::Referenced
         Entity();   
         Entity(Entity& ent);
         void setModel(osg::MatrixTransform& );
-        osg::MatrixTransform* getEntityNode();
+        osg::PositionAttitudeTransform* getEntityNode();
         void setName(const char* name) { m_name=name; }
         std::string& getName() { return m_name; }
         void setType(EntityType);        
@@ -65,7 +66,7 @@ class Entity : public osg::Referenced
         virtual void playAnimation();
 
         virtual void setPosition(osg::Vec3 pos);
-        virtual osg::Vec3& getPosition();
+        virtual const osg::Vec3d& getPosition();
         /* physics */
         virtual bool enablePhysics();
         virtual bool disablePhysics();
@@ -98,7 +99,7 @@ class Entity : public osg::Referenced
         
     protected:
         ~Entity();
-        osg::ref_ptr<osg::MatrixTransform> m_transform;
+        osg::ref_ptr<osg::PositionAttitudeTransform> m_transform;
         EntityType m_type;
         int m_subtype;
         /* ode physics */

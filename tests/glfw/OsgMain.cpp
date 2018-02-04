@@ -111,8 +111,8 @@ bool OsgMain::init(int x, int y, int width, int height)
     //loadScene("Simple");
     //loadScene("Particle");
     //loadScene("Alpha");
-    //loadScene("TestAnimationPath");
-    loadScene("TimelineAnimation");
+    loadScene("TestAnimationPath");
+    //loadScene("TimelineAnimation");
     m_viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     m_viewer->addEventHandler(new osgViewer::StatsHandler);  
     m_viewer->addEventHandler(new MouseHandler());  
