@@ -6,6 +6,27 @@
 #include "EngineCallback.h"
 #include "Logging.h"
 
+void EngineEventQueue::setEvent(EngineEvent event)
+{
+            m_eventQueue.push_back(event);
+}
+void EngineEventQueue::processEvents()
+{
+    if (m_eventQueue.empty())
+        return;
+    std::list<EngineEvent>::iterator it;
+    while( !m_eventQueue.empty() )
+    {
+        it=m_eventQueue.begin();
+        
+        if( (*it).m_type==LEVEL_COMPLETE )
+            Level_completed(NULL);
+        else if( (*it).m_type==ANIMATION_COMPLETE )
+            Scene::instance().endAnimation((*it).m_name);
+        m_eventQueue.pop_front();
+    }
+}
+
 struct cb_item
 {
     const char *cb_name;

@@ -27,13 +27,12 @@ class EntityAnimation: public osg::AnimationPathCallback
 {
     public:
         EntityAnimation();       
-        void setEntity(Entity*);
-        void createAnimation(osg::Vec3, osg::Vec3);
+        void setEntity(Entity*);      
         void setCallback(EngineCallback);        
-        virtual void operator()(osg::Node* node, osg::NodeVisitor* nv);
-        void setAnimationType(AnimType atype) { m_animType = atype; }
-        void createAnimation(Animation *anim);
-
+        virtual void operator()(osg::Node* node, osg::NodeVisitor* nv);      
+        void addTranslate(float, osg::Vec3);
+        void addTranslate(float, float, float, float);
+        void setEventName(std::string);
     private:
         ~EntityAnimation()
         {
@@ -43,6 +42,7 @@ class EntityAnimation: public osg::AnimationPathCallback
         EngineCallback m_callback;
         Entity *m_entity;
         AnimType m_animType;
+        std::string m_eventName;
 };
 
 #endif

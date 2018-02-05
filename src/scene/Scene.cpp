@@ -49,11 +49,19 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
     };    
             
     osg::ref_ptr <Entity> ent;
+    EntityType etype;
     for(unsigned int i=0; ; i++ )
     {
-        if (ent_env_arr[i] == ENTITY_NONE) 
+        etype = ent_env_arr[i];
+        if (etype == ENTITY_NONE) 
             break;
-        ent = m_entityMgr.createEntity(ent_env_arr[i]);
+        if(m_entityList.count(etype)==0)
+        {
+            ent = m_entityMgr.createEntity(etype);
+            m_entityList.insert(std::make_pair(etype, ent));    
+        }
+        else
+            ent = m_entityList[etype];
         if(ent==NULL)
         {
             LOG_ERROR("Entity not found type:%d\n", ent_env_arr[i]);
@@ -66,16 +74,16 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
             eball->setSpeed(0.0);
             eball->setDir(osg::Vec2(0.5, 0.5));
         }
-        if(ent->getType()==ENTITY_DOOR_LEFT)        
-            m_doorLeft = ent;
-        if(ent->getType()==ENTITY_DOOR_RIGHT)        
-            m_doorRight = ent;        
+        
     }
                    
     //loadTMXMap(tmx_file);
     loadLevel(ep_file, lvl_name);
     loadShaders();
-    m_entityMgr.startPhysics();
+    playAnimation("animation_level_new");
+    //playAnimation("animation_level_continue");
+    //playAnimation("animation_level_cleared");
+    //m_entityMgr.startPhysics();
     
 }
 
@@ -288,6 +296,7 @@ void Scene::loadStaticScene()
 }
 void Scene::levelContinue()
 {   
+#if 0    
     const EntitySlot *es;
     es = getEntitySlot(LAST, true);
     if(es != NULL)
@@ -301,11 +310,12 @@ void Scene::levelContinue()
     {
         LOG_INFO("No more paddle in paddle slots: %s\n","");
     }
- 
+#endif 
 }
-
+#if 0 
 void Scene::playAnimation(Entity *ent, osg::Vec3 end_pos, EngineCallback cb, AnimType atype)
 {
+   
     osg::Vec3 start_pos = ent->getPosition();
     EntityAnimation *ea = new EntityAnimation;    
     ea->setCallback(cb);
@@ -314,20 +324,8 @@ void Scene::playAnimation(Entity *ent, osg::Vec3 end_pos, EngineCallback cb, Ani
     ea->setEntity(ent);
     ent->setAnimation(ea);
     ent->playAnimation();
-
 }
-void Scene::playAnimation(std::string anim_name)
-{    
-    if(anim_name=="door_right_open")
-    {   
-        EntityAnimation *ea = new EntityAnimation;        
-        Animation *anim = AssetsManager::instance().getAnimation(anim_name.c_str());        
-        ea->createAnimation(anim);
-        m_doorRight->disablePhysics();
-        m_doorRight->setAnimation(ea);       
-        m_doorRight->playAnimation();
-    }    
-}
+#endif
 
 void Scene::update(float passedTime)
 {
@@ -340,12 +338,144 @@ void Scene::update(float passedTime)
     }
 }
 
-Entity* Scene::getDoorLeft()
-{
-    return m_doorLeft.get();
+void Scene::playAnimation(std::string anim_name)
+{    
+    if(anim_name=="animation_level_new")
+    {   
+        animLevelNew(anim_name);
+    }  
+    else if(anim_name=="animation_level_continue")  
+    {
+        animLevelContinue(anim_name);
+    }
+    else if(anim_name=="animation_level_cleared")
+    {
+        animLevelCleared(anim_name);
+    }
 }
 
-Entity* Scene::getDoorRight()
+void Scene::endAnimation(std::string anim_name)
 {
-    return m_doorRight.get();
+    LOG_INFO("Scene::endAnimation: %s\n",anim_name.c_str());
+}
+
+void Scene::animLevelNew(std::string anim_name)
+{
+    float x,y,z;                
+    osg::ref_ptr <Entity> ent;
+    //left door
+    {            
+        EntityAnimation *ea = new EntityAnimation;  
+        ent=m_entityList[ENTITY_DOOR_LEFT];
+        if(ent==NULL)       
+        {
+            LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
+            return;
+        }
+        osg::Vec3 pos = ent->getPosition();
+        x=pos.x(); y=pos.y(); z=pos.z();        
+        ea->addTranslate(0.0, x, y, z); 
+        ea->addTranslate(2.0, x, y+0.25, z); 
+        ea->addTranslate(3.0, x, y+0.25, z);
+        ea->addTranslate(4.0, x, y, z); 
+        ent->getEntityNode()->setUpdateCallback(ea);
+    }
+    // paddle
+    {
+        EntityAnimation *ea = new EntityAnimation;        
+        ent=m_entityList[ENTITY_PADDLE];
+        if(ent==NULL)       
+        {
+            LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
+            return;
+        }
+        osg::Vec3 pos = ent->getPosition();            
+        x = pos.x()-1.5; y=pos.y(); z=pos.z();        
+        ea->addTranslate(0.0, x, y, z);
+        ea->addTranslate(2.0, x, y, z);
+        ea->addTranslate(3.0, 0.0, y, z);
+        ent->getEntityNode()->setUpdateCallback(ea);
+    }
+    //ball
+    {
+        EntityAnimation *ea = new EntityAnimation;        
+        ent=m_entityList[ENTITY_BALL];
+        if(ent==NULL)       
+        {
+            LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
+            return;
+        }
+        osg::Vec3 pos = ent->getPosition();            
+        x = pos.x(); y=pos.y(); z=pos.z()-0.5;        
+        ea->addTranslate(0.0, x, y, z);
+        ea->addTranslate(3.0, x, y, z);
+        ea->addTranslate(4.0, x, y, z + 0.5);
+        ea->setEventName(anim_name);
+        ent->getEntityNode()->setUpdateCallback(ea);
+       
+    }                
+}
+
+void Scene::animLevelContinue(std::string anim_name)
+{
+    float x,y,z;                
+    osg::ref_ptr<Entity> ent;        
+    //paddle slot
+    {
+        osg::Vec3 end_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
+        const EntitySlot* es = getEntitySlot(LAST, true);        
+        ent = es->m_entity;
+        if(ent.valid()==false)
+        {
+            LOG_ERROR("Scene::animLevelContinue: Invalid entity %s\n", "");
+            return;
+        }
+        EntityAnimation *ea = new EntityAnimation;
+        osg::Vec3 pos = ent->getPosition();            
+        x = pos.x(); y=pos.y(); z=pos.z();        
+        ea->addTranslate(0.0, x, y, z );
+        ea->addTranslate(1.0, x, y, z + 1.0);
+        ea->addTranslate(2.0, end_pos.x(), end_pos.y(), z+1.0);
+        ea->addTranslate(3.0, end_pos.x(), end_pos.y(), end_pos.z());
+        ent->getEntityNode()->setUpdateCallback(ea);
+    }
+    //ball    
+    {
+        EntityAnimation *ea = new EntityAnimation;        
+        ent=m_entityList[ENTITY_BALL];
+        if(ent==NULL)       
+        {
+            LOG_ERROR("Scene::animLevelContinue: Invalid entity %s\n", "");
+            return;
+        }
+        osg::Vec3 pos = ent->getPosition();            
+        x = pos.x(); y=pos.y(); z=pos.z()-0.5;        
+        ea->addTranslate(0.0, x, y, z);
+        ea->addTranslate(3.0, x, y, z);
+        ea->addTranslate(4.0, x, y, z + 0.5);
+        ea->setEventName(anim_name);
+        ent->getEntityNode()->setUpdateCallback(ea);        
+    }                
+}
+
+void Scene::animLevelCleared(std::string anim_name)
+{
+    float x,y,z;                
+    osg::ref_ptr <Entity> ent;
+    //right door
+    {            
+        EntityAnimation *ea = new EntityAnimation;  
+        ent = m_entityList[ENTITY_DOOR_RIGHT];
+        if(ent==NULL)       
+        {
+            LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
+            return;
+        }
+        osg::Vec3 pos = ent->getPosition();
+        x=pos.x(); y=pos.y(); z=pos.z();        
+        ea->addTranslate(0.0, x, y, z); 
+        ea->addTranslate(2.0, x, y+0.25, z);
+        ea->setEventName(anim_name);         
+        ent->getEntityNode()->setUpdateCallback(ea);        
+    }
 }

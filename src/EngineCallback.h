@@ -48,12 +48,14 @@ void Level_completed(void* args);
 
 typedef enum 
 {
+    ANIMATION_COMPLETE,
     LEVEL_COMPLETE
 }EventType;
 
 typedef struct
 {
     EventType m_type;    
+    std::string m_name;
 
 }EngineEvent;
 
@@ -66,23 +68,9 @@ class EngineEventQueue
             static EngineEventQueue instance;
             return instance;
         }
-        void setEvent(EngineEvent event)
-        {
-            m_eventQueue.push_back(event);
-        }
-        void processEvents()
-        {
-            if (m_eventQueue.empty())
-                return;
-            std::list<EngineEvent>::iterator it;
-            while( !m_eventQueue.empty() )
-            {
-                it=m_eventQueue.begin();
-                if( (*it).m_type==LEVEL_COMPLETE )
-                    Level_completed(NULL);
-                m_eventQueue.pop_front();
-            }
-        }
+        void setEvent(EngineEvent event);        
+        void processEvents();
+        
     private:
         std::list <EngineEvent> m_eventQueue;
 };

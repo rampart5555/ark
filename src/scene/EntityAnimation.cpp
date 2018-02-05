@@ -32,8 +32,13 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
             {
                 //printf("animation complete\n");
                 m_status = COMPLETE;
-                if(m_callback != NULL)
-                    m_callback(NULL);
+                if(m_eventName.empty()==false)
+                {
+                    EngineEvent event;
+                    event.m_type=ANIMATION_COMPLETE;
+                    event.m_name=m_eventName;
+                    EngineEventQueue::instance().setEvent(event);
+                }
                 if(m_entity != NULL)
                     m_entity->setValid(false);
             }
@@ -42,65 +47,31 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
 
     // must call any nested node callbacks and continue subgraph traversal.
     osg::NodeCallback::traverse(node,nv);
-}       
-
-void EntityAnimation::createAnimation(Animation *anim)
+}   
+   
+void EntityAnimation::setEventName(std::string event)
 {
-    if(anim==NULL)
+    m_eventName=event;
+}
+
+void EntityAnimation::addTranslate(float frame, osg::Vec3 pos)
+{
+    EntityAnimation::addTranslate(frame, pos.x(), pos.y(), pos.z());
+}
+
+void EntityAnimation::addTranslate(float frame, float x, float y, float z)
+{
+    if(_animationPath.valid()==false)
     {
-        LOG_WARN("EntityAnimation::playAnimation: null animation:%s\n","");
-        return;
+        _animationPath = new osg::AnimationPath;  
+        _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);
     }
-    
-    if(anim->m_frames.size() % 4 != 0)
-    {
-        LOG_WARN("EntityAnimation::playAnimation: animation invalid number of frames:%s\n","");
-        return;
-    }
-    _animationPath = new osg::AnimationPath;
-    _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);    
-    for(unsigned int i=0;i<anim->m_frames.size();i+=4)
-    {
-        osg::Vec3 pos;
-        osg::AnimationPath::ControlPoint cp;
-        pos.set(anim->m_frames[i+1], anim->m_frames[i+2], anim->m_frames[i+3]);
-        cp.setPosition(pos);
-        _animationPath->insert(anim->m_frames[i],cp);
-    }    
+    _animationPath->insert(frame, osg::AnimationPath::ControlPoint(osg::Vec3(x,y,z)));
 }
 
 void EntityAnimation::setEntity(Entity *ent)
 {
     m_entity = ent;
-}
-
-
-void EntityAnimation::createAnimation(osg::Vec3 start_pos, osg::Vec3 end_pos)
-{
-    switch(m_animType)
-    {
-        case PADDLE_MOVE_FROM_SLOT:
-            {
-                _animationPath = new osg::AnimationPath;
-                _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);    
-                _animationPath->insert(0.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
-                _animationPath->insert(1.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z()+1.0)));
-                _animationPath->insert(2.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), start_pos.z()+1.0)));
-                _animationPath->insert(3.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));        
-            }
-            break;
-        case DOOR_CLOSE:
-        case DOOR_OPEN:
-            {                                
-                _animationPath = new osg::AnimationPath;
-                _animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);
-                _animationPath->insert(0.0, osg::AnimationPath::ControlPoint(osg::Vec3(start_pos.x(), start_pos.y(), start_pos.z())));
-                _animationPath->insert(3.0, osg::AnimationPath::ControlPoint(osg::Vec3(end_pos.x(), end_pos.y(), end_pos.z())));                            
-            } 
-            break;
-        default:
-            break;
-    }
 }
 
 void EntityAnimation::setCallback(EngineCallback cb)
