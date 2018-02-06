@@ -91,8 +91,8 @@ void EntityPaddle::beginContact(Entity *ent, b2Contact *contact)
     }
     else if((m_type==ENTITY_PADDLE) && (ent->getType() == ENTITY_DOOR_RIGHT_SENSOR))    
     {
-        EngineEvent ev;
-        ev.m_type=LEVEL_COMPLETE;
+        EngineEvent *ev=new EngineEvent;
+        ev->m_eventId = LEVEL_COMPLETED;
         EngineEventQueue::instance().setEvent(ev);
     }
 }

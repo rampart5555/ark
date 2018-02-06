@@ -4,25 +4,23 @@
 #include "scene/Scene.h"
 #include "scene/LevelManager.h"
 #include "EngineCallback.h"
-#include "Logging.h"
 
-void EngineEventQueue::setEvent(EngineEvent event)
+
+
+void EngineEventQueue::setEvent(osg::ref_ptr<EngineEvent> event)
 {
-            m_eventQueue.push_back(event);
+    m_eventQueue.push_back(event);
 }
+
 void EngineEventQueue::processEvents()
 {
     if (m_eventQueue.empty())
         return;
-    std::list<EngineEvent>::iterator it;
+    std::list< osg::ref_ptr<EngineEvent> >::iterator it;
     while( !m_eventQueue.empty() )
     {
         it=m_eventQueue.begin();
-        
-        if( (*it).m_type==LEVEL_COMPLETE )
-            Level_completed(NULL);
-        else if( (*it).m_type==ANIMATION_COMPLETE )
-            Scene::instance().endAnimation((*it).m_name);
+        Scene_level_callback(*it);        
         m_eventQueue.pop_front();
     }
 }
@@ -75,7 +73,10 @@ void MenuStart_button_start_push(void *args)
 {
     LOG_INFO("%s","MenuStart_button_start_push\n");
     MenuStart *ms = MenuManager::instance().getMenuStart();
-    ms->hide(MenuLevelSelect_show, NULL);    
+    EngineEvent *event = new EngineEvent;  
+    event->m_eventId = LEVEL_LOAD;  
+    ms->hide(NULL, (void*)args);    
+    EngineEventQueue::instance().setEvent(event);
 }
 
 
@@ -344,5 +345,55 @@ void Level_completed(void *args)
     }
     Scene::instance().loadScene(episode->m_file.c_str(), level->m_name.c_str());
     
+}
+
+void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
+{
+    EventId eid;
+    if(args.valid())
+    {
+        eid=args->m_eventId;        
+    }
+    else    
+    {
+        LOG_WARN("Scene_level_callback :%s\n", "NULL status");
+        return;
+    }
+    LOG_INFO("Scene_level_callback: %x\n", eid);
+    switch(eid)
+    {
+        case LEVEL_LOAD:  
+            {
+                unsigned int ep_id, lvl_id;
+                LevelManager::instance().getCurrent(ep_id, lvl_id);
+                SceneEpisode *episode=LevelManager::instance().getEpisode(ep_id);
+                SceneLevel *level=LevelManager::instance().getLevel(ep_id, lvl_id);
+                if((episode==NULL)||(level==NULL))
+                {
+                    LOG_ERROR("LEVEL_LOAD => episode or level not found for :%d lvl: %d\n",ep_id, lvl_id);
+                    return;
+                }
+                Scene::instance().loadScene(episode->m_file.c_str(), level->m_name.c_str());
+                Scene::instance().playAnimation("animation_level_new");
+            }          
+            break;
+        case LEVEL_CLEARED:
+            {
+                Scene::instance().playAnimation("animation_level_cleared");
+            }
+            break;
+        case LEVEL_ANIMATION_COMPLETE:
+            {
+                if(args->m_eventName=="animation_level_new")
+                {
+                    Scene::instance().getEntityManager().startPhysics();
+                }
+            }
+            break;
+        case LEVEL_COMPLETED:
+        case LEVEL_FAILED:
+        default:
+            break;
+    }   
 }
 

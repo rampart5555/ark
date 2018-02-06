@@ -34,9 +34,9 @@ void EntityAnimation::operator()(osg::Node* node, osg::NodeVisitor* nv)
                 m_status = COMPLETE;
                 if(m_eventName.empty()==false)
                 {
-                    EngineEvent event;
-                    event.m_type=ANIMATION_COMPLETE;
-                    event.m_name=m_eventName;
+                    EngineEvent *event=new EngineEvent;
+                    event->m_eventId=LEVEL_ANIMATION_COMPLETE;
+                    event->m_eventName=m_eventName;
                     EngineEventQueue::instance().setEvent(event);
                 }
                 if(m_entity != NULL)

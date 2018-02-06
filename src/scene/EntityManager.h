@@ -8,9 +8,11 @@
 #include "EntityPaddle.h"
 #include "EntityBullet.h"
 #include "Config.h"
+#include "BasicScene.h"
 /* alias for World Manager for entities */
 class Scene;
-class EntityManager
+
+class EntityManager: public BasicScene
 {
     public:
         static b2World *m_world;

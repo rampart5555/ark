@@ -165,6 +165,7 @@ void Entity::update(float passedTime)
 #endif    
 }
 
+
 void Entity::setAnimation(EntityAnimation *anim )
 {
     m_entityAnimation = anim;

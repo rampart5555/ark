@@ -7,6 +7,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "SceneDefs.h"
+#include "BasicScene.h"
 
 typedef struct
 {
@@ -15,7 +16,8 @@ typedef struct
     
 }EntitySlot;
 
-class Scene
+
+class Scene: public BasicScene
 {
     public:
         Scene();

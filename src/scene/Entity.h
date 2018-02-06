@@ -9,6 +9,7 @@
 #include <Box2D/Box2D.h>
 #include "Config.h"
 #include "EntityAnimation.h"
+#include "BasicScene.h"
 
 const unsigned int CAT_WALL           = 0x0001;
 const unsigned int CAT_BALL           = 0x0002;
@@ -58,6 +59,8 @@ class Entity : public osg::Referenced
         EntityType getType();
         void setSubType(int stype) { m_subtype = stype; }
         int  getSubType() { return m_subtype; }
+        void setSceneParent(BasicScene *scene) { m_sceneParent = scene; }
+        const BasicScene* getSceneParent( ) { return m_sceneParent; }
         void updateInitialTransform();
 
         virtual void update(float);
@@ -100,7 +103,9 @@ class Entity : public osg::Referenced
     protected:
         ~Entity();
         osg::ref_ptr<osg::PositionAttitudeTransform> m_transform;
+        BasicScene *m_sceneParent;
         EntityType m_type;
+        
         int m_subtype;
         /* ode physics */
         bool m_phyActive;

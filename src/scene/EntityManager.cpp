@@ -13,6 +13,7 @@ b2World *EntityManager::m_world = NULL;
 
 EntityManager::EntityManager()
 {
+    m_sceneId=ENTITY_MANAGER;
     m_nodeEntMgr = new osg::MatrixTransform();
     m_paddle = NULL;
     m_entitiesNum = 0;
@@ -326,8 +327,8 @@ void EntityManager::update(float passedTime)
     }
     if((m_brickNumber <= 0)&&(m_levelCleared==false))
     {       
-        //levelComplete()
-        levelCleared();
+        EngineEvent *ev=new EngineEvent;
+        Scene_level_callback(ev);
         m_levelCleared=true;        
     }        
    
@@ -401,6 +402,7 @@ void EntityManager::levelFailed()
     stopPhysics();    
     Scene_level_failed(NULL);
 }
+
 
 void EntityManager::levelContinue()
 {    

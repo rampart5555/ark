@@ -2,6 +2,7 @@
 #define __ENGINE_CALLBACK__
 #include <string>
 #include <list>
+#include "Logging.h"
 
 typedef void (*EngineCallback)(void *args);
 EngineCallback getCallback(std::string);
@@ -46,18 +47,39 @@ void Level_update_score(void *args);
 void Level_cleared(void* args);
 void Level_completed(void* args);
 
-typedef enum 
-{
-    ANIMATION_COMPLETE,
-    LEVEL_COMPLETE
-}EventType;
+/*
+NEW STYLE OF CALLBACK FOR SCENES
+*/
 
-typedef struct
+typedef enum
 {
-    EventType m_type;    
-    std::string m_name;
+    LEVEL_LOAD = 0xab11,
+    LEVEL_CLEARED = 0xab12,
+    LEVEL_COMPLETED = 0xab13,
+    LEVEL_FAILED = 0xab14,
+    LEVEL_ANIMATION_COMPLETE=0xab15
 
-}EngineEvent;
+}EventId;
+
+class EngineEvent: public osg::Object
+{
+    public:
+        EngineEvent(){}
+        virtual const char* libraryName() const {return "";}
+        virtual const char* className() const {return "";}
+        virtual osg::Object* cloneType() const {return NULL;}
+        virtual osg::Object* clone(const osg::CopyOp&) const {return NULL;}    
+        EventId m_eventId;
+        std::string m_eventName;
+    private:
+        ~EngineEvent()
+        {
+           LOG_INFO("Delete Event:%s\n","");
+        }        
+};
+
+void  Scene_level_callback(osg::ref_ptr<EngineEvent> event);
+
 
 class EngineEventQueue
 {
@@ -68,10 +90,10 @@ class EngineEventQueue
             static EngineEventQueue instance;
             return instance;
         }
-        void setEvent(EngineEvent event);        
+        void setEvent(osg::ref_ptr<EngineEvent> event);        
         void processEvents();
         
     private:
-        std::list <EngineEvent> m_eventQueue;
+        std::list < osg::ref_ptr<EngineEvent> > m_eventQueue;
 };
 #endif

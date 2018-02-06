@@ -5,9 +5,9 @@
 #include "EntityBall.h"
 #include "Logging.h"
 
-
 Scene::Scene()
-{
+{    
+    m_sceneId=SCENE;
     m_sceneNode = new osg::MatrixTransform();
     m_entityProps = new EntityProps;
     AssetsManager::instance().getEntityProps("lua/entity_props.lua", m_entityProps);  
@@ -26,6 +26,7 @@ void Scene::clear()
     m_levelScore = 0;
     m_entityMgr.clear();
 }
+
 
 void Scene::loadScene(const char *ep_file, const char* lvl_name)
 {    
@@ -80,7 +81,7 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
     //loadTMXMap(tmx_file);
     loadLevel(ep_file, lvl_name);
     loadShaders();
-    playAnimation("animation_level_new");
+    //playAnimation("animation_level_new");
     //playAnimation("animation_level_continue");
     //playAnimation("animation_level_cleared");
     //m_entityMgr.startPhysics();
@@ -357,6 +358,10 @@ void Scene::playAnimation(std::string anim_name)
 void Scene::endAnimation(std::string anim_name)
 {
     LOG_INFO("Scene::endAnimation: %s\n",anim_name.c_str());
+    if(anim_name=="animation_level_new")
+    {
+        m_entityMgr.startPhysics();
+    }
 }
 
 void Scene::animLevelNew(std::string anim_name)
@@ -465,12 +470,13 @@ void Scene::animLevelCleared(std::string anim_name)
     //right door
     {            
         EntityAnimation *ea = new EntityAnimation;  
-        ent = m_entityList[ENTITY_DOOR_RIGHT];
+        ent = m_entityList[ENTITY_DOOR_RIGHT];        
         if(ent==NULL)       
         {
             LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
             return;
         }
+        ent->disablePhysics();
         osg::Vec3 pos = ent->getPosition();
         x=pos.x(); y=pos.y(); z=pos.z();        
         ea->addTranslate(0.0, x, y, z); 
