@@ -339,8 +339,9 @@ void Scene::update(float passedTime)
     }
 }
 
-void Scene::playAnimation(std::string anim_name)
-{    
+void Scene::animationStart(std::string anim_name)
+{   
+    LOG_INFO("Scene::startAnimation: %s\n",anim_name.c_str()); 
     if(anim_name=="animation_level_new")
     {   
         animLevelNew(anim_name);
@@ -355,7 +356,7 @@ void Scene::playAnimation(std::string anim_name)
     }
 }
 
-void Scene::endAnimation(std::string anim_name)
+void Scene::animationEnd(std::string anim_name)
 {
     LOG_INFO("Scene::endAnimation: %s\n",anim_name.c_str());
     if(anim_name=="animation_level_new")

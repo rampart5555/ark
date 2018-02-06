@@ -322,7 +322,7 @@ void Level_update_score(void *args)
 
 void Level_cleared(void *args)
 {
-    Scene::instance().playAnimation("door_right_open");
+    //Scene::instance().playAnimation("door_right_open");
 }
 
 void Level_completed(void *args)
@@ -374,23 +374,21 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
                     return;
                 }
                 Scene::instance().loadScene(episode->m_file.c_str(), level->m_name.c_str());
-                Scene::instance().playAnimation("animation_level_new");
+                Scene::instance().animationStart("animation_level_new");
             }          
             break;
         case LEVEL_CLEARED:
             {
-                Scene::instance().playAnimation("animation_level_cleared");
+                Scene::instance().animationStart("animation_level_cleared");
             }
             break;
         case LEVEL_ANIMATION_COMPLETE:
-            {
-                if(args->m_eventName=="animation_level_new")
-                {
-                    Scene::instance().getEntityManager().startPhysics();
-                }
+            {                
+                Scene::instance().animationEnd(args->m_eventName);
+             
             }
             break;
-        case LEVEL_COMPLETED:
+        case LEVEL_COMPLETED: 
         case LEVEL_FAILED:
         default:
             break;

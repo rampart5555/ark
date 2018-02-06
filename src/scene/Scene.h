@@ -48,8 +48,8 @@ class Scene: public BasicScene
         EntityManager& getEntityManager() { return m_entityMgr; }
         void update(float);
         void levelContinue();        
-        void playAnimation(std::string);    
-        void endAnimation(std::string);    
+        void animationStart(std::string);    
+        void animationEnd(std::string);    
         //animation
         void animLevelNew(std::string);
         void animLevelContinue(std::string);
