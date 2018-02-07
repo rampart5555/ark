@@ -193,25 +193,20 @@ bool Scene::addEntity(osg::ref_ptr<Entity> entity)
 {
     if(entity->getType()==ENTITY_PADDLE)
     {
-        for(unsigned i=0;i<m_paddleSlots.size();i++)
-        {
-            if(m_paddleSlots[i].m_entity.valid()==false)
-            {
-                m_paddleSlots[i].m_entity = entity;
-                m_paddleSlots[i].m_entity->setPosition(m_paddleSlots[i].m_pos);
-                m_sceneNode->addChild(entity->getEntityNode());
-                break;
-            }
-        }
+        m_sparePaddles.push_back(entity);
+        m_sceneNode->addChild(entity->getEntityNode());
     }
     return true;
 }
 
-bool Scene::removeEntity(unsigned int slot_id)
+bool Scene::removeEntity(osg::ref_ptr<Entity> entity)
 {
-    EntitySlot *es = &m_paddleSlots[slot_id];
-    m_sceneNode->removeChild(es->m_entity->getEntityNode());
-    es->m_entity = NULL;
+    entity->disablePhysics();
+    m_sceneNode->removeChild(entity->getEntityNode());
+    if(entity->getType()==ENTITY_PADDLE)
+    {
+       ;
+    }    
     return true;
 }
 
@@ -220,29 +215,6 @@ void Scene::resetEntities()
     std::map<EntityType, osg::ref_ptr<Entity> >::iterator it;
     for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)
         it->second->reset();    
-}
-
-const EntitySlot* Scene::getEntitySlot(EntityPos epos, bool valid)
-{    
-    unsigned int i;
-    if(epos == FIRST)
-    {
-        for(i = 0; i<m_paddleSlots.size(); i++)
-        {
-            if(m_paddleSlots[i].m_entity.valid()==valid)
-                return &m_paddleSlots[i];
-        }
-    }
-    if(epos == LAST)
-    {
-        for(i = m_paddleSlots.size(); i>0; i--)
-        {
-            int j = i-1;
-            if(m_paddleSlots[j].m_entity.valid()==valid)
-                return &m_paddleSlots[j];
-        }
-    }    
-    return NULL;    
 }
 
 osg::MatrixTransform* Scene::getSceneNode()
@@ -278,7 +250,15 @@ void Scene::loadStaticScene()
     osg::Matrix m = model->getMatrix();    
     m.decompose(pos, rot, scale, so);      
     m_sceneNode->addChild(model);
-        
+
+    for(int i=0;i<3;i++)
+    {
+        osg::ref_ptr<Entity> spare_paddle = m_entityMgr.createEntity(ENTITY_PADDLE);                
+        float x = pos.x() -1 + 0.5*i;
+        spare_paddle->setPosition(osg::Vec3(x, pos.y(), pos.z()));
+        addEntity(spare_paddle);
+    }    
+#if 0        
     /* init paddle support slots */
     for(int i=0;i<3; i++)
     {
@@ -294,7 +274,7 @@ void Scene::loadStaticScene()
         addEntity(paddle);
     }
 
-#if 0    
+
     osg::ref_ptr<Entity> paddle = m_entityMgr.createEntity(ENTITY_PADDLE);
     paddle->setPosition(pos);
     m_sceneNode->addChild(paddle->getEntityNode());
@@ -339,11 +319,20 @@ void Scene::update(float passedTime)
 {
     m_entityMgr.update(passedTime);
     /* remove invalid entity from paddle slots */
-    for(unsigned i = 0; i<m_paddleSlots.size(); i++)
+    std::list < osg::ref_ptr<Entity> >::iterator it = m_sparePaddles.begin();
+    while (it != m_sparePaddles.end())
     {
-        if(m_paddleSlots[i].m_entity.valid() && m_paddleSlots[i].m_entity->isValid()==false)
-            removeEntity(i);
-    }
+        (*it)->update(passedTime);        
+        if ((*it)->isValid()==false)        
+        {
+            removeEntity(*it);
+            m_sparePaddles.erase(it++);  // alternatively, i = items.erase(i);
+        }
+        else
+        {            
+            ++it;
+        }
+    }    
 }
 
 void Scene::animationStart(std::string anim_name)
@@ -437,42 +426,41 @@ void Scene::animLevelNew(std::string anim_name)
 void Scene::animLevelContinue(std::string anim_name)
 {
     float x,y,z;                
-    osg::ref_ptr<Entity> ent;        
+    osg::ref_ptr<Entity> entity;
     //paddle slot
     {
         osg::Vec3 end_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
-        const EntitySlot* es = getEntitySlot(LAST, true);        
-        ent = es->m_entity;
-        if(ent.valid()==false)
+        entity = m_sparePaddles.back();        
+        if(entity.valid()==false)
         {
             LOG_ERROR("Scene::animLevelContinue: Invalid entity %s\n", "");
             return;
         }
         EntityAnimation *ea = new EntityAnimation;
-        osg::Vec3 pos = ent->getPosition();            
+        osg::Vec3 pos = entity->getPosition();            
         x = pos.x(); y=pos.y(); z=pos.z();        
         ea->addTranslate(0.0, x, y, z );
         ea->addTranslate(1.0, x, y, z + 1.0);
         ea->addTranslate(2.0, end_pos.x(), end_pos.y(), z+1.0);
         ea->addTranslate(3.0, end_pos.x(), end_pos.y(), end_pos.z());
-        ent->getEntityNode()->setUpdateCallback(ea);
+        entity->getEntityNode()->setUpdateCallback(ea);
     }
     //ball    
     {
         EntityAnimation *ea = new EntityAnimation;        
-        ent=m_entityList[ENTITY_BALL];
-        if(ent==NULL)       
+        entity=m_entityList[ENTITY_BALL];
+        if(entity.valid()==false)       
         {
             LOG_ERROR("Scene::animLevelContinue: Invalid entity %s\n", "");
             return;
         }
-        osg::Vec3 pos = ent->getPosition();            
+        osg::Vec3 pos = entity->getPosition();            
         x = pos.x(); y=pos.y(); z=pos.z()-0.5;        
         ea->addTranslate(0.0, x, y, z);
         ea->addTranslate(3.0, x, y, z);
         ea->addTranslate(4.0, x, y, z + 0.5);
         ea->setEventName(anim_name);
-        ent->getEntityNode()->setUpdateCallback(ea);        
+        entity->getEntityNode()->setUpdateCallback(ea);        
     }                
 }
 

@@ -40,9 +40,8 @@ class Scene: public BasicScene
         osg::ref_ptr <Entity> createEntity(EntityType etype);
 
         bool addEntity(osg::ref_ptr <Entity>);
-        bool removeEntity(unsigned int);
-        void resetEntities();
-        const EntitySlot* getEntitySlot(EntityPos, bool);
+        bool removeEntity(osg::ref_ptr <Entity>);
+        void resetEntities();        
 
         void addEntityProps(Entity *ent);
         bool loadTMXMap( const char* );
@@ -61,7 +60,7 @@ class Scene: public BasicScene
         EntityManager m_entityMgr;
         int m_levelScore;
         EntityProps *m_entityProps;        
-        std::vector <EntitySlot> m_paddleSlots;
+        std::list < osg::ref_ptr<Entity> > m_sparePaddles;
         bool m_sceneLoaded;
         std::map<EntityType, osg::ref_ptr<Entity> >m_entityList;
 };
