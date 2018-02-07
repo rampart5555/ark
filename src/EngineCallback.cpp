@@ -18,8 +18,9 @@ void EngineEventQueue::processEvents()
         return;
     std::list< osg::ref_ptr<EngineEvent> >::iterator it;
     while( !m_eventQueue.empty() )
-    {
+    {        
         it=m_eventQueue.begin();
+        LOG_INFO("EngineEventQueue::processEvents(): %x %s",(*it)->m_eventId,(*it)->m_eventName.c_str());
         Scene_level_callback(*it);        
         m_eventQueue.pop_front();
     }
@@ -364,6 +365,8 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
     {
         case LEVEL_LOAD:  
             {
+                Scene::instance().getEntityManager().stopPhysics();
+                Scene::instance().resetEntities();
                 unsigned int ep_id, lvl_id;
                 LevelManager::instance().getCurrent(ep_id, lvl_id);
                 SceneEpisode *episode=LevelManager::instance().getEpisode(ep_id);
@@ -389,7 +392,36 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
             }
             break;
         case LEVEL_COMPLETED: 
+            /* play animation here, after animation stop call LEVEL_LOAD_NEXT
+               for the moment just unlock and load next level
+            */
+            {
+                Scene::instance().getEntityManager().stopPhysics();
+                Scene::instance().resetEntities();
+                unsigned int ep_id, lvl_id;
+                LevelManager::instance().getCurrent(ep_id, lvl_id);
+                lvl_id+=1;
+                LevelManager::instance().setCurrent(ep_id, lvl_id);
+                SceneEpisode *episode=LevelManager::instance().getEpisode(ep_id);
+                SceneLevel *level=LevelManager::instance().getLevel(ep_id, lvl_id);
+                if((episode==NULL)||(level==NULL))
+                {
+                    LOG_ERROR("LEVEL_LOAD => episode or level not found for :%d lvl: %d\n",ep_id, lvl_id);
+                    return;
+                }
+                Scene::instance().loadScene(episode->m_file.c_str(), level->m_name.c_str());
+                Scene::instance().animationStart("animation_level_new");                
+            }
+            break;
+        case LEVEL_LOAD_NEXT:         
+            break;
         case LEVEL_FAILED:
+            {
+                Scene::instance().getEntityManager().stopPhysics();
+                Scene::instance().resetEntities();
+                Scene::instance().animationStart("animation_level_continue");                
+            }
+            break;
         default:
             break;
     }   

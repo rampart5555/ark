@@ -41,6 +41,7 @@ class Scene: public BasicScene
 
         bool addEntity(osg::ref_ptr <Entity>);
         bool removeEntity(unsigned int);
+        void resetEntities();
         const EntitySlot* getEntitySlot(EntityPos, bool);
 
         void addEntityProps(Entity *ent);

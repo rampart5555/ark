@@ -61,6 +61,7 @@ void Entity::setModel(osg::MatrixTransform& tr)
     osg::Matrix m = tr.getMatrix();
     m.decompose(osg_pos, osg_rot, scale, so);   
     /* set initital position for this entity */
+    m_initialPosition=osg_pos;
     setPosition(osg_pos);
 }
 
@@ -107,6 +108,7 @@ osg::PositionAttitudeTransform* Entity::getEntityNode()
     return m_transform;
 }
 
+
 void Entity::setPosition(osg::Vec3 pos)
 {    
     m_transform->setPosition(pos);
@@ -115,6 +117,17 @@ void Entity::setPosition(osg::Vec3 pos)
 const osg::Vec3d& Entity::getPosition()
 {
     return m_transform->getPosition();
+}
+
+const osg::Vec3d& Entity::getInitialPosition()
+{
+    return m_initialPosition;
+}
+
+void Entity::reset()
+{
+    if(m_transform.valid())
+        m_transform->setPosition(m_initialPosition);
 }
 
 void Entity::setType(EntityType etype)
@@ -298,7 +311,7 @@ bool Entity::disablePhysics()
 {
     if(m_phyActive==false)
         return false;  
-    LOG_INFO("Entity::disablePhysics(): Physics disable for entity:%s\n", m_name.c_str());           
+    LOG_DEBUG("Entity::disablePhysics(): Physics disable for entity:%s\n", m_name.c_str());           
     m_phyActive=false;
     if(m_phyBody != NULL)
     {

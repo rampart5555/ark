@@ -11,9 +11,10 @@ class EntityPaddle : public Entity
         virtual void endContact(Entity*, b2Contact*);
         virtual bool enablePhysics();
         virtual bool disablePhysics();
-        virtual EntityPaddle* asEntityPaddle(){ return this; }        
-        
+        virtual void reset();
+        virtual EntityPaddle* asEntityPaddle(){ return this; }                
         void setJoint(b2Body* );
+
     private:
         osg::ref_ptr<osg::MatrixTransform> m_turret;
         osg::Vec3 m_cannon_left_pos;

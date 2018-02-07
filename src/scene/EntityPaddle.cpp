@@ -48,7 +48,7 @@ void EntityPaddle::update(float passedTime)
     if((m_hasTurret == true) && (m_index > 60))
     {
         m_index = 0;
-        LOG_INFO("%s\n","spwnEntityBullet bullet");
+        LOG_DEBUG("%s\n","spwnEntityBullet bullet");
         /* 
             compute paddle position and canon_left/cannon right 
         */
@@ -91,7 +91,7 @@ void EntityPaddle::beginContact(Entity *ent, b2Contact *contact)
     }
     else if((m_type==ENTITY_PADDLE) && (ent->getType() == ENTITY_DOOR_RIGHT_SENSOR))    
     {
-        EngineEvent *ev=new EngineEvent;
+        EngineEvent *ev = new EngineEvent;
         ev->m_eventId = LEVEL_COMPLETED;
         EngineEventQueue::instance().setEvent(ev);
     }
@@ -122,7 +122,7 @@ bool EntityPaddle::enablePhysics()
     osg::Geode *geo = dynamic_cast<osg::Geode*>(m_transform->getChild(0));
     if(geo==NULL)
     {
-        printf("EntityBall::enablePhysics(): dynamic cast to geode fail\n");
+        LOG_ERROR("EntityBall::enablePhysics(): dynamic cast to geode fail%s\n","");
         return false;
     }
     setBoxShape(geo);
@@ -137,4 +137,13 @@ bool EntityPaddle::disablePhysics()
 {
     return Entity::disablePhysics();
     
+}
+void EntityPaddle::reset()
+{
+    Entity::reset();
+    if(m_transform.valid())
+    {
+        m_transform->removeChild(m_turret);
+        m_hasTurret=false;
+    }
 }

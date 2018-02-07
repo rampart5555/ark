@@ -13,14 +13,13 @@ b2World *EntityManager::m_world = NULL;
 
 EntityManager::EntityManager()
 {
-    m_sceneId=ENTITY_MANAGER;
+    m_sceneId = ENTITY_MANAGER;
     m_nodeEntMgr = new osg::MatrixTransform();
     m_paddle = NULL;
     m_entitiesNum = 0;
     m_brickNumber = 0;
     m_powerupNumber = 0;
     m_paddleSelected=false;
-    m_levelCleared = false;
 }
 
 osg::MatrixTransform* EntityManager::getNodeEntMgr()
@@ -265,12 +264,18 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
         m_brickNumber--;
         // update score   
         int score =  entity->getValue();        
-        Level_update_score(&score);
-                
+        Level_update_score(&score);                
         if(entity->getPowerup() > 0)
         {
             spawnPowerup(entity);
         }
+        if((m_brickNumber <= 0))
+        {               
+            LOG_INFO("EntityManager: %s\n","*** LEVEL CLEARED ***");
+            EngineEvent *ev = new EngineEvent;
+            ev->m_eventId = LEVEL_CLEARED;
+            EngineEventQueue::instance().setEvent(ev);            
+        }        
     }
     else if(entity->getType() == ENTITY_POWERUP)
     {
@@ -280,14 +285,16 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
         setPowerup(ptype);
     }
     else if(entity->getType() == ENTITY_BALL)
-    {
-        LOG_INFO("Removing ball from entity list: %ul\n",m_ballList.size());
+    {        
         m_ballList.remove(entity->asEntityBall());
         if(m_ballList.size()==0)
         {
-            levelFailed();
+            LOG_INFO("EntityManager: %s\n","*** LEVEL FAILED ***");
+            EngineEvent *ev = new EngineEvent;
+            ev->m_eventId = LEVEL_FAILED;
+            EngineEventQueue::instance().setEvent(ev);            
         }
-    }
+    }    
 }
 
 void EntityManager::clear()
@@ -302,8 +309,7 @@ void EntityManager::clear()
     m_ballList.clear();
     m_entitiesNum = 0;
     m_brickNumber = 0;
-    m_powerupNumber = 0;
-    m_levelCleared=false;
+    m_powerupNumber = 0;    
 }
 
 void EntityManager::update(float passedTime)
@@ -321,17 +327,9 @@ void EntityManager::update(float passedTime)
         {
             tmp_it=it++;
             removeEntity(*tmp_it);
-            m_entityList.erase(tmp_it);
-            
+            m_entityList.erase(tmp_it);            
         }
-    }
-    if((m_brickNumber <= 0)&&(m_levelCleared==false))
-    {       
-        EngineEvent *ev=new EngineEvent;
-        Scene_level_callback(ev);
-        m_levelCleared=true;        
-    }        
-   
+    }   
 }
 
 void EntityManager::paddleSelect(void *args)

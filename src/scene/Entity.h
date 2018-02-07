@@ -70,6 +70,9 @@ class Entity : public osg::Referenced
 
         virtual void setPosition(osg::Vec3 pos);
         virtual const osg::Vec3d& getPosition();
+        virtual const osg::Vec3d& getInitialPosition();
+        virtual void reset();
+        
         /* physics */
         virtual bool enablePhysics();
         virtual bool disablePhysics();
@@ -117,7 +120,7 @@ class Entity : public osg::Referenced
         int m_value;
         PowerupType m_powerup;
         unsigned int m_color;
-        osg::Vec3 m_position;
+        osg::Vec3d m_initialPosition;
         osg::ref_ptr<EntityAnimation> m_entityAnimation;
 };
 

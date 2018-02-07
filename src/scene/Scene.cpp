@@ -24,7 +24,7 @@ Scene::~Scene()
 void Scene::clear()
 {    
     m_levelScore = 0;
-    m_entityMgr.clear();
+    m_entityMgr.clear();    
 }
 
 
@@ -215,6 +215,13 @@ bool Scene::removeEntity(unsigned int slot_id)
     return true;
 }
 
+void Scene::resetEntities()
+{
+    std::map<EntityType, osg::ref_ptr<Entity> >::iterator it;
+    for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)
+        it->second->reset();    
+}
+
 const EntitySlot* Scene::getEntitySlot(EntityPos epos, bool valid)
 {    
     unsigned int i;
@@ -363,6 +370,11 @@ void Scene::animationEnd(std::string anim_name)
     {
         m_entityMgr.startPhysics();
     }
+    if(anim_name=="animation_level_continue")
+    {
+        m_entityMgr.startPhysics();
+    }
+
 }
 
 void Scene::animLevelNew(std::string anim_name)
