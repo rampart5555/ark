@@ -13,12 +13,13 @@
 #include <osgGA/StateSetManipulator>
 #include <osg/PositionAttitudeTransform>
 #include <osgDB/ReadFile>
+#include <osgDB/WriteFile>
 
 #include <osgShadow/ShadowedScene>
 #include <osgShadow/ShadowMap>
-#include "ArkShadowMap"
-
-
+#include <osgShadow/ShadowTexture>
+//#include "ArkShadowMap"
+#include "ArkShadowTexture"
 
 
 const int ReceivesShadowTraversalMask = 0x1;
@@ -35,8 +36,8 @@ typedef enum
 
 void setShader(osg::MatrixTransform *model)
 {
-    osg::Shader *vert_shader = osg::Shader::readShaderFile(osg::Shader::VERTEX,  "../assets/shaders/default_color.vert");
-    osg::Shader *frag_shader = osg::Shader::readShaderFile(osg::Shader::FRAGMENT,"../assets/shaders/default_color.frag");
+    osg::Shader *vert_shader = osg::Shader::readShaderFile(osg::Shader::VERTEX,  "default_color.vert");
+    osg::Shader *frag_shader = osg::Shader::readShaderFile(osg::Shader::FRAGMENT,"default_color.frag");
     osg::Program *program=new osg::Program();
     program->addShader(vert_shader);
     program->addShader(frag_shader);
@@ -44,60 +45,58 @@ void setShader(osg::MatrixTransform *model)
     ss->setAttributeAndModes(program, osg::StateAttribute::ON);
 }
 
-osgShadow::ShadowedScene* createShadowScene(osg::Group *scene_models)
+void setUpdateCallback(osg::MatrixTransform *model)
+{
+    osg::AnimationPath* animationPath = new osg::AnimationPath;
+    animationPath->setLoopMode(osg::AnimationPath::SWING);
+    animationPath->insert(0.0,osg::AnimationPath::ControlPoint(osg::Vec3(0.0,0.0,0.0)));
+    animationPath->insert(12.0,osg::AnimationPath::ControlPoint(osg::Vec3(0.0,0.0,2.0)));
+    osg::AnimationPathCallback *apc=new osg::AnimationPathCallback();
+    apc->setAnimationPath(animationPath);
+    model->setUpdateCallback(apc);
+}
+
+osgShadow::ShadowedScene* createShadowScene(osg::Group *scene_models, bool gles2_enabled)
 {
     if(scene_models==NULL)
     {
-        printf("Scene node ios null\n");
+        printf("Scene node is null\n");
         return NULL;
     }
     
-    int mapres = 512;
-    ArkShadowMap *shadowMap = new ArkShadowMap;
-    shadowMap->setTextureSize(osg::Vec2s(mapres, mapres));
-
-
-    //osg::Shader *shadow_frag_1 = new osg::Shader(osg::Shader::FRAGMENT,fragmentShaderSource_noBaseTexture);
-    //shadowMap->addShader(shadow_frag_1);
-    //osg::Shader *shadow_frag =osg::Shader::readShaderFile(osg::Shader::FRAGMENT, "../assets/shaders/shadow.frag");
-    //shadowMap->addShader(shadow_frag);
+    ArkShadowTexture *shadowMap = new ArkShadowTexture;
     
     osgShadow::ShadowedScene *shadowScene = new osgShadow::ShadowedScene;
     osgShadow::ShadowSettings* settings = shadowScene->getShadowSettings();
     settings->setReceivesShadowTraversalMask(ReceivesShadowTraversalMask);
     settings->setCastsShadowTraversalMask(CastsShadowTraversalMask);    
     shadowScene->setShadowTechnique(shadowMap);  
-    //shadowScene->addChild(ls);    
-
+    
     
     for(unsigned int i=0;i<scene_models->getNumChildren();i++)
     {
         osg::MatrixTransform *model = dynamic_cast<osg::MatrixTransform*> (scene_models->getChild(i));
-        printf("model: %s\n", model->getName().c_str());
-        if(model->getName()=="entity_light")
-            continue;
-        setShader(model);
+        printf("Adding model: %s\n", model->getName().c_str());
         if(model->getName()=="entity_background")
-            model->setNodeMask(ReceivesShadowTraversalMask);
-        else
         {
-            model->setNodeMask(CastsShadowTraversalMask);
-            if(model->getName()=="Sphere")
-            {
-                osg::AnimationPath* animationPath = new osg::AnimationPath;
-                animationPath->setLoopMode(osg::AnimationPath::SWING);
-                animationPath->insert(0.0,osg::AnimationPath::ControlPoint(osg::Vec3(0.0,0.0,0.0)));
-                animationPath->insert(2.0,osg::AnimationPath::ControlPoint(osg::Vec3(0.0,0.0,2.0)));
-                osg::AnimationPathCallback *apc=new osg::AnimationPathCallback();
-                apc->setAnimationPath(animationPath);
-                model->setUpdateCallback(apc);
-            }
+            model->setNodeMask(ReceivesShadowTraversalMask);            
             //setShader(model);
         }
+        
+        else if(model->getName()=="Sphere")
+        {
+            setShader(model);
+            setUpdateCallback(model);            
+            model->setNodeMask(CastsShadowTraversalMask);
+        }
+        else
+        {
+            setShader(model);
+            model->setNodeMask(CastsShadowTraversalMask);
             
-        shadowScene->addChild(model);
+        }            
+        shadowScene->addChild(model);               
     }
-    
     return shadowScene;    
 }
 
@@ -110,16 +109,25 @@ int main()
     //m_window->getEventQueue()->windowResize(x, y, width, height);
     m_viewer->setUpViewInWindow(0,0,600,800);
     
-        
+    
     m_viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     m_viewer->addEventHandler(new osgViewer::StatsHandler);  
-    
-    osg::ref_ptr<osg::Node> scene_models=osgDB::readRefNodeFile("scene.osgt");
+
+    bool gles2_enabled=false;  
+    osg::ref_ptr<osg::Node> scene_models;          
+#ifdef GLES_2
+    gles2_enabled=true;
+#endif
+    if(gles2_enabled==false)
+        scene_models=osgDB::readRefNodeFile("scene_light.osgt");
+    else
+        scene_models=osgDB::readRefNodeFile("scene.osgt");
     
     osg::Group  *root = new osg::Group();
+    
 #if 1   
     //shadown
-    osgShadow::ShadowedScene *shadowScene = createShadowScene(scene_models->asGroup());    
+    osgShadow::ShadowedScene *shadowScene = createShadowScene(scene_models->asGroup(), gles2_enabled);    
     root->addChild(shadowScene);
 #else    
     //no shadow
@@ -128,27 +136,17 @@ int main()
 #endif            
     m_viewer->setSceneData(root);
     
-#if 0    
-    osgViewer::Viewer::Windows windows;    
-    m_viewer->getWindows(windows);        
 
-    ArkShadowMap* sm = dynamic_cast<ArkShadowMap*>(shadowScene->getShadowTechnique());
-    if( sm ) 
-    {
-        osg::ref_ptr<osg::Camera> hudCamera = sm->makeDebugHUD();
-
-        // set up cameras to rendering on the first window available.
-        hudCamera->setGraphicsContext(windows[0]);
-        hudCamera->setViewport(0,0,windows[0]->getTraits()->width, windows[0]->getTraits()->height);
-
-        m_viewer->addSlave(hudCamera.get(), false);
-    }
-#endif     
-
+    int i=0;
     m_viewer->realize();
     while (!m_viewer->done())
     {
         m_viewer->frame();
+        if(i++ == 50)
+        {
+            printf("Writing debug scene\n");
+            osgDB::writeNodeFile(*shadowScene, "scene_debug.osgt");
+        }
     }
     
     return 0;

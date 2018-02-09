@@ -1,4 +1,4 @@
-//#version 100 
+//#version 100
 //precision mediump float;
 
 const vec3 cLightPos = vec3(5.0, 5.0, 5.0);
@@ -10,11 +10,11 @@ const vec4 uEntityDiffuseColor=vec4(0.7,0.7,0.7,1.0);
 
 void main (void)
 {
-    //vec4 MatAmb = vec4(0.1, 0.1, 0.1,1.0)*uEntityDiffuseColor;
-    //vec3 L = normalize(cLightPos - vModel);
-    //vec4 Idiff = MatAmb + uEntityDiffuseColor*(cLightColor * max(dot(vNormal,L), 0.0));
-    //Idiff = clamp(Idiff, 0.0, 1.0); 
-    gl_FragColor = vec4(0.0,0.0,0.0,0.5);
+    vec4 MatAmb = vec4(0.1, 0.1, 0.1,1.0)*uEntityDiffuseColor;
+    vec3 L = normalize(cLightPos - vModel);
+    vec4 Idiff = MatAmb + uEntityDiffuseColor*(cLightColor * max(dot(vNormal,L), 0.0));
+    Idiff = clamp(Idiff, 0.0, 1.0); 
+    gl_FragColor = Idiff;
 }
 
 
