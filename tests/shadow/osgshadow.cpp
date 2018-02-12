@@ -79,16 +79,10 @@ osgShadow::ShadowedScene* createShadowScene(osg::Group *scene_models, bool gles2
         printf("Adding model: %s\n", model->getName().c_str());
         if(model->getName()=="entity_background")
         {
-            model->setNodeMask(ReceivesShadowTraversalMask);            
-            //setShader(model);
-        }
-        
-        else if(model->getName()=="Sphere")
-        {
             setShader(model);
-            setUpdateCallback(model);            
-            model->setNodeMask(CastsShadowTraversalMask);
-        }
+            model->setNodeMask(ReceivesShadowTraversalMask);                        
+            //model->setNodeMask(CastsShadowTraversalMask);
+        }      
         else
         {
             setShader(model);
@@ -113,7 +107,7 @@ int main()
     m_viewer->setCameraManipulator(new osgGA::TrackballManipulator);
     m_viewer->addEventHandler(new osgViewer::StatsHandler);  
 
-    bool gles2_enabled=false;  
+    bool gles2_enabled=true;  
     osg::ref_ptr<osg::Node> scene_models;          
 #ifdef GLES_2
     gles2_enabled=true;

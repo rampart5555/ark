@@ -1,5 +1,5 @@
-//#version 100
-//precision mediump float;
+#version 100
+precision mediump float;
 
 const vec3 cLightPos = vec3(5.0, 5.0, 5.0);
 const vec4 cLightColor = vec4(1.0, 1.0, 1.0, 1.0);

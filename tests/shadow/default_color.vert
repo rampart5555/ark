@@ -1,4 +1,4 @@
-//#version 100
+#version 100
 
 varying vec3 vModel;
 varying vec3 vNormal;

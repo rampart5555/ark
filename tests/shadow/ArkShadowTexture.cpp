@@ -17,7 +17,7 @@
 #include <osg/ComputeBoundsVisitor>
 #include <osg/io_utils>
 #include "ArkShadowTexture"
-
+#include<stdio.h>
 
 ArkShadowTexture::ArkShadowTexture():
     _textureUnit(1)
@@ -66,26 +66,27 @@ void ArkShadowTexture::init()
 
         // attach the texture and use it as the color buffer.
         _camera->attach(osg::Camera::COLOR_BUFFER, _texture.get());
-
+#if 0
         _material = new osg::Material;
         _material->setAmbient(osg::Material::FRONT_AND_BACK,osg::Vec4(0.0f,0.0f,0.0f,1.0f));
         _material->setDiffuse(osg::Material::FRONT_AND_BACK,osg::Vec4(0.0f,0.0f,0.0f,1.0f));
         _material->setEmission(osg::Material::FRONT_AND_BACK,osg::Vec4(0.0f,0.0f,0.0f,1.0f));
         _material->setShininess(osg::Material::FRONT_AND_BACK,0.0f);
-
+#endif
         osg::StateSet* stateset = _camera->getOrCreateStateSet();
         stateset->setAttribute(_material.get(),osg::StateAttribute::OVERRIDE);
 
     }
 
     {
-        _stateset = new osg::StateSet;
+        _stateset = new osg::StateSet;        
         _stateset->setTextureAttributeAndModes(_textureUnit,_texture.get(),osg::StateAttribute::ON);
+#if 0        
         _stateset->setTextureMode(_textureUnit,GL_TEXTURE_GEN_S,osg::StateAttribute::ON);
         _stateset->setTextureMode(_textureUnit,GL_TEXTURE_GEN_T,osg::StateAttribute::ON);
         _stateset->setTextureMode(_textureUnit,GL_TEXTURE_GEN_R,osg::StateAttribute::ON);
         _stateset->setTextureMode(_textureUnit,GL_TEXTURE_GEN_Q,osg::StateAttribute::ON);
-
+#endif
         _texgen = new osg::TexGen;
     }
 
@@ -121,7 +122,6 @@ void ArkShadowTexture::cull(osgUtil::CullVisitor& cv)
                              getShadowedScene()->getReceivesShadowTraversalMask() );
 
         _shadowedScene->osg::Group::traverse(cv);
-
         cv.popStateSet();
 
     }
@@ -131,7 +131,7 @@ void ArkShadowTexture::cull(osgUtil::CullVisitor& cv)
     // 2) get the center and extents of the view frustum
 
     const osg::Light* selectLight = 0;
-    osg::Vec4 lightpos;
+    osg::Vec4 lightpos(4,5,6,0.0);
 
     osgUtil::PositionalStateContainer::AttrMatrixList& aml = orig_rs->getPositionalStateContainer()->getAttrMatrixList();
     for(osgUtil::PositionalStateContainer::AttrMatrixList::iterator itr = aml.begin();
@@ -154,7 +154,7 @@ void ArkShadowTexture::cull(osgUtil::CullVisitor& cv)
 
     lightpos = lightpos * eyeToWorld;
 
-    if (selectLight)
+    if (true)
     {
 
         // get the bounds of the model.
@@ -236,7 +236,7 @@ void ArkShadowTexture::cull(osgUtil::CullVisitor& cv)
         // do RTT camera traversal
         _camera->accept(cv);
 
-        orig_rs->getPositionalStateContainer()->addPositionedTextureAttribute(_textureUnit, cv.getModelViewMatrix(), _texgen.get());
+        //orig_rs->getPositionalStateContainer()->addPositionedTextureAttribute(_textureUnit, cv.getModelViewMatrix(), _texgen.get());
     }
 
 
