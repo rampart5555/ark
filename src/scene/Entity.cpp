@@ -128,6 +128,8 @@ void Entity::reset()
 {
     if(m_transform.valid())
         m_transform->setPosition(m_initialPosition);
+    m_valid=true;
+    m_transform->setUpdateCallback(NULL);
 }
 
 void Entity::setType(EntityType etype)

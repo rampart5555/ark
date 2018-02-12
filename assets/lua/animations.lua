@@ -65,5 +65,4 @@ function getAnimation(anim_index)
     return Animations[anim_index]
 end
 
-print(demo1["level_complete"][1].target)
 

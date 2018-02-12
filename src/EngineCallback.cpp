@@ -20,7 +20,7 @@ void EngineEventQueue::processEvents()
     while( !m_eventQueue.empty() )
     {        
         it=m_eventQueue.begin();
-        LOG_INFO("EngineEventQueue::processEvents(): %x %s",(*it)->m_eventId,(*it)->m_eventName.c_str());
+        LOG_INFO("EngineEventQueue::processEvents(): %x %s\n",(*it)->m_eventId,(*it)->m_eventName.c_str());
         Scene_level_callback(*it);        
         m_eventQueue.pop_front();
     }
@@ -75,8 +75,8 @@ void MenuStart_button_start_push(void *args)
     LOG_INFO("%s","MenuStart_button_start_push\n");
     MenuStart *ms = MenuManager::instance().getMenuStart();
     EngineEvent *event = new EngineEvent;  
-    event->m_eventId = LEVEL_LOAD;  
-    ms->hide(NULL, (void*)args);    
+    event->m_eventId = LEVEL_LOAD;      
+    ms->hide(MenuSceneHud_show, NULL);    
     EngineEventQueue::instance().setEvent(event);
 }
 
@@ -204,7 +204,9 @@ void MenuLevelFailed_button_continue_push(void* args)
 {
     MenuLevelFailed *mlf = MenuManager::instance().getMenuLevelFailed();
     mlf->hide(MenuSceneHud_show, args);    
-    Scene::instance().levelContinue();
+    EngineEvent *event = new EngineEvent;  
+    event->m_eventId = LEVEL_CONTINUE;          
+    EngineEventQueue::instance().setEvent(event);
 }
 
 /*** Scene ***/
@@ -385,10 +387,10 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
                 Scene::instance().animationStart("animation_level_cleared");
             }
             break;
+
         case LEVEL_ANIMATION_COMPLETE:
             {                
-                Scene::instance().animationEnd(args->m_eventName);
-             
+                Scene::instance().animationEnd(args->m_eventName);             
             }
             break;
         case LEVEL_COMPLETED: 
@@ -415,11 +417,18 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
             break;
         case LEVEL_LOAD_NEXT:         
             break;
-        case LEVEL_FAILED:
+        case LEVEL_CONTINUE:
             {
                 Scene::instance().getEntityManager().stopPhysics();
                 Scene::instance().resetEntities();
                 Scene::instance().animationStart("animation_level_continue");                
+            }
+            break;
+        case LEVEL_FAILED:
+            {
+                Scene::instance().getEntityManager().stopPhysics();
+                Scene::instance().resetEntities();
+                MenuLevelFailed_show(NULL);        
             }
             break;
         default:

@@ -42,25 +42,25 @@ typedef struct
 
 typedef enum 
 {
-    ENTITY_NONE         = 0,
-    ENTITY_WALL         = 1,
-    ENTITY_BALL         = 2,
-    ENTITY_BRICK        = 3,
-    ENTITY_PADDLE       = 4,
-    ENTITY_POWERUP      = 5,
-    ENTITY_WALL_TOP     = 6,
-    ENTITY_WALL_BOTTOM  = 7,
-    ENTITY_WALL_LEFT    = 8,
-    ENTITY_WALL_RIGHT   = 9,
-    ENTITY_BACKGROUND   = 10,
-    ENTITY_TURRET       = 11,
-    ENTITY_CANNON       = 12,
-    ENTITY_BULLET       = 13,
-    ENTITY_DOOR_LEFT    = 14,
-    ENTITY_DOOR_RIGHT   = 15,
-    ENTITY_DOOR_LEFT_SENSOR = 16,
-    ENTITY_DOOR_RIGHT_SENSOR = 17       
-    
+    ENTITY_NONE        ,
+    ENTITY_WALL        ,
+    ENTITY_BALL        ,
+    ENTITY_BRICK       ,
+    ENTITY_PADDLE      ,
+    ENTITY_PADDLE_SPARE,
+    ENTITY_POWERUP     ,
+    ENTITY_WALL_TOP    ,
+    ENTITY_WALL_BOTTOM ,
+    ENTITY_WALL_LEFT   ,
+    ENTITY_WALL_RIGHT  ,
+    ENTITY_BACKGROUND  ,
+    ENTITY_TURRET      ,
+    ENTITY_CANNON      ,
+    ENTITY_BULLET      ,
+    ENTITY_DOOR_LEFT   ,
+    ENTITY_DOOR_RIGHT  ,
+    ENTITY_DOOR_LEFT_SENSOR,
+    ENTITY_DOOR_RIGHT_SENSOR               
 }EntityType;
 
 /* map powerup from 17 to 25 */

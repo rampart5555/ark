@@ -132,7 +132,8 @@ osg::ref_ptr <Entity> EntityManager::createEntity(EntityType etype)
         ent = new Entity();
     ent->setType(etype);
     ent->setModel(*model);
-    ent->setName(model->getName().c_str());    
+    ent->setName(model->getName().c_str());  
+    ent->setSceneParent(this);
     return ent;
 }
 
@@ -146,7 +147,10 @@ void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
     }
     LOG_DEBUG("EntityManager::addEntity=> %s\n",entity->getName().c_str());
     m_entityList.push_back(entity);
-    m_nodeEntMgr->addChild(entity->getEntityNode());
+
+    if(entity->getSceneParent()==this)
+        m_nodeEntMgr->addChild(entity->getEntityNode());
+
     if(entity->getType() == ENTITY_PADDLE)
         m_paddle = entity->asEntityPaddle();
     else if(entity->getType() == ENTITY_BRICK)                    
@@ -257,7 +261,8 @@ void EntityManager::setPowerup(PowerupType ptype)
 void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
 {
     entity->disablePhysics();
-    m_nodeEntMgr->removeChild(entity->getEntityNode());
+    if(entity->getSceneParent()==this)
+        m_nodeEntMgr->removeChild(entity->getEntityNode());
     if(entity->getType() == ENTITY_BRICK)
     {
         m_entitiesNum--;

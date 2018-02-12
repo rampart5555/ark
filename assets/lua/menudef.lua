@@ -84,21 +84,21 @@ MenuSceneHud =
         model="widget_square", 
         cb="Scene_resume", 
         label="Resume", 
-        x=2.0, y=-4.0, width=1.0, height=1.0  
+        x=2.0, y=-5.0, width=1.0, height=1.0  
     },    
     { 
         name="Levels",
         model="widget_square", 
         cb="MenuSceneHud_button_levels_push", 
         label="Levels", 
-        x=0.0, y=-4.0, width=1.0, height=1.0  
+        x=0.0, y=-5.0, width=1.0, height=1.0  
     },    
     { 
         name="Pause",
         model="widget_square", 
         cb="Scene_pause", 
         label="Pause", 
-        x=-2.0, y=-4.0, width=1.0, height=1.0  
+        x=-2.0, y=-5.0, width=1.0, height=1.0  
     },
     { 
         name="HudScore",

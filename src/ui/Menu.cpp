@@ -345,7 +345,7 @@ void MenuLevelComplete::createMenu()
     {        
         return;
     }
-    for (unsigned int i; i<items->size(); i++)
+    for (unsigned int i=0; i<items->size(); i++)
     {
         MenuItem itm = items->at(i);
         Widget *w = new Widget(itm);
@@ -388,7 +388,7 @@ void MenuLevelFailed::createMenu()
     {        
         return;
     }
-    for (unsigned int i; i<items->size(); i++)
+    for (unsigned int i=0; i<items->size(); i++)
     {
         Widget *w = new Widget(items->at(i));
         m_transform->addChild(w->getNode());
