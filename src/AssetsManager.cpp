@@ -477,14 +477,12 @@ bool AssetsManager::getLevelData(const char *ep_file, const char *lvl_name, Leve
         return false;       
     }
         
-    LOG_INFO("Loading level name:%s from:%s \n", lvl_name, ep_file);
+    LOG_INFO("Loading level name:%s from:%s \n",lvl_name, ep_file);
     res = lua_mgr.loadLevelData(lvl_name, data);
     lua_mgr.close();
     
     if(res==false)
         LOG_ERROR("Level name:%s from:%s not found \n", lvl_name, ep_file);    
-    else
-        LOG_INFO("Loading level name:%s from:%s \n", lvl_name, ep_file);
             
     return res;
 }

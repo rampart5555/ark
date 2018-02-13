@@ -25,20 +25,7 @@ void EntityBall::update(float passedTime)
         minimum velocity threshold for elastic collision 
         changed constant of Box2D b2_velocityThreshold = 0.01 
     */
-#if 0    
-    if(m_ajustBallSpeed == true)
-    {
-        float threshold = 1.1;
-        m_ajustBallSpeed=false;
-        b2Vec2 vel = m_phyBody->GetLinearVelocity();
-        vel.x = vel.x < 0.0 ? -threshold:threshold;        
-        vel.y = vel.y < 0.0 ? -threshold:threshold;
-        vel.Normalize();
-        vel *= m_ballSpeed;
-        m_phyBody->SetLinearVelocity(vel);
-        printf("Velocity changed:%f,%f\n",vel.x, vel.y);
-    }
-#endif    
+ 
 }
 
 void EntityBall::beginContact(Entity *ent, b2Contact *contact)
@@ -59,7 +46,18 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
         contact->GetWorldManifold( &worldManifold );
         b2Vec2 pos = ent->getPhyBody()->GetPosition();
         float local_x = worldManifold.points[0].x - pos.x;
+#if  0
+        b2Vec2 vel = m_phyBody->GetLinearVelocity();
         //printf("EntityBall::endContact %d %f %f\n",numPoints, local_x,worldManifold.points[0].x);
+        //R = 2*(V dot N)*N - V -reflexion vector
+        // define dx=x2-x1 and dy=y2-y1, then the normals are (-dy, dx) and (dy, -dx).
+        printf("local_x:%f\n",local_x);
+        b2Vec2 n(local_x, 0.25-local_x);
+        n.Normalize();
+        const b2Vec2& r = -2*b2Dot(vel,n)*n + vel;
+        m_phyBody->SetLinearVelocity(r);
+        return;
+#endif        
         if((local_x>=-0.13)&&(local_x<=0.13))
         {
             m_dir.x = cos(3.14/2);

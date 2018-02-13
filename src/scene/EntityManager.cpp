@@ -171,7 +171,7 @@ void EntityManager::spawnPowerup(Entity *entity)
 {
     const char *ptype;
     ptype = powerupToStr(entity->getPowerup());
-    LOG_INFO("SPAWN POWERUP: %s\n", ptype);
+    LOG_INFO("Spawn powerup: %s\n", ptype);
     //m_level->spawnPowerup(entity.get());
     osg::ref_ptr<Entity> pu_ent = createEntity(ENTITY_POWERUP);
     if(pu_ent == NULL)
@@ -200,7 +200,7 @@ void EntityManager::spawnEntity(EntityType etype, osg::Vec3 pos)
 
 void EntityManager::setPowerup(PowerupType ptype)
 {
-    LOG_INFO("setPowerup:% %s", powerupToStr( ptype));
+    LOG_INFO("Apply powerup:%s\n", powerupToStr( ptype));
     switch(ptype)
     {
         case POWERUP_BALLS:
@@ -276,7 +276,7 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
         }
         if((m_brickNumber <= 0))
         {               
-            LOG_INFO("EntityManager: %s\n","*** LEVEL CLEARED ***");
+            LOG_STATE("EntityManager: %s\n","*** LEVEL CLEARED ***");
             EngineEvent *ev = new EngineEvent;
             ev->m_eventId = LEVEL_CLEARED;
             EngineEventQueue::instance().setEvent(ev);            
@@ -294,9 +294,12 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
         m_ballList.remove(entity->asEntityBall());
         if(m_ballList.size()==0)
         {
-            LOG_INFO("EntityManager: %s\n","*** LEVEL FAILED ***");
+            LOG_STATE("EntityManager: %s\n","*** LEVEL FAILED ***");
             EngineEvent *ev = new EngineEvent;
-            ev->m_eventId = LEVEL_FAILED;
+            if(m_brickNumber>0)
+                ev->m_eventId = LEVEL_FAILED;
+            else //all bricks are removed so move to the next level
+                ev->m_eventId = LEVEL_COMPLETED;
             EngineEventQueue::instance().setEvent(ev);            
         }
     }    
@@ -373,7 +376,7 @@ void EntityManager::paddleUnselect(void *args)
     if(m_paddleSelected==false)
         return;
 
-    LOG_INFO("%s", "LEVEL_PADDLE_UNSELECT\n");
+    LOG_DEBUG("%s\n", "LEVEL_PADDLE_UNSELECT");
     if (m_mouseJoint != NULL)
     {
         EntityManager::m_world->DestroyJoint(m_mouseJoint);
@@ -394,7 +397,7 @@ void EntityManager::paddleUnselect(void *args)
 
 void EntityManager::levelComplete()
 {
-    LOG_INFO("%s", "*** LEVEL COMPLETE ***\n");
+    LOG_STATE("%s\n", "*** LEVEL COMPLETE ***");
     stopPhysics();
     Scene_level_complete(NULL);    
 }
@@ -409,7 +412,7 @@ void EntityManager::levelFailed()
 
 void EntityManager::levelContinue()
 {    
-    LOG_INFO("%s", "*** LEVEL CONTINUE ***\n");
+    LOG_STATE("%s\n", "*** LEVEL CONTINUE ***");
     osg::ref_ptr<Entity> ent = createEntity(ENTITY_BALL);
     EntityBall *new_ball=ent->asEntityBall();
     new_ball->setDir(osg::Vec2(0.5,0.5));

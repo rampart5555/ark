@@ -270,7 +270,7 @@ bool Entity::enablePhysics()
         LOG_WARN("%s", "Entity::enablePhysics(): dynamic cast to geode fail\n");
         return false;
     }
-    LOG_INFO("Entity::enablePhysics(): Physics enable for entity:%s\n", m_name.c_str());     
+    LOG_DEBUG("Entity::enablePhysics(): Physics enable for entity:%s\n", m_name.c_str());     
     switch(m_type)
     {        
 #if 0       

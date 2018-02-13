@@ -3,6 +3,7 @@
 #include "ui/Widget.h"
 #include "MouseHandler.h"
 #include "scene/Scene.h"
+#include "Logging.h"
 
 bool MouseHandler::handleMenuEvent(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& aa)
 {
@@ -12,7 +13,7 @@ bool MouseHandler::handleMenuEvent(const osgGA::GUIEventAdapter& ea, osgGA::GUIA
     float x = (ea.getX()-ea.getXmin())/(ea.getXmax()-ea.getXmin())*static_cast<float>(ea.getWindowWidth());
     float y = (ea.getY()-ea.getYmin())/(ea.getYmax()-ea.getYmin())*static_cast<float>(ea.getWindowHeight());
     if (ea.getMouseYOrientation()==osgGA::GUIEventAdapter::Y_INCREASING_DOWNWARDS) y = static_cast<float>(ea.getWindowHeight())-y;
-    printf("MouseHandler::handleMenuEvent (%f, %f)\n",x,y);
+    LOG_DEBUG("MouseHandler::handleMenuEvent (%f, %f)\n",x,y);
     osg::Camera* camera = viewer->getCamera();
     osgViewer::GraphicsWindow* gw = dynamic_cast<osgViewer::GraphicsWindow*>(camera->getGraphicsContext());
     if (gw)
@@ -26,11 +27,11 @@ bool MouseHandler::handleMenuEvent(const osgGA::GUIEventAdapter& ea, osgGA::GUIA
         hitr = intersections.begin();
         if (hitr->drawable.valid())
         {
-            printf("Menu handle event: (%f %f) %s \n", x, y, hitr->drawable->getName().c_str());            
+            LOG_DEBUG("Menu handle event: (%f %f) %s \n", x, y, hitr->drawable->getName().c_str());            
             Widget *w  = dynamic_cast<Widget*>(hitr->drawable->getUserData());
             if(w==NULL)
             {
-                printf("Inavlid widget\n");
+                LOG_WARN("Inavlid widget:%s\n","");
             }
             else
             {
@@ -42,7 +43,7 @@ bool MouseHandler::handleMenuEvent(const osgGA::GUIEventAdapter& ea, osgGA::GUIA
     }
     else
     {
-        printf("Button not found\n");
+        LOG_DEBUG("Button not found:%s\n","");
     }
     return false;
 }
@@ -62,7 +63,7 @@ bool MouseHandler::handleSceneEvent(const osgGA::GUIEventAdapter& ea, osgGA::GUI
                 {
                     if(hitr->drawable.valid() && (hitr->drawable->getName()=="entity_paddle") )
                     {                        
-                        printf("Scene handle event: %s \n",  hitr->drawable->getName().c_str());
+                        LOG_INFO("Scene handle event: %s \n",  hitr->drawable->getName().c_str());
                         osg::Vec3f world_int = hitr->getWorldIntersectPoint();
                         Event_XY event_xy;
                         event_xy.x = world_int.x();
@@ -114,7 +115,7 @@ bool MouseHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdap
 { 
     if(ea.getEventType() == osgGA::GUIEventAdapter::PUSH)
     {
-        printf("MouseHandler::handle::PUSH \n");
+        LOG_DEBUG("MouseHandler::handle::PUSH :%s\n","");
         if(handleMenuEvent(ea,aa)==true)
             return true;
         if(handleSceneEvent(ea,aa) == true)

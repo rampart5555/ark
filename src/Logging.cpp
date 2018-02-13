@@ -54,6 +54,7 @@ void debug_log(LogLevel level, const char *fmt, ...)
         return;
     if(level==LOG_ERROR) printf("%s", "ERROR: ");
     if(level==LOG_WARN) printf("%s", "WARN: ");
+    if(level==LOG_STATE) printf("%s", "STATE: ");
     if(level==LOG_INFO) printf("%s", "INFO: ");
     if(level==LOG_DEBUG) printf("%s", "DEBUG: ");
     va_list args;
