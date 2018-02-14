@@ -33,6 +33,7 @@ class Scene: public BasicScene
         }
         void clear();
         void loadStaticScene(); // no physics for this scene
+        void addSparePaddle(osg::Vec3);
         void loadScene(const char*, const char*);
         bool loadLevel(const char*,const char*);
         osg::MatrixTransform *getSceneNode();
@@ -48,9 +49,9 @@ class Scene: public BasicScene
         EntityManager& getEntityManager() { return m_entityMgr; }
         void update(float);
         void levelContinue();        
-        void animationStart(std::string);    
-        void animationEnd(std::string);    
         //animation
+        void animationStart(std::string);    
+        void animationEnd(std::string);            
         void animLevelNew(std::string);
         void animLevelContinue(std::string);
         void animLevelCleared(std::string);

@@ -59,7 +59,8 @@ typedef enum
     LEVEL_FAILED = 0xab14,
     LEVEL_LOAD_NEXT = 0xab15,
     LEVEL_ANIMATION_COMPLETE=0xab16,
-    LEVEL_CONTINUE=0xab17
+    LEVEL_CONTINUE=0xab17,
+    SCENE_ADD_SPARE_PADDLE = 0xac11
 
 }EventId;
 

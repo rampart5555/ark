@@ -30,15 +30,6 @@ void EntityBall::update(float passedTime)
 
 void EntityBall::beginContact(Entity *ent, b2Contact *contact)
 {    
-#if 0
-    b2Vec2 vel = m_phyBody->GetLinearVelocity();
-    printf("begin_contact: %s (%f,%f)\n",ent->getName().c_str(),vel.x,vel.y);
-    float th = 0.2;
-    if( (abs(vel.x) < th)||(abs(vel.y) < th) )
-    { 
-        m_ajustBallSpeed = true;                  
-    }
-#endif
     if(ent->getType()==ENTITY_PADDLE)
     {
         int numPoints = contact->GetManifold()->pointCount;
@@ -46,6 +37,16 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
         contact->GetWorldManifold( &worldManifold );
         b2Vec2 pos = ent->getPhyBody()->GetPosition();
         float local_x = worldManifold.points[0].x - pos.x;
+        float local_y = 0.25 - abs(local_x);
+        //begin debug
+        float res = atan2 (local_y,local_x) * 180 / osg::PI;
+        if(res >90.0) res=180.0-res;
+        printf("angle %f\n",res);
+        //end debug
+        m_dir.x = local_x;
+        m_dir.y = local_y;
+        m_dir.Normalize();
+        m_ajustBallDir = true;
 #if  0
         b2Vec2 vel = m_phyBody->GetLinearVelocity();
         //printf("EntityBall::endContact %d %f %f\n",numPoints, local_x,worldManifold.points[0].x);
@@ -57,7 +58,7 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
         const b2Vec2& r = -2*b2Dot(vel,n)*n + vel;
         m_phyBody->SetLinearVelocity(r);
         return;
-#endif        
+      
         if((local_x>=-0.13)&&(local_x<=0.13))
         {
             m_dir.x = cos(3.14/2);
@@ -76,6 +77,7 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
             m_dir.y = sin(3.14/3);
             m_ajustBallDir = true;
         }        
+#endif          
     }
     if(ent->getType()==ENTITY_WALL_BOTTOM)
     {

@@ -272,9 +272,20 @@ void Scene::loadStaticScene()
     m_sceneNode->addChild(model);
 }
 
+void Scene::addSparePaddle(osg::Vec3 pos)
+{
+    LOG_INFO("Scene::addSparePaddle:%s\n","");
+    osg::Vec3 s_pos = AssetsManager::instance().getEntityModelPosition("entity_paddle_support");
+    osg::ref_ptr<Entity> spare_paddle = createEntity(ENTITY_PADDLE);                
+    spare_paddle->setType(ENTITY_PADDLE_SPARE);
+    float x = s_pos.x() - 1 + 0.5*m_sparePaddles.size();
+    spare_paddle->setPosition(osg::Vec3(x, s_pos.y(), s_pos.z()));
+    addEntity(spare_paddle);
+}
+
 void Scene::levelContinue()
 {   
-
+    
 }
 
 void Scene::update(float passedTime)

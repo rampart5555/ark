@@ -89,6 +89,14 @@ void EntityPaddle::beginContact(Entity *ent, b2Contact *contact)
         /* has turret */
         m_hasTurret = true;
     }
+
+    else if((ent->getType()==ENTITY_POWERUP) && (ent->getSubType() == POWERUP_LIFE))
+    {
+        EngineEvent *ev = new EngineEvent;
+        ev->m_eventId = SCENE_ADD_SPARE_PADDLE;
+        EngineEventQueue::instance().setEvent(ev);
+    }
+
     else if((m_type==ENTITY_PADDLE) && (ent->getType() == ENTITY_DOOR_RIGHT_SENSOR))    
     {
         EngineEvent *ev = new EngineEvent;

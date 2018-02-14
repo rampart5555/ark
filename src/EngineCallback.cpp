@@ -365,6 +365,11 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
     LOG_INFO("Scene_level_callback: %x\n", eid);
     switch(eid)
     {
+        case SCENE_ADD_SPARE_PADDLE:
+            {
+                Scene::instance().addSparePaddle(osg::Vec3(0,0,1));
+            }
+            break;            
         case LEVEL_LOAD:  
             {
                 Scene::instance().getEntityManager().stopPhysics();
