@@ -33,51 +33,7 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
     clear();
     
     loadStaticScene();
-
-    EntityType ent_env_arr[] = {
-        ENTITY_WALL_TOP,
-        ENTITY_WALL_LEFT,
-        ENTITY_WALL_RIGHT,
-        ENTITY_WALL_BOTTOM,
-        ENTITY_BALL,
-        ENTITY_PADDLE,
-        ENTITY_BACKGROUND,
-        ENTITY_DOOR_LEFT,
-        ENTITY_DOOR_RIGHT,
-        ENTITY_DOOR_LEFT_SENSOR,
-        ENTITY_DOOR_RIGHT_SENSOR,        
-        ENTITY_NONE //last entry        
-    };    
-            
-    osg::ref_ptr <Entity> ent;
-    EntityType etype;
-    for(unsigned int i=0; ; i++ )
-    {
-        etype = ent_env_arr[i];
-        if (etype == ENTITY_NONE) 
-            break;
-        if(m_entityList.count(etype)==0)
-        {
-            ent = createEntity(etype);
-            m_entityList.insert(std::make_pair(etype, ent));    
-        }
-        else
-            ent = m_entityList[etype];
-        if(ent==NULL)
-        {
-            LOG_ERROR("Entity not found type:%d\n", ent_env_arr[i]);
-            continue;
-        }
-        addEntity(ent); //add entity transform node to scene node
-        m_entityMgr.addEntity(ent); // add entity to entity manager
-        if(ent->getType() == ENTITY_BALL)
-        {
-            EntityBall *eball = ent->asEntityBall();
-            eball->setSpeed(0.0);
-            eball->setDir(osg::Vec2(0.5, 0.5));
-        }
-        
-    }
+    
                        
     loadLevel(ep_file, lvl_name);
     loadShaders();        
@@ -167,6 +123,24 @@ void Scene::addEntityProps(Entity *ent)
     }
 }
 
+osg::ref_ptr <Entity> Scene::createEntity(std::string ename)
+{
+    
+    osg::ref_ptr <Entity> ent;
+    osg::MatrixTransform *model = AssetsManager::instance().getEntityModel(ename.c_str());
+    if(model == NULL)
+    {
+        LOG_ERROR("Entity model not found for entity type:%s", ename.c_str());
+        return NULL;
+    }
+    ent = new Entity();
+    ent->setType(ENTITY_NONE);
+    ent->setModel(*model);
+    ent->setName(model->getName().c_str());  
+    ent->setSceneParent(this);
+    return ent;
+}
+
 osg::ref_ptr <Entity> Scene::createEntity(EntityType etype)
 {
     osg::MatrixTransform *model;
@@ -202,6 +176,7 @@ bool Scene::addEntity(osg::ref_ptr<Entity> entity)
     if(entity->getType()==ENTITY_PADDLE_SPARE)
         m_sparePaddles.push_back(entity);            
     m_sceneNode->addChild(entity->getEntityNode());    
+    m_entityList.push_back(entity);
     return true;
 }
 
@@ -217,11 +192,23 @@ bool Scene::removeEntity(osg::ref_ptr<Entity> entity)
     return true;
 }
 
+osg::ref_ptr <Entity> Scene::getEntity(EntityType etype)
+{
+    std::list<osg::ref_ptr<Entity> >::iterator it;
+
+    for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)
+        if((*it)->getType()==etype)        
+            return (*it);
+
+    return NULL;
+}
+
 void Scene::resetEntities()
 {
-    std::map<EntityType, osg::ref_ptr<Entity> >::iterator it;
+    std::list<osg::ref_ptr<Entity> >::iterator it;
     for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)
-        it->second->reset();    
+        if((*it)->getType()!=ENTITY_PADDLE_SPARE)
+            (*it)->reset();    
 }
 
 osg::MatrixTransform* Scene::getSceneNode()
@@ -251,25 +238,64 @@ void Scene::loadStaticScene()
         return;
     m_sceneLoaded = true;
 
-    osg::MatrixTransform *model = AssetsManager::instance().getEntityModel("entity_paddle_support");
-    osg::Vec3f pos, scale;
-    osg::Quat rot, so;
-    osg::Matrix m = model->getMatrix();    
-    m.decompose(pos, rot, scale, so);      
-    m_sceneNode->addChild(model);
+    EntityType ent_env_arr[] = {
+        ENTITY_WALL_TOP,
+        ENTITY_WALL_LEFT,
+        ENTITY_WALL_RIGHT,
+        ENTITY_WALL_BOTTOM,
+        ENTITY_BALL,
+        ENTITY_PADDLE,
+        ENTITY_BACKGROUND,
+        ENTITY_DOOR_LEFT,
+        ENTITY_DOOR_RIGHT,
+        ENTITY_DOOR_LEFT_SENSOR,
+        ENTITY_DOOR_RIGHT_SENSOR,        
+        ENTITY_NONE //last entry        
+    };    
+            
+    osg::ref_ptr <Entity> ent;
+    EntityType etype;
+    for(unsigned int i=0; ; i++ )
+    {
+        etype = ent_env_arr[i];
+        if (etype == ENTITY_NONE) 
+            break;        
 
+        ent = createEntity(etype);                    
+
+        if(ent==NULL)
+        {
+            LOG_ERROR("Entity not found type:%d\n", ent_env_arr[i]);
+            continue;
+        }
+        addEntity(ent); //add entity transform node to scene node
+        m_entityMgr.addEntity(ent); // add entity to entity manager
+        if(ent->getType() == ENTITY_BALL)
+        {
+            EntityBall *eball = ent->asEntityBall();
+            eball->setSpeed(0.0);
+            eball->setDir(osg::Vec2(0.5, 0.5));
+        }
+        
+    }
+
+    //padle support    
+    ent = createEntity("entity_paddle_support");
+    addEntity(ent);
+    //spare paddle
+    osg::Vec3f pos = ent->getPosition();        
     for(int i=0;i<3;i++)
     {
-        osg::ref_ptr<Entity> spare_paddle = createEntity(ENTITY_PADDLE);                
-        spare_paddle->setType(ENTITY_PADDLE_SPARE);
+        ent = createEntity("entity_paddle");                
+        ent->setType(ENTITY_PADDLE_SPARE);
         float x = pos.x() -1 + 0.5*i;
-        spare_paddle->setPosition(osg::Vec3(x, pos.y(), pos.z()));
-        addEntity(spare_paddle);
+        ent->setPosition(osg::Vec3(x, pos.y(), pos.z()));
+        addEntity(ent);
     }    
-    model = AssetsManager::instance().getEntityModel("entity_corner_left");    
-    m_sceneNode->addChild(model);
-    model = AssetsManager::instance().getEntityModel("entity_corner_right");    
-    m_sceneNode->addChild(model);
+    ent = createEntity("entity_corner_left");
+    addEntity(ent);
+    ent = createEntity("entity_corner_right");
+    addEntity(ent);    
 }
 
 void Scene::addSparePaddle(osg::Vec3 pos)
@@ -327,29 +353,28 @@ void Scene::animationStart(std::string anim_name)
 
 void Scene::animationEnd(std::string anim_name)
 {
-    LOG_INFO("Scene::endAnimation: %s\n",anim_name.c_str());
+    LOG_INFO("Scene::endAnimation: %s\n", anim_name.c_str());
     if(anim_name=="animation_level_new")
     {
         m_entityMgr.startPhysics();
     }
     if(anim_name=="animation_level_continue")
     {
-        //add ball to entity manager   
-        if(m_entityList.count(ENTITY_BALL)>0)
-            m_entityMgr.addEntity(m_entityList[ENTITY_BALL]);
+        //add ball to entity manager           
+        m_entityMgr.addEntity(getEntity(ENTITY_BALL));
         m_entityMgr.startPhysics();
     }
 
 }
 
 void Scene::animLevelNew(std::string anim_name)
-{
+{    
     float x,y,z;                
     osg::ref_ptr <Entity> ent;
     //left door
     {            
         EntityAnimation *ea = new EntityAnimation;  
-        ent=m_entityList[ENTITY_DOOR_LEFT];
+        ent = getEntity(ENTITY_DOOR_LEFT);
         if(ent==NULL)       
         {
             LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
@@ -362,18 +387,19 @@ void Scene::animLevelNew(std::string anim_name)
         ea->addTranslate(3.0, x, y+0.25, z);
         ea->addTranslate(4.0, x, y, z); 
         ent->getEntityNode()->setUpdateCallback(ea);
-    }
+    }    
     // paddle
     {
-        EntityAnimation *ea = new EntityAnimation;        
-        ent=m_entityList[ENTITY_PADDLE];
+        EntityAnimation *ea = new EntityAnimation;
+        ent = getEntity(ENTITY_PADDLE);                
         if(ent==NULL)       
         {
             LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
             return;
         }
         osg::Vec3 pos = ent->getPosition();            
-        x = pos.x()-1.5; y=pos.y(); z=pos.z();        
+        x = pos.x()-1.5; y=pos.y(); z=pos.z(); 
+        printf("paddle pos: %f %f %f\n", x,y,z);
         ea->addTranslate(0.0, x, y, z);
         ea->addTranslate(2.0, x, y, z);
         ea->addTranslate(3.0, 0.0, y, z);
@@ -382,7 +408,7 @@ void Scene::animLevelNew(std::string anim_name)
     //ball
     {
         EntityAnimation *ea = new EntityAnimation;        
-        ent=m_entityList[ENTITY_BALL];
+        ent = getEntity(ENTITY_BALL);
         if(ent==NULL)       
         {
             LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");
@@ -425,7 +451,7 @@ void Scene::animLevelContinue(std::string anim_name)
     //ball    
     {
         EntityAnimation *ea = new EntityAnimation;        
-        entity=m_entityList[ENTITY_BALL];
+        entity=getEntity(ENTITY_BALL);
         if(entity.valid()==false)       
         {
             LOG_ERROR("Scene::animLevelContinue: Invalid entity %s\n", "");
@@ -448,7 +474,7 @@ void Scene::animLevelCleared(std::string anim_name)
     //right door
     {            
         EntityAnimation *ea = new EntityAnimation;  
-        ent = m_entityList[ENTITY_DOOR_RIGHT];        
+        ent = getEntity(ENTITY_DOOR_RIGHT);        
         if(ent==NULL)       
         {
             LOG_ERROR("Scene::playAnimation: Invalid entity %s\n", "");

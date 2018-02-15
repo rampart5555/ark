@@ -39,11 +39,11 @@ class Scene: public BasicScene
         osg::MatrixTransform *getSceneNode();
         void loadShaders();
         osg::ref_ptr <Entity> createEntity(EntityType etype);
-
+        osg::ref_ptr <Entity> createEntity(std::string);
         bool addEntity(osg::ref_ptr <Entity>);
         bool removeEntity(osg::ref_ptr <Entity>);
         void resetEntities();        
-
+        osg::ref_ptr<Entity> getEntity(EntityType);
         void addEntityProps(Entity *ent);
         bool loadTMXMap( const char* );
         EntityManager& getEntityManager() { return m_entityMgr; }
@@ -63,6 +63,6 @@ class Scene: public BasicScene
         EntityProps *m_entityProps;        
         std::list < osg::ref_ptr<Entity> > m_sparePaddles;
         bool m_sceneLoaded;
-        std::map<EntityType, osg::ref_ptr<Entity> >m_entityList;
+        std::list<osg::ref_ptr<Entity> >m_entityList;
 };
 #endif
