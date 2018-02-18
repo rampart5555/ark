@@ -36,13 +36,14 @@ void EntityManager::loadShaders()
 
 void EntityManager::startPhysics()
 {
-    LOG_DEBUG("%s","*** EntityManager::enablePhysics() ***\n");
+    LOG_STATE("*** EntityManager::enablePhysics() ***%s\n","");
     if(m_physicsActive==true)
     {
         LOG_INFO("%s", "Physics already enabled\n");
         return;
     }   
     
+    LOG_INFO("Number of entities:%lu\n", m_entityList.size());    
     m_world = new b2World(b2Vec2(0.0, 0.0));
 
    
@@ -60,7 +61,7 @@ void EntityManager::startPhysics()
     m_paddle->setJoint(m_groundBody);
     //m_paddle->getPhyBody()->Dump();
     //m_bottomWall->getPhyBody()->Dump();
-    LOG_INFO("Number of entities:%lu\n", m_entityList.size());    
+    
 
     /*create a joint between paddle and ball */
     EntityBall *ball = m_ballList.front();
@@ -145,7 +146,8 @@ void EntityManager::addEntity(osg::ref_ptr<Entity> entity)
         LOG_WARN("%s", "EntityManager::addEntity: NULL entity\n");
         return;
     }
-    LOG_DEBUG("EntityManager::addEntity=> %s\n",entity->getName().c_str());
+    LOG_INFO("EntityManager::addEntity=> %s type: %d\n",
+        entity->getName().c_str(),entity->getType());
     m_entityList.push_back(entity);
 
     if(entity->getSceneParent()==this)
@@ -263,6 +265,12 @@ void EntityManager::removeEntity(osg::ref_ptr<Entity> entity)
     entity->disablePhysics();
     if(entity->getSceneParent()==this)
         m_nodeEntMgr->removeChild(entity->getEntityNode());
+    else
+    {
+        BasicScene *bs=entity->getSceneParent();
+        if(bs!=NULL)
+            bs->handleRemove(entity);
+    }
     if(entity->getType() == ENTITY_BRICK)
     {
         m_entitiesNum--;

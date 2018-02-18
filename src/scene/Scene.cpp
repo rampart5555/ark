@@ -41,6 +41,13 @@ void Scene::loadScene(const char *ep_file, const char* lvl_name)
 
 bool Scene::loadLevel(const char *ep_file, const char* lvl_name)
 {
+    //add create entity in Scene to entity manager for physiscs
+    std::list < osg::ref_ptr<Entity> >::iterator it;
+    for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)
+        if((*it)->getPhysics()==true)
+            m_entityMgr.addEntity(*it);
+
+    //load level bricks and power up
     LevelData ldata;
 
     bool res = AssetsManager::instance().getLevelData(ep_file, lvl_name, &ldata);    
@@ -192,6 +199,11 @@ bool Scene::removeEntity(osg::ref_ptr<Entity> entity)
     return true;
 }
 
+void Scene::handleRemove(osg::ref_ptr<Entity> entity)
+{
+    LOG_INFO("Scene::handleRemove:%s\n",entity->getName().c_str());
+}
+
 osg::ref_ptr <Entity> Scene::getEntity(EntityType etype)
 {
     std::list<osg::ref_ptr<Entity> >::iterator it;
@@ -206,9 +218,10 @@ osg::ref_ptr <Entity> Scene::getEntity(EntityType etype)
 void Scene::resetEntities()
 {
     std::list<osg::ref_ptr<Entity> >::iterator it;
-    for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)
-        if((*it)->getType()!=ENTITY_PADDLE_SPARE)
+    for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)            
+        if((*it)->getPhysics()==true)
             (*it)->reset();    
+    
 }
 
 osg::MatrixTransform* Scene::getSceneNode()
@@ -268,8 +281,7 @@ void Scene::loadStaticScene()
             LOG_ERROR("Entity not found type:%d\n", ent_env_arr[i]);
             continue;
         }
-        addEntity(ent); //add entity transform node to scene node
-        m_entityMgr.addEntity(ent); // add entity to entity manager
+        addEntity(ent); //add entity transform node to scene node        
         if(ent->getType() == ENTITY_BALL)
         {
             EntityBall *eball = ent->asEntityBall();
@@ -282,6 +294,7 @@ void Scene::loadStaticScene()
     //padle support    
     ent = createEntity("entity_paddle_support");
     addEntity(ent);
+    ent->setPhysics(false);
     //spare paddle
     osg::Vec3f pos = ent->getPosition();        
     for(int i=0;i<3;i++)
@@ -291,10 +304,13 @@ void Scene::loadStaticScene()
         float x = pos.x() -1 + 0.5*i;
         ent->setPosition(osg::Vec3(x, pos.y(), pos.z()));
         addEntity(ent);
+        ent->setPhysics(false);
     }    
     ent = createEntity("entity_corner_left");
+    ent->setPhysics(false);
     addEntity(ent);
     ent = createEntity("entity_corner_right");
+    ent->setPhysics(false);
     addEntity(ent);    
 }
 
@@ -304,6 +320,7 @@ void Scene::addSparePaddle(osg::Vec3 pos)
     osg::Vec3 s_pos = AssetsManager::instance().getEntityModelPosition("entity_paddle_support");
     osg::ref_ptr<Entity> spare_paddle = createEntity(ENTITY_PADDLE);                
     spare_paddle->setType(ENTITY_PADDLE_SPARE);
+    spare_paddle->setPhysics(false);
     float x = s_pos.x() - 1 + 0.5*m_sparePaddles.size();
     spare_paddle->setPosition(osg::Vec3(x, s_pos.y(), s_pos.z()));
     addEntity(spare_paddle);

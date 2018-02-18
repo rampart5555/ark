@@ -25,6 +25,7 @@ Entity::Entity()
     m_phyBody = NULL;
     m_valid = true;
     m_phyActive = false;
+    m_physics =true;//this body can have physics
     m_hits  = 0;
     m_value = 0;    
     m_powerup = POWERUP_NONE;
@@ -43,6 +44,7 @@ Entity::Entity(Entity& ent)
     m_phyBody = NULL;
     m_valid = true;
     m_phyActive = false; 
+    m_physics =true; //this body can have physics
     m_powerup = POWERUP_NONE;     
     m_color = 0xc0c0c0FF;  
 }
@@ -248,6 +250,10 @@ void Entity::setCategoryBits( EntityType etype)
 
 bool Entity::enablePhysics()
 {
+    if(m_physics==false)
+    {
+        return false;
+    }
     if(m_phyActive == true)
     {
         LOG_WARN("%s","Entity::enablePhysics(): Physics already active\n");

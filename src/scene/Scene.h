@@ -42,6 +42,7 @@ class Scene: public BasicScene
         osg::ref_ptr <Entity> createEntity(std::string);
         bool addEntity(osg::ref_ptr <Entity>);
         bool removeEntity(osg::ref_ptr <Entity>);
+        virtual void handleRemove(osg::ref_ptr <Entity>);
         void resetEntities();        
         osg::ref_ptr<Entity> getEntity(EntityType);
         void addEntityProps(Entity *ent);

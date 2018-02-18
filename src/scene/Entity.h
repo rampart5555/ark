@@ -60,7 +60,7 @@ class Entity : public osg::Referenced
         void setSubType(int stype) { m_subtype = stype; }
         int  getSubType() { return m_subtype; }
         void setSceneParent(BasicScene *scene) { m_sceneParent = scene; }
-        const BasicScene* getSceneParent( ) { return m_sceneParent; }
+        BasicScene* getSceneParent( ) { return m_sceneParent; }
         void updateInitialTransform();
 
         virtual void update(float);
@@ -74,6 +74,8 @@ class Entity : public osg::Referenced
         virtual void reset();
         
         /* physics */
+        virtual void setPhysics(bool phy) { m_physics=phy; }
+        virtual bool getPhysics(){ return m_physics; }
         virtual bool enablePhysics();
         virtual bool disablePhysics();
         void setCategoryBits(EntityType);        
@@ -110,8 +112,9 @@ class Entity : public osg::Referenced
         EntityType m_type;
         
         int m_subtype;
-        /* ode physics */
+        /*physics */
         bool m_phyActive;
+        bool m_physics; // indicate if this Entity can have physics
         b2Body *m_phyBody;
         b2PrismaticJoint *m_phyJoint;
         std::string m_name;
@@ -122,6 +125,7 @@ class Entity : public osg::Referenced
         unsigned int m_color;
         osg::Vec3d m_initialPosition;
         osg::ref_ptr<EntityAnimation> m_entityAnimation;
+        
 };
 
 class ContactListener : public b2ContactListener
