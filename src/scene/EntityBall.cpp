@@ -32,17 +32,16 @@ void EntityBall::beginContact(Entity *ent, b2Contact *contact)
 {    
     if(ent->getType()==ENTITY_PADDLE)
     {
-        int numPoints = contact->GetManifold()->pointCount;
+        //int numPoints = contact->GetManifold()->pointCount;
         b2WorldManifold worldManifold;
         contact->GetWorldManifold( &worldManifold );
         b2Vec2 pos = ent->getPhyBody()->GetPosition();
         float local_x = worldManifold.points[0].x - pos.x;
         float local_y = 0.25 - abs(local_x);
-        //begin debug
+
         float res = atan2 (local_y,local_x) * 180 / osg::PI;
         if(res >90.0) res=180.0-res;
-        printf("angle %f\n",res);
-        //end debug
+        
         m_dir.x = local_x;
         m_dir.y = local_y;
         m_dir.Normalize();

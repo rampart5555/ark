@@ -199,9 +199,15 @@ bool Scene::removeEntity(osg::ref_ptr<Entity> entity)
     return true;
 }
 
+/*
+For the moment entitymanager call this function for removing ball and paddle
+removing means hiding for Scene objects
+*/
 void Scene::handleRemove(osg::ref_ptr<Entity> entity)
 {
     LOG_INFO("Scene::handleRemove:%s\n",entity->getName().c_str());
+    entity->getEntityNode()->setNodeMask(0);
+
 }
 
 osg::ref_ptr <Entity> Scene::getEntity(EntityType etype)
@@ -354,6 +360,10 @@ void Scene::update(float passedTime)
 void Scene::animationStart(std::string anim_name)
 {   
     LOG_INFO("Scene::startAnimation: %s\n",anim_name.c_str()); 
+    std::list < osg::ref_ptr<Entity> >::iterator it;
+    for ( it=m_entityList.begin(); it!=m_entityList.end(); ++it)            
+        (*it)->getEntityNode()->setNodeMask(0xffffffff);
+
     if(anim_name=="animation_level_new")
     {   
         animLevelNew(anim_name);
@@ -481,7 +491,25 @@ void Scene::animLevelContinue(std::string anim_name)
         ea->addTranslate(4.0, x, y, z + 0.5);
         ea->setEventName(anim_name);
         entity->getEntityNode()->setUpdateCallback(ea);        
-    }                
+    } 
+    //paddle 
+    {
+        EntityAnimation *ea = new EntityAnimation;        
+        entity=getEntity(ENTITY_PADDLE);
+        if(entity.valid()==false)       
+        {
+            LOG_ERROR("Scene::animLevelContinue: Invalid entity %s\n", "");
+            return;
+        }
+        //entity->reset();
+        osg::Vec3 pos = entity->getPosition();
+        x = pos.x(); y=pos.y(); z=pos.z()-0.5;        
+        ea->addTranslate(0.0, x, y, z);
+        ea->addTranslate(3.0, x, y, z);
+        ea->addTranslate(3.01, x, y, z + 0.5);
+        ea->setEventName(anim_name);
+        entity->getEntityNode()->setUpdateCallback(ea);        
+    }              
 }
 
 void Scene::animLevelCleared(std::string anim_name)
