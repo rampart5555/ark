@@ -49,7 +49,8 @@ class Scene: public BasicScene
         bool loadTMXMap( const char* );
         EntityManager& getEntityManager() { return m_entityMgr; }
         void update(float);
-        void levelContinue();        
+        void levelContinue();  
+        unsigned int getSparePaddleNumber(){ return m_sparePaddles.size(); }       
         //animation
         void animationStart(std::string);    
         void animationEnd(std::string);            

@@ -426,6 +426,11 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
             {
                 Scene::instance().getEntityManager().stopPhysics();
                 Scene::instance().resetEntities();
+                if(Scene::instance().getSparePaddleNumber()==0)
+                {
+                    LOG_STATE("*** Game End ***:%s\n","");
+                    return;
+                }
                 Scene::instance().animationStart("animation_level_continue");                
             }
             break;
