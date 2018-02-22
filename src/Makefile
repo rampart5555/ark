@@ -69,6 +69,7 @@ LOCAL_OBJ_FILES:=main.o\
     ui/Widget.o\
     scene/Scene.o\
     scene/LevelManager.o\
+    scene/LevelManager2.o\
     scene/Entity.o\
     scene/EntityBall.o\
     scene/EntityBullet.o\

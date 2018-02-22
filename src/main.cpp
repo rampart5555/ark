@@ -7,7 +7,7 @@
 #include <osgViewer/ViewerEventHandlers>
 #include <osgGA/TrackballManipulator>
 #include <osgDB/ReadFile>
-
+#include "scene/LevelManager2.h"
 #include "OsgMain.h"
 
 OsgMain &osg_main = OsgMain::instance();
@@ -150,8 +150,7 @@ int main(void)
     glfwSwapInterval(1);
         
     osg_main.init(0,0, init_width, init_height);    
-
-
+    test_level_manager_2();
     while (!glfwWindowShouldClose(window))
     {        
         int width, height;
