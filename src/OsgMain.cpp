@@ -5,6 +5,7 @@
 #include "ui/MenuManager.h"
 #include "scene/Scene.h"
 #include "scene/LevelManager.h"
+#include "scene/LevelManager2.h"
 #include "EngineCallback.h"
 
 #if 0 //use 1 for static build
@@ -125,7 +126,8 @@ bool OsgMain::init(int x, int y, int width, int height)
 	osg::DisplaySettings::instance()->setNumMultiSamples( 4 ); 
     m_viewer->realize();
 
-    LevelManager::instance().setCurrent(0,0); //set current episode 0 and current level 0
+    LevelManager2::instance().readSceneInfo();
+    //LevelManager::instance().setCurrent(0,0); //set current episode 0 and current level 0
     // run this only to create levels.osgt for the first time
     //std::string osgtfile = LevelManager::instance().getOsgtFile();
     //build_scene_data(osgtfile.c_str());

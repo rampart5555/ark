@@ -17,6 +17,7 @@ typedef struct
 {        
     int m_score;   
     int m_lives;     
+    int m_currentLevel;
     std::string m_name;
     std::vector<LevelInfo> m_levels;
 
@@ -47,7 +48,7 @@ class LevelManager2
         LevelManager2();
         SceneInfo m_sceneData;
         std::string m_osgFile;
-        int m_currentLevel;
+        unsigned int m_currentLevel;
         int m_levelScore;
         int m_lives;   
 };

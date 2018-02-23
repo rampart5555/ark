@@ -24,6 +24,7 @@ void build_scene_data_2(const char *osgt_file)
     scene_info.m_name="Ark Scene";
     scene_info.m_score=0;
     scene_info.m_lives=3;
+    scene_info.m_currentLevel=0;
     
     LevelManager2::instance().setSceneData(scene_group, &scene_info);
 
@@ -67,6 +68,7 @@ bool LevelManager2::setSceneData(osg::Group *group, SceneInfo *sc_data)
     group->setUserValue("scene_score", sc_data->m_name);    
     group->setUserValue("scene_score", sc_data->m_score);    
     group->setUserValue("scene_lives", sc_data->m_lives);  
+    group->setUserValue("scene_level", sc_data->m_currentLevel);  
     return true;      
 }
 
@@ -75,6 +77,7 @@ bool LevelManager2::getSceneData(osg::Group *group, SceneInfo *sc_data)
     group->getUserValue("scene_score", sc_data->m_name);    
     group->getUserValue("scene_score", sc_data->m_score);    
     group->getUserValue("scene_lives", sc_data->m_lives);   
+    group->getUserValue("scene_level", sc_data->m_currentLevel);  
     return true;
 }
 
@@ -136,6 +139,25 @@ bool LevelManager2::writeSceneInfo()
         scene_group->addChild(level_group);
     }                
     return true;
+}
+
+LevelInfo* LevelManager2::getCurrentLevel()
+{
+    if(m_currentLevel < m_sceneData.m_levels.size())
+    {
+        return &m_sceneData.m_levels[m_currentLevel];
+    }
+    return NULL;
+}
+
+LevelInfo* LevelManager2::getNextLevel()
+{
+    m_currentLevel++;
+    if(m_currentLevel < m_sceneData.m_levels.size())
+    {
+        return &m_sceneData.m_levels[m_currentLevel];
+    }
+    return NULL;
 }
 
 void LevelManager2::dump()

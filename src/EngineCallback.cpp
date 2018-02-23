@@ -3,6 +3,7 @@
 #include "ui/MenuManager.h"
 #include "scene/Scene.h"
 #include "scene/LevelManager.h"
+#include "scene/LevelManager2.h"
 #include "EngineCallback.h"
 
 
@@ -374,6 +375,7 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
             {
                 Scene::instance().getEntityManager().stopPhysics();
                 Scene::instance().resetEntities();
+#if 0                
                 unsigned int ep_id, lvl_id;
                 LevelManager::instance().getCurrent(ep_id, lvl_id);
                 SceneEpisode *episode=LevelManager::instance().getEpisode(ep_id);
@@ -383,7 +385,9 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
                     LOG_ERROR("LEVEL_LOAD => episode or level not found for :%d lvl: %d\n",ep_id, lvl_id);
                     return;
                 }
-                Scene::instance().loadScene(episode->m_file.c_str(), level->m_name.c_str());
+#endif                
+                LevelInfo *level_info = LevelManager2::instance().getCurrentLevel();                
+                Scene::instance().loadScene("levels/episode_1.lua", level_info->m_name.c_str());
                 Scene::instance().animationStart("animation_level_new");
             }          
             break;
@@ -405,6 +409,7 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
             {
                 Scene::instance().getEntityManager().stopPhysics();
                 Scene::instance().resetEntities();
+#if 0                
                 unsigned int ep_id, lvl_id;
                 LevelManager::instance().getCurrent(ep_id, lvl_id);
                 lvl_id+=1;
@@ -416,7 +421,9 @@ void Scene_level_callback( osg::ref_ptr<EngineEvent> args)
                     LOG_ERROR("LEVEL_LOAD => episode or level not found for :%d lvl: %d\n",ep_id, lvl_id);
                     return;
                 }
-                Scene::instance().loadScene(episode->m_file.c_str(), level->m_name.c_str());
+#endif          
+                LevelInfo *level_info = LevelManager2::instance().getNextLevel();                
+                Scene::instance().loadScene("levels/episode_1.lua", level_info->m_name.c_str());
                 Scene::instance().animationStart("animation_level_new");                
             }
             break;

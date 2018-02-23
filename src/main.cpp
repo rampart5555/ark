@@ -150,7 +150,7 @@ int main(void)
     glfwSwapInterval(1);
         
     osg_main.init(0,0, init_width, init_height);    
-    test_level_manager_2();
+    //test_level_manager_2();
     while (!glfwWindowShouldClose(window))
     {        
         int width, height;

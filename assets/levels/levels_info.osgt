@@ -1,0 +1,868 @@
+#Ascii Scene 
+#Version 131 
+#Generator OpenSceneGraph 3.4.1 
+
+osg::Group {
+  UniqueID 1 
+  UserDataContainer TRUE {
+    osg::DefaultUserDataContainer {
+      UniqueID 2 
+      UDC_UserObjects 3 {
+        osg::IntValueObject {
+          UniqueID 3 
+          Name "scene_score" 
+        }
+        osg::IntValueObject {
+          UniqueID 4 
+          Name "scene_lives" 
+          Value 3 
+        }
+        osg::IntValueObject {
+          UniqueID 5 
+          Name "scene_level" 
+        }
+      }
+    }
+  }
+  Children 30 {
+    osg::Group {
+      UniqueID 6 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 7 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 8 
+              Name "level_id" 
+            }
+            osg::IntValueObject {
+              UniqueID 9 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 10 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 11 
+              Name "level_name" 
+              Value "Level_01" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 12 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 13 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 14 
+              Name "level_id" 
+              Value 1 
+            }
+            osg::IntValueObject {
+              UniqueID 15 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 16 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 17 
+              Name "level_name" 
+              Value "Level_02" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 18 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 19 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 20 
+              Name "level_id" 
+              Value 2 
+            }
+            osg::IntValueObject {
+              UniqueID 21 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 22 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 23 
+              Name "level_name" 
+              Value "Level_03" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 24 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 25 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 26 
+              Name "level_id" 
+              Value 3 
+            }
+            osg::IntValueObject {
+              UniqueID 27 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 28 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 29 
+              Name "level_name" 
+              Value "Level_04" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 30 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 31 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 32 
+              Name "level_id" 
+              Value 4 
+            }
+            osg::IntValueObject {
+              UniqueID 33 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 34 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 35 
+              Name "level_name" 
+              Value "Level_05" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 36 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 37 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 38 
+              Name "level_id" 
+              Value 5 
+            }
+            osg::IntValueObject {
+              UniqueID 39 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 40 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 41 
+              Name "level_name" 
+              Value "Level_06" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 42 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 43 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 44 
+              Name "level_id" 
+              Value 6 
+            }
+            osg::IntValueObject {
+              UniqueID 45 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 46 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 47 
+              Name "level_name" 
+              Value "Level_07" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 48 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 49 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 50 
+              Name "level_id" 
+              Value 7 
+            }
+            osg::IntValueObject {
+              UniqueID 51 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 52 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 53 
+              Name "level_name" 
+              Value "Level_08" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 54 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 55 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 56 
+              Name "level_id" 
+              Value 8 
+            }
+            osg::IntValueObject {
+              UniqueID 57 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 58 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 59 
+              Name "level_name" 
+              Value "Level_09" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 60 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 61 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 62 
+              Name "level_id" 
+              Value 9 
+            }
+            osg::IntValueObject {
+              UniqueID 63 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 64 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 65 
+              Name "level_name" 
+              Value "Level_10" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 66 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 67 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 68 
+              Name "level_id" 
+              Value 10 
+            }
+            osg::IntValueObject {
+              UniqueID 69 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 70 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 71 
+              Name "level_name" 
+              Value "Level_11" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 72 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 73 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 74 
+              Name "level_id" 
+              Value 11 
+            }
+            osg::IntValueObject {
+              UniqueID 75 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 76 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 77 
+              Name "level_name" 
+              Value "Level_12" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 78 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 79 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 80 
+              Name "level_id" 
+              Value 12 
+            }
+            osg::IntValueObject {
+              UniqueID 81 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 82 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 83 
+              Name "level_name" 
+              Value "Level_13" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 84 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 85 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 86 
+              Name "level_id" 
+              Value 13 
+            }
+            osg::IntValueObject {
+              UniqueID 87 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 88 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 89 
+              Name "level_name" 
+              Value "Level_14" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 90 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 91 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 92 
+              Name "level_id" 
+              Value 14 
+            }
+            osg::IntValueObject {
+              UniqueID 93 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 94 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 95 
+              Name "level_name" 
+              Value "Level_15" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 96 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 97 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 98 
+              Name "level_id" 
+              Value 15 
+            }
+            osg::IntValueObject {
+              UniqueID 99 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 100 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 101 
+              Name "level_name" 
+              Value "Level_16" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 102 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 103 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 104 
+              Name "level_id" 
+              Value 16 
+            }
+            osg::IntValueObject {
+              UniqueID 105 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 106 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 107 
+              Name "level_name" 
+              Value "Level_17" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 108 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 109 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 110 
+              Name "level_id" 
+              Value 17 
+            }
+            osg::IntValueObject {
+              UniqueID 111 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 112 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 113 
+              Name "level_name" 
+              Value "Level_18" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 114 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 115 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 116 
+              Name "level_id" 
+              Value 18 
+            }
+            osg::IntValueObject {
+              UniqueID 117 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 118 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 119 
+              Name "level_name" 
+              Value "Level_19" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 120 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 121 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 122 
+              Name "level_id" 
+              Value 19 
+            }
+            osg::IntValueObject {
+              UniqueID 123 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 124 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 125 
+              Name "level_name" 
+              Value "Level_20" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 126 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 127 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 128 
+              Name "level_id" 
+              Value 20 
+            }
+            osg::IntValueObject {
+              UniqueID 129 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 130 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 131 
+              Name "level_name" 
+              Value "Level_21" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 132 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 133 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 134 
+              Name "level_id" 
+              Value 21 
+            }
+            osg::IntValueObject {
+              UniqueID 135 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 136 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 137 
+              Name "level_name" 
+              Value "Level_22" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 138 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 139 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 140 
+              Name "level_id" 
+              Value 22 
+            }
+            osg::IntValueObject {
+              UniqueID 141 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 142 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 143 
+              Name "level_name" 
+              Value "Level_23" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 144 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 145 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 146 
+              Name "level_id" 
+              Value 23 
+            }
+            osg::IntValueObject {
+              UniqueID 147 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 148 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 149 
+              Name "level_name" 
+              Value "Level_24" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 150 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 151 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 152 
+              Name "level_id" 
+              Value 24 
+            }
+            osg::IntValueObject {
+              UniqueID 153 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 154 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 155 
+              Name "level_name" 
+              Value "Level_25" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 156 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 157 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 158 
+              Name "level_id" 
+              Value 25 
+            }
+            osg::IntValueObject {
+              UniqueID 159 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 160 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 161 
+              Name "level_name" 
+              Value "Level_26" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 162 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 163 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 164 
+              Name "level_id" 
+              Value 26 
+            }
+            osg::IntValueObject {
+              UniqueID 165 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 166 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 167 
+              Name "level_name" 
+              Value "Level_27" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 168 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 169 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 170 
+              Name "level_id" 
+              Value 27 
+            }
+            osg::IntValueObject {
+              UniqueID 171 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 172 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 173 
+              Name "level_name" 
+              Value "Level_28" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 174 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 175 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 176 
+              Name "level_id" 
+              Value 28 
+            }
+            osg::IntValueObject {
+              UniqueID 177 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 178 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 179 
+              Name "level_name" 
+              Value "Level_29" 
+            }
+          }
+        }
+      }
+    }
+    osg::Group {
+      UniqueID 180 
+      UserDataContainer TRUE {
+        osg::DefaultUserDataContainer {
+          UniqueID 181 
+          UDC_UserObjects 4 {
+            osg::IntValueObject {
+              UniqueID 182 
+              Name "level_id" 
+              Value 29 
+            }
+            osg::IntValueObject {
+              UniqueID 183 
+              Name "level_score" 
+            }
+            osg::BoolValueObject {
+              UniqueID 184 
+              Name "level_unlocked" 
+            }
+            osg::StringValueObject {
+              UniqueID 185 
+              Name "level_name" 
+              Value "Level_30" 
+            }
+          }
+        }
+      }
+    }
+  }
+}
