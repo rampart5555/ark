@@ -55,54 +55,11 @@ class Menu
         std::vector<Widget*> m_widgetList;
 };
 
-class MenuEpisode: public Menu
-{
-    public:
-        MenuEpisode(MenuManager*);
-        virtual void createMenu();        
-        void setEpisodeId(int);
-        int  getEpisodeId();
-        void loadShaders();
-        void loadWidgets();
-        void setPosition(float x, float y, float z);
-        
-    protected:        
-        int m_episodeId;
-        osg::Vec3f m_position;
-
-};
-
 class MenuStart: public Menu
 {
     public:
         MenuStart(MenuManager*);
         virtual void createMenu();             
-};
-
-class MenuLevelSelect : public Menu
-{
-    public:
-        MenuLevelSelect(MenuManager*);
-        virtual void createMenu();        
-        void nextEpisode();
-        void prevEpisode();
-        virtual void show();
-        virtual void hide(EngineCallback, void*);
-        MenuEpisode* getMenuEpisode(unsigned int);
-    protected:
-        std::vector <MenuEpisode*> m_menuList;
-        int m_menuIndex;
-        osg::Vec3f m_position;
-};
-
-class MenuLevelComplete : public Menu
-{
-    public:
-        MenuLevelComplete(MenuManager*);
-        virtual void createMenu();  
-        void updateScore(int);
-    protected:
-        osg::ref_ptr <Widget> m_score;          
 };
 
 class MenuLevelFailed : public Menu

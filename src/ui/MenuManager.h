@@ -16,16 +16,12 @@ class MenuManager
         }        
         void createMenu();
         osg::MatrixTransform* getMenuNode();
-        MenuStart* getMenuStart() { return m_start; }
-        MenuLevelSelect* getMenuLevelSelect() { return m_levelSelect; }
-        MenuSceneHud* getMenuSceneHud() { return m_sceneHud; }
-        MenuLevelComplete* getMenuLevelComplete() { return m_levelComplete; }
+        MenuStart* getMenuStart() { return m_start; }        
+        MenuSceneHud* getMenuSceneHud() { return m_sceneHud; }        
         MenuLevelFailed* getMenuLevelFailed() { return m_levelFailed; }
         
     protected:        
-        osg::MatrixTransform *m_menuNode;        
-        MenuLevelSelect *m_levelSelect;
-        MenuLevelComplete *m_levelComplete;
+        osg::MatrixTransform *m_menuNode;                        
         MenuLevelFailed *m_levelFailed;
         MenuStart *m_start;
         MenuSceneHud *m_sceneHud;

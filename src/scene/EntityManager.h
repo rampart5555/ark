@@ -28,10 +28,7 @@ class EntityManager: public BasicScene
         void clear();
         void update(float passedTime);
         std::list < osg::ref_ptr<Entity> >* getEntityList();
-        void levelComplete(); 
-        void levelContinue();
-        void levelFailed();
-        void levelCleared();
+        
         void paddleSelect(void *args);
         void paddleMove(void *args);       
         void paddleUnselect(void *args);        

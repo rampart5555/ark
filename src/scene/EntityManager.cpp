@@ -403,39 +403,6 @@ void EntityManager::paddleUnselect(void *args)
     m_paddleSelected=false;
 }
 
-void EntityManager::levelComplete()
-{
-    LOG_STATE("%s\n", "*** LEVEL COMPLETE ***");
-    stopPhysics();
-    Scene_level_complete(NULL);    
-}
-
-void EntityManager::levelFailed()
-{
-    paddleUnselect(NULL);
-    stopPhysics();    
-    Scene_level_failed(NULL);
-}
-
-
-void EntityManager::levelContinue()
-{    
-    LOG_STATE("%s\n", "*** LEVEL CONTINUE ***");
-    osg::ref_ptr<Entity> ent = createEntity(ENTITY_BALL);
-    EntityBall *new_ball=ent->asEntityBall();
-    new_ball->setDir(osg::Vec2(0.5,0.5));
-    new_ball->setSpeed(DEFAULT_BALL_SPEED);
-    addEntity(ent);
-    osg::Vec3 paddle_pos  = AssetsManager::instance().getEntityModelPosition("spawn_entity_paddle");
-    m_paddle->setPosition(paddle_pos);
-    startPhysics();
-}
-
-void EntityManager::levelCleared()
-{
-    Level_cleared(NULL);
-}
-
 /* debug function*/
 const char* EntityManager::powerupToStr(PowerupType ptype)
 {

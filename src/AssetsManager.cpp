@@ -21,39 +21,6 @@ typedef struct {
     const char* filename;
 }FontEntry;
 
-class FindAnimation : public osg::NodeVisitor
-{
-    public:
-        osg::ref_ptr<osgAnimation::BasicAnimationManager> _am;    
-        FindAnimation(): osg::NodeVisitor(osg::NodeVisitor::TRAVERSE_ALL_CHILDREN)
-        {
-                        
-        }     
-        void apply(osg::Node& node) 
-        {
-            if (_am.valid())
-            {                
-                return;
-            }
-            if (node.getUpdateCallback()) 
-            {
-                osgAnimation::AnimationManagerBase* b = dynamic_cast<osgAnimation::AnimationManagerBase*>(node.getUpdateCallback());
-                if (b) 
-                {
-                    _am = new osgAnimation::BasicAnimationManager(*b);
-                    printf("****************************found animation\n");
-                    for (osgAnimation::AnimationList::const_iterator animIter = _am->getAnimationList().begin();
-                    animIter != _am->getAnimationList().end(); ++animIter)
-                    {
-                        (*animIter)->setPlayMode(osgAnimation::Animation::LOOP);
-                    }                    
-                    return;
-                }
-            }
-            traverse(node);
-        }                       
-};   
-
 class FindModel : public osg::NodeVisitor
 {
     public:            
@@ -295,8 +262,8 @@ bool AssetsManager::loadMenuEntries()
         LOG_ERROR("Error Loading script:%s\n", lua_file);
         return false;
     }
-    const char menu_names_size=3;  
-    const char *menu_names[menu_names_size]={"MenuLevelComplete","MenuSceneHud","MenuLevelFailed"};
+    const char menu_names_size=2;  
+    const char *menu_names[menu_names_size] = { "MenuSceneHud", "MenuLevelFailed" };
     for(int i=0;i<menu_names_size;i++)
     {
         std::vector<MenuItem> *vect = new std::vector<MenuItem>(); 
