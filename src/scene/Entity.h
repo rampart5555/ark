@@ -104,6 +104,7 @@ class Entity : public osg::Referenced
         void setPowerup( PowerupType pup) { m_powerup = pup; }
         PowerupType  getPowerup( )        { return m_powerup; }
         void setColor(int color)  { m_color = color; }
+        void setTexture(const char*);
         
     protected:
         ~Entity();

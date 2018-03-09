@@ -35,8 +35,7 @@ class AssetsManager
         void getEntityProps(const char *, EntityProps *);
         std::vector<MenuItem>*getMenuItems(const char*);
         Animation* getAnimation(const char*);
-
-        bool loadAnimations();
+        
         bool loadAssets();
         bool loadTextures();        
         bool loadMenuEntries();    

@@ -136,9 +136,11 @@ void AssetsManagerLua::getPropVector(lua_State* L, const char *table_name, std::
         getInt(L,"color", prop.m_color);
         getInt(L,"hits", prop.m_hits);
         getInt(L,"value", prop.m_value);
+        getString(L,"texture",prop.m_texture);
         lua_pop(L, 1);  
         items->push_back(prop);
-        //printf("id:%d color:%8x value:%d \n",prop.m_id, prop.m_color, prop.m_value);
+        // printf("Texture: %s\n", prop.m_texture.c_str());
+        // printf("id:%d color:%8x value:%d \n",prop.m_id, prop.m_color, prop.m_value);
     }
     lua_pop(L, 1);
     
@@ -201,19 +203,6 @@ bool AssetsManagerLua::loadMenuItems(const char *menu_name, std::vector<MenuItem
     return true;
 }
 
-void AssetsManagerLua::dumpMenuItem(MenuItem& item)
-{
-    printf("******** Item *********\n");
-    printf("name: %s\n", item.m_name.c_str());
-    printf("m_label: %s\n", item.m_label.c_str());
-    printf("m_model: %s\n", item.m_model.c_str());
-    printf("m_cb: %s\n", item.m_cb.c_str());
-    printf("x: %f\n", item.m_x);
-    printf("y: %f\n", item.m_y);
-    printf("width: %f\n", item.m_width);
-    printf("height: %f\n", item.m_height);
-}
-
 bool AssetsManagerLua::loadEntityProps(const char* table_name, EntityProps *props)
 {
     lua_getglobal(L, table_name);   
@@ -271,43 +260,6 @@ bool AssetsManagerLua::loadLevelData(const char *table_name, LevelData *data)
     return true;
 }
 
-bool AssetsManagerLua::loadAnimations(std::vector<Animation> *anim_vec)
-{    
-        
-    lua_getglobal(L, "getAnimationTableSize");    
-    if (lua_pcall(L, 0, 1, 0) != 0)
-    {
-        printf("Error running function : %s",lua_tostring(L, -1));
-        return false;
-    }
-    if (!lua_isnumber(L, -1))
-    {
-        printf("Function must return a number");
-        return false;
-    }
-    int table_size = lua_tonumber(L, -1);             
-    for(int i=0;i<table_size;i++)
-    {
-         lua_getglobal(L, "getAnimation");
-         lua_pushnumber(L, i+1);
-         if (lua_pcall(L, 1, 1, 0) != 0)
-         {
-            printf("Error running function : %s\n",lua_tostring(L, -1));
-            return false;
-        }
-        if(!lua_istable(L,-1))
-        {        
-            printf("Return type is not a table\n");
-            return false;
-        }
-        Animation anim;
-        getString(L,"name", anim.m_name);        
-        getFloatVector(L,"frames",&anim.m_frames);
-        anim_vec->push_back(anim);
-    }
-    lua_pop(L, 1);
-    return true;
-}
 
 
 

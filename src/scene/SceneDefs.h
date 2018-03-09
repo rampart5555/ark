@@ -6,7 +6,8 @@ struct EntityProp
     int m_id;
     int m_color;
     int m_hits;
-    int m_value;      
+    int m_value;   
+    std::string m_texture;
 };
 
 struct EntityProps

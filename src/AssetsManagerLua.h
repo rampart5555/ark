@@ -24,10 +24,9 @@ class AssetsManagerLua
         bool loadMenuItems(const char*, std::vector<MenuItem>* ); 
         bool loadEntityProps(const char*, EntityProps * );
         bool loadLevelData(const char*, LevelData*);
-        bool loadResources(const char*, std::vector<ResourceItem>*);
-        bool loadAnimations(std::vector<Animation>*);
+        bool loadResources(const char*, std::vector<ResourceItem>*);        
         bool close();
-        void dumpMenuItem(MenuItem&);
+        
     private:
         lua_State* L;
         void getString(lua_State* , const char*, std::string&);

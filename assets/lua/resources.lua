@@ -13,5 +13,6 @@ Resources={
     { rtype="glsl", rid="widget_color_vert",  file_path=ROOT_PATH .. "shaders/widget_color.vert"},
     { rtype="glsl", rid="widget_color_frag",  file_path=ROOT_PATH .. "shaders/widget_color.frag"},
     { rtype="jpeg", rid="brick_read",         file_path=ROOT_PATH .. "images/brick_red.jpeg"},
+    { rtype="png",  rid="powerup_slow",       file_path=ROOT_PATH .. "images/slow.png"},
     { rtype="ttf",  rid="icomoon",            file_path=ROOT_PATH .. "fonts/IcoMoon-Free.ttf"}
 }

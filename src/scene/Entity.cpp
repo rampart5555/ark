@@ -105,6 +105,16 @@ void Entity::setUniforms()
 #endif    
 }
 
+void Entity::setTexture(const char* tex_name)
+{
+    osg::Texture *texture=NULL;
+    texture = AssetsManager::instance().getTexture(tex_name);
+    if(texture!=NULL)
+    {
+        
+    }
+}
+
 osg::PositionAttitudeTransform* Entity::getEntityNode()
 {
     return m_transform;

@@ -95,8 +95,7 @@ bool AssetsManager::loadAssets()
     assets_lua.close();
     //Menu entries
     loadMenuEntries();
-    //animations
-    loadAnimations();
+    
     for (unsigned i=0;i<res_items.size();i++)
     {
         item=&res_items[i];        
@@ -223,26 +222,6 @@ bool AssetsManager::loadTextures()
         texture->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::REPEAT);
         texture->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::REPEAT);
         m_assetList.insert(std::make_pair(imageList[i].name, texture.get()));    
-    }
-    return true;
-}
-bool AssetsManager::loadAnimations()
-{
-    AssetsManagerLua lua_mgr;
-    unsigned int filesize;
-    std::string lua_file = m_rootPath + "/lua/animations.lua";
-    LOG_INFO("AssetsManager::loadAnimations()=> %s\n",lua_file.c_str());
-    char *script = readBinaryFile(lua_file.c_str(), &filesize);
-    bool result = lua_mgr.loadScript(script);
-    if(result==false )
-    {
-        LOG_ERROR("Error Loading script:%s\n", lua_file);
-        return false;
-    }
-    lua_mgr.loadAnimations(&m_animationList);
-    for(unsigned int i=0;i<m_animationList.size();i++)
-    {
-        printf("Animation name:%s\n",m_animationList[i].m_name.c_str());
     }
     return true;
 }
