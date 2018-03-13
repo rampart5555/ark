@@ -12,7 +12,7 @@ void main (void)
     vec3 lightColor = vec3(texture2D(uSampler, vTexCoord)) * vLightIntensity;
     vec3 ct = clamp(lightColor, 0.0, 1.0);
     //gl_FragColor = vec4 (ct, 1.0);
-    gl_FragColor = texture2D(uSampler, texcoord).aaaa;
+    gl_FragColor = texture2D(uSampler, vTexCoord);
 }
 
 /*

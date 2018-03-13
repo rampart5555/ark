@@ -111,6 +111,7 @@ void Scene::addEntityProps(Entity *ent)
                 ent->setHits(prop->m_hits);
                 ent->setValue(prop->m_value);
                 ent->setColor(prop->m_color);
+                ent->setTexture(prop->m_texture);
                 //printf("setting entity prop: %d color:%8x\n",prop->m_id, prop->m_color);
                 break;                
             }
@@ -124,6 +125,8 @@ void Scene::addEntityProps(Entity *ent)
             if(prop->m_id == ent->getSubType())
             {
                 ent->setColor(prop->m_color);
+                ent->setTexture(prop->m_texture);
+                ent->setRotation(10.0);
                 break;
             }
         }

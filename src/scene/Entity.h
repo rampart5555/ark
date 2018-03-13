@@ -70,6 +70,7 @@ class Entity : public osg::Referenced
 
         virtual void setPosition(osg::Vec3 pos);
         virtual const osg::Vec3d& getPosition();
+        virtual void setRotation(float);
         virtual const osg::Vec3d& getInitialPosition();
         virtual void reset();
         
@@ -104,7 +105,7 @@ class Entity : public osg::Referenced
         void setPowerup( PowerupType pup) { m_powerup = pup; }
         PowerupType  getPowerup( )        { return m_powerup; }
         void setColor(int color)  { m_color = color; }
-        void setTexture(const char*);
+        void setTexture(std::string);
         
     protected:
         ~Entity();
@@ -124,8 +125,10 @@ class Entity : public osg::Referenced
         int m_value;
         PowerupType m_powerup;
         unsigned int m_color;
+        std::string m_textureName;
         osg::Vec3d m_initialPosition;
         osg::ref_ptr<EntityAnimation> m_entityAnimation;
+        float m_rotation;
         
 };
 

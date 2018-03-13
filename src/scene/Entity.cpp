@@ -30,6 +30,7 @@ Entity::Entity()
     m_value = 0;    
     m_powerup = POWERUP_NONE;
     m_color = 0xc0c0c0FF;
+    m_rotation=0.0;
 }
 
 Entity::Entity(Entity& ent)
@@ -47,6 +48,7 @@ Entity::Entity(Entity& ent)
     m_physics =true; //this body can have physics
     m_powerup = POWERUP_NONE;     
     m_color = 0xc0c0c0FF;  
+    m_rotation=0.0;
 }
 
 Entity::~Entity()
@@ -69,14 +71,31 @@ void Entity::setModel(osg::MatrixTransform& tr)
 
 void Entity::setUniforms()
 {
-    float r,g,b;
-    r = ((m_color>>16) & 0xff)/255.0;
-    g = ((m_color>>8 ) & 0xff)/255.0;
-    b = ((m_color>>0 ) & 0xff)/255.0;   
-    //LOG_DEBUG("Entity::setUniforms()=> %s %d %f %f %f\n", m_name.c_str(), m_color,r,g,b);
-    osg::Uniform* uEntityDiffuseColor = new osg::Uniform("uEntityDiffuseColor",osg::Vec4(r,g,b,1.0));
-    osg::StateSet *ss = m_transform->getOrCreateStateSet();
-    ss->addUniform(uEntityDiffuseColor);     
+    if(m_textureName.size() > 0)
+    {
+        osg::Texture *texture=NULL;
+        osg::StateSet *ss = m_transform->getOrCreateStateSet();            
+        texture=AssetsManager::instance().getTexture(m_textureName.c_str());    
+        osg::Program *program = AssetsManager::instance().getProgram("model_texture");        
+        ss->setAttributeAndModes(program, osg::StateAttribute::ON );
+
+        texture = AssetsManager::instance().getTexture(m_textureName.c_str());    
+        ss->setTextureAttribute(0, texture);
+        osg::Uniform* baseTextureSampler = new osg::Uniform("uSampler",0);
+        ss->addUniform(baseTextureSampler);         
+
+    }
+    else
+    {
+        float r,g,b;
+        r = ((m_color>>16) & 0xff)/255.0;
+        g = ((m_color>>8 ) & 0xff)/255.0;
+        b = ((m_color>>0 ) & 0xff)/255.0;   
+        //LOG_DEBUG("Entity::setUniforms()=> %s %d %f %f %f\n", m_name.c_str(), m_color,r,g,b);
+        osg::Uniform* uEntityDiffuseColor = new osg::Uniform("uEntityDiffuseColor",osg::Vec4(r,g,b,1.0));
+        osg::StateSet *ss = m_transform->getOrCreateStateSet();
+        ss->addUniform(uEntityDiffuseColor);     
+    }
 #if 0
     osg::Texture *texture=NULL;
     osg::StateSet *ss = m_transform->getOrCreateStateSet();
@@ -105,14 +124,9 @@ void Entity::setUniforms()
 #endif    
 }
 
-void Entity::setTexture(const char* tex_name)
+void Entity::setTexture(std::string tex_name)
 {
-    osg::Texture *texture=NULL;
-    texture = AssetsManager::instance().getTexture(tex_name);
-    if(texture!=NULL)
-    {
-        
-    }
+    m_textureName = tex_name;
 }
 
 osg::PositionAttitudeTransform* Entity::getEntityNode()
@@ -129,6 +143,11 @@ void Entity::setPosition(osg::Vec3 pos)
 const osg::Vec3d& Entity::getPosition()
 {
     return m_transform->getPosition();
+}
+
+void Entity::setRotation(float angularVel)
+{
+    m_rotation = angularVel;
 }
 
 const osg::Vec3d& Entity::getInitialPosition()
@@ -183,6 +202,12 @@ void Entity::update(float passedTime)
         
     const b2Vec2& pos = m_phyBody->GetPosition();
     setPosition(osg::Vec3(pos.x,pos.y,0.0));
+    if(m_rotation > 0.0)
+    {
+        m_transform->setAttitude(osg::Quat(osg::inDegrees(m_rotation),osg::Vec3d(1.0,0.0,0.0)));
+        m_rotation+=10.0;
+    }
+    
 #if 0    
     osg::Matrix osg_pos = osg::Matrix::translate(pos.x, pos.y, 0.0);
     float bodyAngle = m_phyBody->GetAngle();

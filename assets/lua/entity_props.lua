@@ -16,10 +16,10 @@ EntityProps=
     powerup = 
     {
         { id=17, color=0xbbccff, hits=1, value=10, texture="powerup_slow"},
-        { id=18, color=0xffffff, hits=1, value=10, texture=""},
-        { id=19, color=0x557799, hits=1, value=10, texture=""},
-        { id=20, color=0x123456, hits=1, value=40, texture=""},
-        { id=21, color=0x0000ff, hits=1, value=50, texture=""}
+        { id=18, color=0xffffff, hits=1, value=10, texture="powerup_slow"},
+        { id=19, color=0x557799, hits=1, value=10, texture="powerup_slow"},
+        { id=20, color=0x123456, hits=1, value=40, texture="powerup_slow"},
+        { id=21, color=0x0000ff, hits=1, value=50, texture="powerup_slow"}
     }
 } 
 

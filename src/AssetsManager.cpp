@@ -130,6 +130,20 @@ bool AssetsManager::loadAssets()
             }                          
             m_assetList.insert(std::make_pair(item->m_id, glsl));
         }
+        else if(item->m_type=="png")
+        {
+            LOG_INFO("AssetsManager::loadTexture=>%s:%s\n", item->m_id.c_str(), item->m_path.c_str());
+            osg::Object *obj = loadObject(item->m_path.c_str(),"png");
+            osg::ref_ptr<osg::Image> image = dynamic_cast<osg::Image*>(obj);
+            osg::ref_ptr<osg::Texture2D> texture = new osg::Texture2D;
+            texture->setDataVariance(osg::Object::DYNAMIC);
+            texture->setImage(image.get());
+            texture->setFilter(osg::Texture2D::MIN_FILTER, osg::Texture2D::LINEAR);
+            texture->setFilter(osg::Texture2D::MAG_FILTER, osg::Texture2D::LINEAR);
+            texture->setWrap(osg::Texture2D::WRAP_S, osg::Texture2D::REPEAT);
+            texture->setWrap(osg::Texture2D::WRAP_T, osg::Texture2D::REPEAT);
+            m_assetList.insert(std::make_pair(item->m_id, texture.get()));    
+        }
     }     
     return true;
 }
@@ -353,7 +367,7 @@ osg::Texture2D* AssetsManager::getTexture(const char* texture_name)
     }
     else
     {
-        LOG_WARN("AssetsManager::getTexture=> not tound%s\n", texture_name);
+        LOG_WARN("AssetsManager::getTexture=> not found%s\n", texture_name);
     }
     return NULL;
 }
