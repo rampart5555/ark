@@ -6,81 +6,90 @@ using System.Xml;
 using UnityEngine;
 
 public class ParseTMX
-{
-    string m_filePath = @"c:\a_dev\ark_textures\level_1.tmx";
-    int m_width;
-    int m_height;
-    List<int> m_brickData;
-    List<int> m_powerupData;
+{    
+    public int m_width;
+    public int m_height;
+    public List<int> m_brickData;
+    public List<int> m_powerupData;
+
     public ParseTMX()
     {
         m_brickData = new List<int>();
         m_powerupData = new List<int>();
     }
-    public void ParseFile()
+    public void ParseLayerNode(XmlDocument xmlDoc,string layerName)
     {
-        XmlDocument doc = new XmlDocument();
-        doc.Load(m_filePath);
         XmlNode layer;
         XmlNode layer_data;
-        /* bricks layer */
-        layer = doc.DocumentElement.SelectSingleNode("//layer[@name='bricks']");
+        string xpath = string.Format("//layer[@name='{0}']",layerName);
+        Debug.Log (xpath);
+        layer = xmlDoc.DocumentElement.SelectSingleNode(xpath);
+
         if (layer == null)
         {
-            Debug.Log("layer bricks not found");
+            Debug.LogError("Layer not found");
             return;
         }            
         layer_data = layer.SelectSingleNode("./data");
         if(layer_data == null)
         {
-            Debug.Log("bricks node data not found!");
+            Debug.LogError("Data not found!");
             return;
         }
-        foreach (string s in layer_data.InnerText.Split(','))            
-            m_brickData.Add(int.Parse(s));
 
-        /* powerup layer */
-        layer = doc.DocumentElement.SelectSingleNode("//layer[@name='powerup']");
-        if (layer == null)
+        if (layerName == "bricks") 
         {
-            Debug.Log("Node not found");
-            return;
-        }
-        layer_data = layer.SelectSingleNode("./data");
-        if (layer_data == null)
+            foreach (string s in layer_data.InnerText.Split(','))
+                m_brickData.Add (int.Parse (s));
+        } 
+        else if (layerName == "powerup") 
         {
-            Debug.Log("bricks node data not found!");
-            return;
+            foreach (string s in layer_data.InnerText.Split(','))
+                m_powerupData.Add (int.Parse (s));
         }
-        foreach (string s in layer_data.InnerText.Split(','))
-            m_powerupData.Add(int.Parse(s));
+    }
 
-        m_width = int.Parse(layer.Attributes["width"].Value);
-        m_height = int.Parse(layer.Attributes["height"].Value);
-        Dump();
+    public void ParseFile(string xml_string)
+    {
+        XmlDocument doc = new XmlDocument();
+        doc.LoadXml(xml_string);
+        XmlNode mapNode = doc.DocumentElement.SelectSingleNode("//map");
+        if (mapNode != null) 
+        {
+            m_width = int.Parse(mapNode.Attributes["width"].Value);
+            m_height = int.Parse(mapNode.Attributes["height"].Value);
+        }
+        ParseLayerNode (doc, "bricks");
+        ParseLayerNode (doc, "powerup");
+        //Dump();
     }
     void Dump()
     {
         Debug.Log("Width:"  + m_width);
         Debug.Log("Height:" + m_height);
         Debug.Log("Layer bricks");
+        string brickStr="";
         for (int i = 0; i < m_height; i++)
         {
             for (int j = 0; j < m_width; j++)
             {
-                Debug.Log(" "+m_brickData[i * m_width + j]);                    
+                brickStr += " "+m_brickData[i * m_width + j];                    
             }
-            Debug.Log("\n");
+            brickStr += "\n";
         }
+        Debug.Log(brickStr);
+
         Debug.Log("Layer powerup");
-        for (int i = 0; i < m_height; i++)
+        string powerupStr="";
+        for (int j = 0; j < m_height; j++)
         {
-            for (int j = 0; j < m_width; j++)
+            for (int i = 0; i < m_width; i++)
             {
-                Debug.Log(" " + m_powerupData[i * m_width + j]);
+                powerupStr += " "+m_brickData[j * m_width + i];                    
             }
-            Debug.Log("\n");
+            powerupStr += "\n";
         }
+        Debug.Log (powerupStr);
     }
 }
 
